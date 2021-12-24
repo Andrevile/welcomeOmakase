@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+:root {
+  --text-color: black;
+  --font-size: 16px;
+  --font-family: "Roboto", sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +43,52 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 컴포넌트 스타일림 */
+
+.section {
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  /* background-color: ; */
+}
+
+.section .inner {
+  /* max-width: 980px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative; */
+  height: 68px;
+  font-family: "Black Han Sans", sans-serif;
+}
+
+.section .menu-group {
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.section .menu-group .title p {
+  display: block;
+  line-height: 0%;
+  /* font-family: "Black Han Sans", sans-serif; */
+}
+
+.section .menu-group .main-menu {
+  display: flex;
+  list-style-type: none;
+}
+
+.section .menu-group .main-menu .menu-item {
+  text-align: center;
+  padding: 10px;
+}
+
+.section .menu-group .main-menu .link {
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+.section .menu-group .main-menu .link:hover {
+  color: #61dafb;
 }
