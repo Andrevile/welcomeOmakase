@@ -4,7 +4,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import GlobalStyles from "./components/GlobalStyles";
 import NavBar from "./components/NavBar";
-import "./App.css";
+
 function App() {
   return (
     <>
@@ -12,6 +12,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<div></div>}></Route>
+        <Route path="/dining" element={<h1>test 3</h1>}></Route>
       </Routes>
     </>
   );
