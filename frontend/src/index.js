@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename="welcomeOmakase">
+    <BrowserRouter basename="/welcomeOmakase">
       <App />
     </BrowserRouter>
   </React.StrictMode>,

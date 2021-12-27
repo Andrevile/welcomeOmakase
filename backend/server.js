@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const path = require("path");
+const mongoose = require("mongoose");
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,15 @@ app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_MODE !== "DEV") {
   app.use(express.static(path.join(__dirname, process.env.FRONTEND_DIR)));
 }
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 // const introduceRouter = require("./routes/introduce");
 // const diningRouter = require("./routes/dining");
 
