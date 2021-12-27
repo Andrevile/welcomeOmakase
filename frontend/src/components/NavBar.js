@@ -8,7 +8,7 @@ const NavBar = () => {
         <div className="menu-group">
           <div className="title">
             <Link
-              to="/why"
+              to="/"
               style={{
                 color: "black",
                 textDecoration: "none",

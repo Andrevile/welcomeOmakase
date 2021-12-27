@@ -2,8 +2,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import GlobalStyles from "./components/GlobalStyles";
 import NavBar from "./components/NavBar";
+import Main from "./components/Main";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <NavBar></NavBar>
 
       <Routes>
-        <Route path="/" element={<div></div>}></Route>
+        <Route path="/" element={<Main></Main>}></Route>
         <Route path="/dining" element={<h1>test 3</h1>}></Route>
       </Routes>
     </>
