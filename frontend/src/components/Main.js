@@ -10,6 +10,7 @@ const Main = () => {
 
       <div className="Youtuber">
         <div className="tiles">
+          <div className="tiles-title">LIST</div>
           <ul>
             <li>유튜버1</li>
             <li>유튜버2</li>
