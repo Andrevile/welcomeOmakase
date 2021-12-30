@@ -129,3 +129,29 @@
   border-right: none;
   /* box-sizing: border-box; */
 }
+
+/* 컨텐츠 페이지 */
+
+.dining-container {
+  background-color: wheat;
+  position: relative;
+  height: auto;
+  /* overflow: hidden; */
+}
+.contents-container {
+  max-width: 1200px;
+  padding: 30px;
+  position: relative;
+  /* height: 800px; */
+  margin: 0 auto;
+}
+
+.contents-container .map-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NaverMap {
+  border: 3px solid var(--border-color);
+}

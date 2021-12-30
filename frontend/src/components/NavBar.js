@@ -31,8 +31,8 @@ const NavBar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="link">
-                #
+              <Link to="/share" className="link">
+                공유
               </Link>
             </li>
           </ul>
