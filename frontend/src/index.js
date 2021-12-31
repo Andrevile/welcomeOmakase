@@ -4,10 +4,17 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { RenderAfterNavermapsLoaded } from "react-naver-maps";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename="/welcomeOmakase">
-      <App />
+      <RenderAfterNavermapsLoaded
+        ncpClientId={process.env.REACT_APP_MAP_KEY} // 자신의 네이버 계정에서 발급받은 Client ID
+        error={<p>Maps Load Error</p>}
+        loading={<p>Maps Loading...</p>}
+      >
+        <App />
+      </RenderAfterNavermapsLoaded>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

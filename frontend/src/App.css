@@ -129,3 +129,54 @@
   border-right: none;
   /* box-sizing: border-box; */
 }
+
+/* 컨텐츠 페이지 */
+
+.dining-container {
+  background-color: black;
+  position: relative;
+  height: auto;
+  /* width: 90%; */
+  margin: 0 auto;
+  border: 2px solid black;
+  /* overflow: hidden; */
+}
+.contents-container {
+  max-width: 1200px;
+  padding: 5px 30px;
+  position: relative;
+  /* height: 800px; */
+  margin: 0 auto;
+}
+
+.contents-container .map-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NaverMap {
+  border: 3px double #0c68e0;
+  border-radius: 1%;
+}
+
+/* 기본 소개 페이지 */
+
+.default-intro-container {
+  max-width: 1200px;
+  height: 800px;
+  background-color: green;
+  position: relative;
+}
+
+.default-intro-container .default-intro-title {
+  padding: 5px;
+  width: 85%;
+  background-color: wheat;
+  margin: 0 auto;
+  height: 100px;
+}
+
+.default-intro-container .default-intro-title h1 {
+  text-align: center;
+}
