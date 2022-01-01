@@ -7,3 +7,8 @@
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white">
 </p>
 
+
+## :snowflake: 이랏샤이 오마카세란?
+
+유튜버들이 추천하는 음식점들을 종합해서 네이버 지도에 표시해주고,
+원하는 음식점을 필터링하여, 정보를 제공하는 서비스입니다.
