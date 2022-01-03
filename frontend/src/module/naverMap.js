@@ -26,7 +26,7 @@ export const contentString = (data) => {
   return arr;
 };
 
-export const callMap = (placeData) => {
+export const callMap = async (placeData) => {
   let map = null;
   const initMap = () => {
     const mapOptions = {
