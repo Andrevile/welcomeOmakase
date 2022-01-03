@@ -12,12 +12,13 @@
 /* NavBar */
 .section {
   position: relative;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid black;
   /* background-color: ; */
 }
 
 .section .inner {
-  max-width: 1200px;
+  /* max-width: 1200px; */
+  padding: 10px;
   margin: 0 auto;
   box-sizing: border-box;
   position: relative;
@@ -31,9 +32,11 @@
   align-items: center;
   height: 100%;
 }
+.section .menu-group .title {
+  margin-right: 10px;
+}
 .section .menu-group .title p {
   display: block;
-  line-height: 0%;
   /* font-family: "Black Han Sans", sans-serif; */
 }
 
@@ -133,13 +136,18 @@
 /* 컨텐츠 페이지 */
 
 .dining-container {
-  background-color: black;
   position: relative;
   height: auto;
-  /* width: 90%; */
+  padding: 10px;
   margin: 0 auto;
-  border: 2px solid black;
+  /* border: 2px soli; */
   /* overflow: hidden; */
+}
+
+.dining-container::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 .contents-container {
   max-width: 1200px;
@@ -155,28 +163,60 @@
   justify-content: center;
 }
 
-.NaverMap {
+/* .NaverMap {
   border: 3px double #0c68e0;
   border-radius: 1%;
-}
+} */
 
 /* 기본 소개 페이지 */
 
 .default-intro-container {
-  max-width: 1200px;
+  margin-top: 10px;
+  /* max-width: 1200px; */
   height: 800px;
-  background-color: green;
-  position: relative;
+  /* border: 1px solid var(--border-color); */
+  /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); */
+  /* position: absolute; */
 }
 
-.default-intro-container .default-intro-title {
+.default-intro-container .default-intro-box {
+  /* width: 100%; */
+  margin: auto;
+  /* box-sizing: border-box; */
+  padding: 10px;
+}
+
+.default-intro-container .default-intro-box .default-intro-title {
   padding: 5px;
-  width: 85%;
+  /* width: 100%; */
   background-color: wheat;
   margin: 0 auto;
   height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.default-intro-container .default-intro-title h1 {
-  text-align: center;
+.default-intro-container .default-intro-box .default-intro-title h1 {
+  font-family: var(--font-family);
+  font-size: 40px;
+}
+
+#map {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  float: right;
+  box-sizing: border-box;
+}
+
+#filtering-place {
+  float: left;
+  width: 28%;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  height: 80vh;
+  box-sizing: border-box;
+  margin-right: 5px;
 }
