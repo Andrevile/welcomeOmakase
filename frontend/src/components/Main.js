@@ -16,21 +16,21 @@ const Main = () => {
           <div className="tiles-title">LIST</div>
           <ul>
             <li>
-              <p className="tiles-profile-title">먹적</p>
               <div className="tiles-profile-picture">
                 <img src="img/youtuber/먹적.jpeg"></img>
+                <p className="tiles-profile-title">먹적</p>
               </div>
             </li>
             <li>
-              <p className="tiles-profile-title">더들리</p>
               <div className="tiles-profile-picture">
                 <img src="img/youtuber/더들리.jpeg"></img>
+                <p className="tiles-profile-title">더들리</p>
               </div>
             </li>
             <li>
-              <p className="tiles-profile-title">마리아주</p>
               <div className="tiles-profile-picture">
                 <img src="img/youtuber/마리아주.jpeg"></img>
+                <p className="tiles-profile-title">마리아주</p>
               </div>
             </li>
           </ul>

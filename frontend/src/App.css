@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gamja+Flower&display=swap");
 :root {
   --text-color: black;
   --font-size: 16px;
   --font-family: "Black Han Sans", sans-serif;
   --border-color: #e5e5e5;
+  --font-normal: "Gamja Flower", cursive;
 }
 
 /* 컴포넌트 스타일림 */
@@ -172,19 +172,15 @@
 .Youtuber .tiles ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* max-width: 800px; */
-  /* position: relative; */
   height: 500px;
   list-style: none;
   padding: 0 0;
   margin-top: 0;
 }
 .Youtuber .tiles ul li {
+  font-family: var(--font-normal);
   text-align: center;
   background-color: white;
-  /* border-right: 1px solid #e5e5e5;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5; */
   border: 1px solid var(--border-color);
   border-radius: 10%;
   box-sizing: border-box;
@@ -192,10 +188,14 @@
   position: relative;
   margin: 5px;
   cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .Youtuber .tiles ul li img {
   border-radius: 50%;
+  padding: 30px;
+  width: 40%;
 }
 
 .Youtuber .tiles ul li:hover {
