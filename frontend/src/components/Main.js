@@ -5,16 +5,34 @@ const Main = () => {
   return (
     <>
       <div className="Jumbo">
-        <div className="Jumbo-description"></div>
+        <div className="Jumbo-description">
+          <h1>이랏샤이 おまかせ</h1>
+          <p>먹을거에 목숨 건 유튜버들 추천 리스트...</p>
+        </div>
       </div>
 
       <div className="Youtuber">
         <div className="tiles">
           <div className="tiles-title">LIST</div>
           <ul>
-            <li>유튜버1</li>
-            <li>유튜버2</li>
-            <li>유튜버3</li>
+            <li>
+              <p className="tiles-profile-title">먹적</p>
+              <div className="tiles-profile-picture">
+                <img src="img/youtuber/먹적.jpeg"></img>
+              </div>
+            </li>
+            <li>
+              <p className="tiles-profile-title">더들리</p>
+              <div className="tiles-profile-picture">
+                <img src="img/youtuber/더들리.jpeg"></img>
+              </div>
+            </li>
+            <li>
+              <p className="tiles-profile-title">마리아주</p>
+              <div className="tiles-profile-picture">
+                <img src="img/youtuber/마리아주.jpeg"></img>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

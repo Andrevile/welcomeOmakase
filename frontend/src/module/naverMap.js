@@ -1,4 +1,5 @@
 export const contentString = (data) => {
+  //네이버 infoWindow 스타일 문자열 반환.
   const arr = [
     `<div class="iw_inner"style=" padding:0; font-size: 10px; width:200px; height: 100px;  box-sizing:border-box;">
     <div style="padding: 3px 3px;">
