@@ -2,8 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const path = require("path");
-const mongoose = require("mongoose");
 
+const connect = require("./schemas");
+const usersRouter = require("./routes/users");
+const placesRouter = require("./routes/places");
 dotenv.config();
 const app = express();
 
@@ -13,22 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_MODE !== "DEV") {
+  //배포시 설정할 static 경로
   app.use(express.static(path.join(__dirname, process.env.FRONTEND_DIR)));
 }
 
-let db;
-mongoose
-  .connect(process.env.MONGO_URI, { dbName: "Omakase" })
-  .then(() => {
-    console.log("Connected to MongoDB");
-    db = mongoose.connection;
-    app.listen(app.get("port"), () => {
-      console.log("listening on port", app.get("port"));
-    });
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+connect(); //DB 연결
+
+// 라우터 등록
+app.use("/api", placesRouter); //dining에서 데이터 불러올 때,
 
 // 배포 테스트용 코드
 // app.get("/", (req, res) => {
@@ -42,34 +36,21 @@ mongoose
 // });
 
 // Dining 데이터 필터링 api
-app.route("/api/filtering").get(async (req, res) => {
-  console.log(req.query);
-  // let target = await db.getCollection("Place");
-  // target.findOne({ youtuber: "먹적" }, (err, result) => {
-  //   console.log(result);
-  // });
-  // const dbData = await db.collection
-  console.log("requsest here");
-  const Fdata = [
-    {
-      youtuber: "",
-      place_name: "기본",
-      place_position: "서울시/1",
-      place_imgPath: "img/Jumbo-picture3.jpg",
-      place_yotubeURL: "",
-      lat: 37.554822,
-      long: 126.970833,
-    },
-    {
-      youtuber: "",
-      place_name: "서울역",
-      place_position: "서울시/2",
-      place_imgPath: "",
-      place_yotubeURL: "",
-      lat: 37.5536387,
-      long: 126.9669926,
-    },
-  ];
-  // console.log(target);
-  res.json({ data: Fdata });
+
+// app.get("/places", (req, res) => {
+//   console.log("her");
+// });
+
+//404 에러처리 미들웨어 = 일치하는 라우터가 없을 때,
+app.use((req, res, next) => {
+  res.status(400).send("Not Found");
+});
+// 에러처리 미들웨어
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500), send(err.message);
+});
+
+app.listen(app.get("port"), () => {
+  console.log("listening on port", app.get("port"));
 });
