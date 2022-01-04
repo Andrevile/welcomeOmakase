@@ -111,15 +111,18 @@
   margin-top: 0;
 }
 .Youtuber .tiles ul li {
-  /* width: 33%; */
   text-align: center;
   background-color: white;
-  border-right: 1px solid #e5e5e5;
+  /* border-right: 1px solid #e5e5e5;
   border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5; */
+  border: 1px solid var(--border-color);
   border-radius: 10%;
   box-sizing: border-box;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   position: relative;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .Youtuber .tiles ul li:hover {
@@ -189,7 +192,9 @@
 .default-intro-container .default-intro-box .default-intro-title {
   padding: 5px;
   /* width: 100%; */
-  background-color: wheat;
+  background-color: rgb(250, 191, 82);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
   margin: 0 auto;
   height: 100px;
   display: flex;

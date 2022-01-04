@@ -27,6 +27,7 @@ export const contentString = (data) => {
 };
 
 export const callMap = async (placeData) => {
+  console.log(placeData);
   let map = null;
   const initMap = () => {
     const mapOptions = {
@@ -37,7 +38,7 @@ export const callMap = async (placeData) => {
 
     placeData.map((place) => {
       const makeMarker = new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(place.lat, place.long),
+        position: new window.naver.maps.LatLng(place.latitude, place.longitude),
         map: map,
         animation: window.naver.maps.Animation.DROP,
       });
