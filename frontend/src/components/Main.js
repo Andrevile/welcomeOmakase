@@ -1,7 +1,8 @@
-import axios from "axios";
-import { React, useEffect } from "react";
-
+import { React, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { clickYoutuberProfile } from "../module/filteringPlace";
 const Main = () => {
+  const profileList = ["먹적", "더들리", "마리아주"];
   return (
     <>
       <div className="Jumbo">
@@ -15,24 +16,26 @@ const Main = () => {
         <div className="tiles">
           <div className="tiles-title">LIST</div>
           <ul>
-            <li>
-              <div className="tiles-profile-picture">
-                <img src="img/youtuber/먹적.jpeg"></img>
-                <p className="tiles-profile-title">먹적</p>
-              </div>
-            </li>
-            <li>
-              <div className="tiles-profile-picture">
-                <img src="img/youtuber/더들리.jpeg"></img>
-                <p className="tiles-profile-title">더들리</p>
-              </div>
-            </li>
-            <li>
-              <div className="tiles-profile-picture">
-                <img src="img/youtuber/마리아주.jpeg"></img>
-                <p className="tiles-profile-title">마리아주</p>
-              </div>
-            </li>
+            {profileList.map((profile, idx) => {
+              return (
+                <li
+                  key={idx}
+                  onClick={() => {
+                    clickYoutuberProfile(profile);
+                  }}
+                >
+                  {/* <Link to="/dining" className="tiles-card"> */}
+                  <div className="tiles-profile-picture">
+                    <img
+                      src={"img/youtuber/" + profile + ".jpeg"}
+                      alt={profile}
+                    ></img>
+                    <p className="tiles-profile-title">{profile}</p>
+                  </div>
+                  {/* </Link> */}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

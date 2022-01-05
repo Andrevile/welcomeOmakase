@@ -29,7 +29,6 @@ export const contentString = (data) => {
 
 export const callMap = async (placeData) => {
   console.log(placeData);
-  let map = null;
   const initMap = () => {
     const mapOptions = {
       center: new window.naver.maps.LatLng(37.554722, 126.970833),
