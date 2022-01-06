@@ -27,49 +27,111 @@ export const contentString = (data) => {
   return arr;
 };
 
-export const callMap = async (placeData) => {
-  console.log(placeData);
-  const initMap = () => {
-    const mapOptions = {
-      center: new window.naver.maps.LatLng(37.554722, 126.970833),
-      zoom: 13,
-    };
-    const map = new window.naver.maps.Map("map", mapOptions);
+export const callMap = async (mode, placeData) => {
+  //케이스 고려사항
+  //1. 처음 렌더링 되면 모든 데이터 마커 표시
+  //2. 필터링 폼 제출시, 해당 데이터만 마커 표시
+  //3. 이미 필터링된 마커 표시 상황에서 다른 필터링폼을 적용할 때 즉각반영
+  //4. 언마운트나 초기화 적용시 모든 마커 표시
+  try {
+    let markerList = [];
+    let map;
+    let placeMap = new Map(); //객체와 Map의 다른점은 객체는 객체키를 사용할 수 없지만 Map은 객체키를 사용가능함.
 
-    placeData.map((place) => {
-      const makeMarker = new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(place.latitude, place.longitude),
-        map: map,
-        animation: window.naver.maps.Animation.DROP,
+    if (mode === "initialize") {
+      //케이스 1번
+      const mapOptions = {
+        center: new window.naver.maps.LatLng(37.554722, 126.970833),
+        zoom: 13,
+      };
+      map = await new window.naver.maps.Map("map", mapOptions);
+      placeData.map((place) => {
+        //필터링된 데이터를 Map에 초기화
+        placeMap.set(place, map);
       });
-      const infoWindow = new window.naver.maps.InfoWindow({
-        content: contentString(place)[0],
-        maxWidth: 500,
-        backgroundColor: "white",
-        borderColor: "#B0E0E6",
-        borderWidth: 1,
-        disableAnchor: true,
-        // anchorSize: new window.naver.maps.Size(10, 20),
-        // anchorSkew: false,
-        // anchorColor: "red",
-        // anchor: 3,
-        pixelOffset: new window.naver.maps.Point(150, -50),
+      markerDrawing(mode, map, placeData, placeMap, markerList);
+    } else if (mode === "filtering") {
+      //케이스 2,3번
+      placeData.map((place) => {
+        //필터링된 데이터를 Map에 초기화
+        placeMap.set(place, map);
       });
-      window.naver.maps.Event.addListener(
-        makeMarker,
-        "mouseover",
-        function (e) {
-          if (!infoWindow.getMap()) {
-            infoWindow.open(map, makeMarker);
+      markerDrawing(mode, map, placeData, markerList);
+    }
+    console.log(placeMap);
+    // markerList[0].makeMarker.marker.setMap(null);
+    console.log(markerList[0].makeMarker.map);
+  } catch (err) {}
+};
+
+const markerDrawing = async (mode, map, placeData, placeMap, markerList) => {
+  try {
+    // let markerList = [];
+    switch (mode) {
+      case "initialize": //
+        placeData.map((place) => {
+          const makeMarker = new window.naver.maps.Marker({
+            position: new window.naver.maps.LatLng(
+              place.latitude,
+              place.longitude
+            ),
+            map: map,
+            animation: window.naver.maps.Animation.DROP,
+          });
+          markerList.push({
+            //나중에 필터링된 placeData와 marker들과 비교하기 위한 객체 삽입
+            place,
+            makeMarker,
+          });
+          const infoWindow = new window.naver.maps.InfoWindow({
+            content: contentString(place)[0],
+            maxWidth: 500,
+            backgroundColor: "white",
+            borderColor: "#B0E0E6",
+            borderWidth: 1,
+            disableAnchor: true,
+            pixelOffset: new window.naver.maps.Point(150, -50),
+          });
+          window.naver.maps.Event.addListener(
+            makeMarker,
+            "mouseover",
+            function (e) {
+              if (!infoWindow.getMap()) {
+                infoWindow.open(map, makeMarker);
+              }
+            }
+          );
+          window.naver.maps.Event.addListener(
+            makeMarker,
+            "mouseout",
+            function (e) {
+              if (infoWindow.getMap()) {
+                infoWindow.close();
+              }
+            }
+          );
+        });
+        break;
+      case "filtering":
+        markerList.map((each) => {
+          if (placeMap.get(each.place) === undefined) {
+            //지금 마커가 Map에 없으면
+            each.marker.setMap(null);
+          } else {
+            //지금 마커가 Map에 존재는 하는데,
+            if (each.makeMarker.marker.map === null) {
+              //지금 마커가 지도에 연결 안되있는경우
+              each.makeMarker.marker.setMap(map);
+            }
           }
-        }
-      );
-      window.naver.maps.Event.addListener(makeMarker, "mouseout", function (e) {
-        if (infoWindow.getMap()) {
-          infoWindow.close();
-        }
-      });
-    });
-  };
-  initMap();
+        });
+        break;
+
+      // console.log(markerList[0].marker;
+
+      // case "filtering":
+    }
+  } catch (err) {
+    console.log("makerStatus:", err);
+  }
 };

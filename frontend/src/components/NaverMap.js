@@ -12,7 +12,7 @@ const NaverMap = ({ data }) => {
     console.log(res);
     res = await res.data;
     console.log(res);
-    await callMap(res);
+    await callMap("initialize", res);
     //네이버 API 불러올 script 태그 생성후 src 삽입
 
     return () => {
