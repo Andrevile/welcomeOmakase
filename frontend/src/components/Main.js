@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { clickYoutuberProfile } from "../module/filteringPlace";
-const Main = () => {
+import { Axios } from "../module/axiosmodule";
+const Main = ({ mode, placeData, set_default, data_filter }) => {
   const profileList = ["먹적", "더들리", "마리아주"];
   return (
     <>
@@ -18,22 +19,21 @@ const Main = () => {
           <ul>
             {profileList.map((profile, idx) => {
               return (
-                <li
+                <Link
                   key={idx}
-                  onClick={() => {
-                    clickYoutuberProfile(profile);
-                  }}
+                  to={"/dining/" + profile}
+                  className="tiles-card"
                 >
-                  {/* <Link to="/dining" className="tiles-card"> */}
-                  <div className="tiles-profile-picture">
-                    <img
-                      src={"img/youtuber/" + profile + ".jpeg"}
-                      alt={profile}
-                    ></img>
-                    <p className="tiles-profile-title">{profile}</p>
-                  </div>
-                  {/* </Link> */}
-                </li>
+                  <li>
+                    <div className="tiles-profile-picture">
+                      <img
+                        src={"img/youtuber/" + profile + ".jpeg"}
+                        alt={profile}
+                      ></img>
+                      <p className="tiles-profile-title">{profile}</p>
+                    </div>
+                  </li>
+                </Link>
               );
             })}
           </ul>

@@ -2,18 +2,18 @@ import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Main from "./components/Main";
+import NavBarContainer from "./containers/NavBarContainer";
+import MainContainer from "./containers/MainContainer";
 import Dining from "./components/Dining";
 
 function App() {
   return (
     <>
-      <NavBar></NavBar>
+      <NavBarContainer></NavBarContainer>
 
       <Routes>
-        <Route path="/" element={<Main></Main>}></Route>
-        <Route path="/dining" element={<Dining></Dining>}></Route>
+        <Route path="/" element={<MainContainer></MainContainer>}></Route>
+        <Route path="/dining/:name" element={<Dining></Dining>}></Route>
       </Routes>
     </>
   );

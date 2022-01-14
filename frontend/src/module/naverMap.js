@@ -35,7 +35,7 @@ export const callMap = async (mode, placeData) => {
   //4. 언마운트나 초기화 적용시 모든 마커 표시
   try {
     let markerList = [];
-    let map;
+    let N_map;
     let placeMap = new Map(); //객체와 Map의 다른점은 객체는 객체키를 사용할 수 없지만 Map은 객체키를 사용가능함.
 
     if (mode === "initialize") {
@@ -44,27 +44,31 @@ export const callMap = async (mode, placeData) => {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
         zoom: 13,
       };
-      map = await new window.naver.maps.Map("map", mapOptions);
+      N_map = await new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {
         //필터링된 데이터를 Map에 초기화
-        placeMap.set(place, map);
+        placeMap.set(place, N_map);
       });
-      markerDrawing(mode, map, placeData, placeMap, markerList);
+      markerDrawing(mode, N_map, placeData, placeMap, markerList);
     } else if (mode === "filtering") {
       //케이스 2,3번
       placeData.map((place) => {
         //필터링된 데이터를 Map에 초기화
-        placeMap.set(place, map);
+        placeMap.set(place, N_map);
       });
-      markerDrawing(mode, map, placeData, markerList);
+      N_map = window.naver.maps;
+      console.log(N_map);
+      markerDrawing(mode, N_map, placeData, markerList);
+    } else if (mode === "allMarker") {
+      //케이스 4번
     }
-    console.log(placeMap);
+    // console.log(placeMap);
     // markerList[0].makeMarker.marker.setMap(null);
-    console.log(markerList[0].makeMarker.map);
+    // console.log(markerList[0].makeMarker.map);
   } catch (err) {}
 };
 
-const markerDrawing = async (mode, map, placeData, placeMap, markerList) => {
+const markerDrawing = async (mode, N_map, placeData, placeMap, markerList) => {
   try {
     // let markerList = [];
     switch (mode) {
@@ -75,7 +79,7 @@ const markerDrawing = async (mode, map, placeData, placeMap, markerList) => {
               place.latitude,
               place.longitude
             ),
-            map: map,
+            map: N_map,
             animation: window.naver.maps.Animation.DROP,
           });
           markerList.push({
@@ -97,7 +101,7 @@ const markerDrawing = async (mode, map, placeData, placeMap, markerList) => {
             "mouseover",
             function (e) {
               if (!infoWindow.getMap()) {
-                infoWindow.open(map, makeMarker);
+                infoWindow.open(N_map, makeMarker);
               }
             }
           );
@@ -121,7 +125,7 @@ const markerDrawing = async (mode, map, placeData, placeMap, markerList) => {
             //지금 마커가 Map에 존재는 하는데,
             if (each.makeMarker.marker.map === null) {
               //지금 마커가 지도에 연결 안되있는경우
-              each.makeMarker.marker.setMap(map);
+              each.makeMarker.marker.setMap(N_map);
             }
           }
         });

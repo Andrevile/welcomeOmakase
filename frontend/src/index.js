@@ -5,6 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { RenderAfterNavermapsLoaded } from "react-naver-maps";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./module/redux";
+const store = createStore(rootReducer);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -13,7 +17,9 @@ ReactDOM.render(
         error={<p>Maps Load Error</p>}
         loading={<p>Maps Loading...</p>}
       >
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </RenderAfterNavermapsLoaded>
     </BrowserRouter>
   </React.StrictMode>,

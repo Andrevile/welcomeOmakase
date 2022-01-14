@@ -177,6 +177,11 @@
   padding: 0 0;
   margin-top: 0;
 }
+.tiles-card {
+  text-decoration: none;
+  color: black;
+}
+
 .Youtuber .tiles ul li {
   font-family: var(--font-normal);
   text-align: center;
@@ -190,6 +195,7 @@
   cursor: pointer;
   font-size: 30px;
   font-weight: bold;
+  height: 500px;
 }
 
 .Youtuber .tiles ul li img {
