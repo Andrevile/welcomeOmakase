@@ -27,7 +27,7 @@ const NavBar = ({ set_default, data_filtering }) => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/dining" className="link">
+              <Link to="/dining?youtuber=all" className="link">
                 맛집
               </Link>
             </li>

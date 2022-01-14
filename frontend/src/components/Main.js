@@ -21,7 +21,7 @@ const Main = ({ mode, placeData, set_default, data_filter }) => {
               return (
                 <Link
                   key={idx}
-                  to={"/dining/" + profile}
+                  to={"/dining?youtuber=" + encodeURI(profile)}
                   className="tiles-card"
                 >
                   <li>

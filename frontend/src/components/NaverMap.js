@@ -1,29 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { callMap } from "../module/naverMap";
 import { Axios } from "../module/axiosmodule";
-const NaverMap = ({ mode, placeData, set_default, data_filter }) => {
-  useEffect(async () => {
-    const script = document.createElement("script");
-    script.src =
-      "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=" +
-      process.env.REACT_APP_MAP_KEY;
-    script.async = true;
-    // console.log(placeData);
-    console.log(mode);
-    if (mode === "initailize") {
-      let res = await Axios("/api/places", "GET", {});
-      res = await res.data;
-      // console.log(res);
-      set_default(res);
-      // console.log("placeData", placeData);
-      callMap("initialize", res);
+
+const NaverMap = ({ location, mode, placeData, set_default, data_filter }) => {
+  const [MarkerList, setMarkerList] = useState([]);
+  const query = decodeURI(location.search);
+  async function fetchData(mode, query) {
+    let res = await Axios("/api/places" + query, "GET", {});
+    res = await res.data;
+    set_default(res);
+    if (mode === "initialize") {
+      callMap("initialize", res, MarkerList, setMarkerList);
     } else if (mode === "filtering") {
-      callMap("filtering", placeData);
+      callMap("filtering", res, MarkerList, setMarkerList);
     }
-    //네이버 API 불러올 script 태그 생성후 src 삽입
-    return () => {
-      document.body.removeChild(script);
-    };
+  }
+  useEffect(() => {
+    fetchData("initialize", ""); //마커 모두 등록
+    if (query && query !== "?youtuber=all") {
+      fetchData("filtering", query);
+    }
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -31,7 +28,7 @@ const NaverMap = ({ mode, placeData, set_default, data_filter }) => {
       console.log(placeData);
       // callMap("initialize", placeData);
     } else if (mode === "filtering") {
-      callMap("filtering", placeData);
+      // callMap("filtering", placeData);
     }
   }, [placeData]);
   return (

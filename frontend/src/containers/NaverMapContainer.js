@@ -3,20 +3,17 @@ import NaverMap from "../components/NaverMap";
 import { connect } from "react-redux";
 import { setdefault, datafilter } from "../module/redux/filtering";
 import { Axios } from "../module/axiosmodule";
-const NaverMapContainer = ({ mode, placeData, set_default, data_filter }) => {
-  useEffect(async () => {
-    if (mode === "initailize") {
-      //   let res = await Axios("/api/places", "GET", {});
-      //   res = await res.data;
-      //   console.log(res);
-      //   set_default(res);
-      console.log("placeData", placeData);
-    } else if (mode === "filtering") {
-    }
-  }, []);
+const NaverMapContainer = ({
+  location,
+  mode,
+  placeData,
+  set_default,
+  data_filter,
+}) => {
   return (
     <>
       <NaverMap
+        location={location}
         mode={mode}
         placeData={placeData}
         set_default={set_default}

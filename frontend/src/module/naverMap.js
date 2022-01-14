@@ -27,14 +27,13 @@ export const contentString = (data) => {
   return arr;
 };
 
-export const callMap = async (mode, placeData) => {
+export const callMap = async (mode, placeData, markerList, setMarkerList) => {
   //케이스 고려사항
   //1. 처음 렌더링 되면 모든 데이터 마커 표시
   //2. 필터링 폼 제출시, 해당 데이터만 마커 표시
   //3. 이미 필터링된 마커 표시 상황에서 다른 필터링폼을 적용할 때 즉각반영
   //4. 언마운트나 초기화 적용시 모든 마커 표시
   try {
-    let markerList = [];
     let N_map;
     let placeMap = new Map(); //객체와 Map의 다른점은 객체는 객체키를 사용할 수 없지만 Map은 객체키를 사용가능함.
 
@@ -43,13 +42,21 @@ export const callMap = async (mode, placeData) => {
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
         zoom: 13,
+        scrollWheel: true,
       };
-      N_map = await new window.naver.maps.Map("map", mapOptions);
+      N_map = new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {
         //필터링된 데이터를 Map에 초기화
         placeMap.set(place, N_map);
       });
-      markerDrawing(mode, N_map, placeData, placeMap, markerList);
+      markerDrawing(
+        mode,
+        N_map,
+        placeData,
+        placeMap,
+        markerList,
+        setMarkerList
+      );
     } else if (mode === "filtering") {
       //케이스 2,3번
       placeData.map((place) => {
@@ -58,7 +65,7 @@ export const callMap = async (mode, placeData) => {
       });
       N_map = window.naver.maps;
       console.log(N_map);
-      markerDrawing(mode, N_map, placeData, markerList);
+      markerDrawing(mode, N_map, placeData, markerList, setMarkerList);
     } else if (mode === "allMarker") {
       //케이스 4번
     }
@@ -68,9 +75,16 @@ export const callMap = async (mode, placeData) => {
   } catch (err) {}
 };
 
-const markerDrawing = async (mode, N_map, placeData, placeMap, markerList) => {
+const markerDrawing = async (
+  mode,
+  N_map,
+  placeData,
+  placeMap,
+  markerList,
+  setMarkerList
+) => {
   try {
-    // let markerList = [];
+    let temp = [];
     switch (mode) {
       case "initialize": //
         placeData.map((place) => {
@@ -82,11 +96,12 @@ const markerDrawing = async (mode, N_map, placeData, placeMap, markerList) => {
             map: N_map,
             animation: window.naver.maps.Animation.DROP,
           });
-          markerList.push({
+          temp.push({
             //나중에 필터링된 placeData와 marker들과 비교하기 위한 객체 삽입
             place,
             makeMarker,
           });
+          setMarkerList(temp);
           const infoWindow = new window.naver.maps.InfoWindow({
             content: contentString(place)[0],
             maxWidth: 500,
@@ -117,6 +132,7 @@ const markerDrawing = async (mode, N_map, placeData, placeMap, markerList) => {
         });
         break;
       case "filtering":
+        console.log(markerList);
         markerList.map((each) => {
           if (placeMap.get(each.place) === undefined) {
             //지금 마커가 Map에 없으면

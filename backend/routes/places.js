@@ -9,9 +9,14 @@ router.get("/places", async (req, res, next) => {
   console.log(req.query);
   const query = req.query;
   try {
+    let places;
     //데이터 베이스 안에 있는 places collection의 데이터를 모두 가져옴
+    if (query.youtuber === "all" || query === {}) {
+      places = await Place.find();
+    } else {
+      places = await Place.find(query);
+    }
 
-    const places = await Place.find(query);
     console.log("here", places);
     res.json({ data: places });
   } catch (err) {

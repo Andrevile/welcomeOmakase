@@ -12,15 +12,15 @@ const store = createStore(rootReducer);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <RenderAfterNavermapsLoaded
+      {/* <RenderAfterNavermapsLoaded
         ncpClientId={process.env.REACT_APP_MAP_KEY} // 자신의 네이버 계정에서 발급받은 Client ID
         error={<p>Maps Load Error</p>}
         loading={<p>Maps Loading...</p>}
-      >
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </RenderAfterNavermapsLoaded>
+      > */}
+      <Provider store={store}>
+        <App />
+      </Provider>
+      {/* </RenderAfterNavermapsLoaded> */}
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
