@@ -221,8 +221,9 @@
 }
 
 .tiles-profile-intro {
-  margin-top: 10px;
+  margin-top: 3px;
   padding: 20px;
+  font-size: 20px;
 }
 /* 컨텐츠 페이지 */
 
@@ -313,4 +314,45 @@
   height: 8vh;
   box-sizing: border-box;
   margin-right: 5px;
+}
+
+/* 마커 */
+.cs_mapbridge {
+  width: 120px;
+  height: 36px;
+  background-color: #0475f4;
+  border: 1px solid black;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 23px;
+  box-sizing: border-box;
+  padding: 5px;
+  position: absolute;
+}
+
+.cs_mapbridge:hover {
+  z-index: 100;
+}
+
+.cs_mapbridge i {
+  background-color: white;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  position: absolute;
+  /* top: px; */
+}
+.map_marker {
+}
+.shd {
+  display: block;
+  color: white;
+  font-family: var(--font-family);
+  position: absolute;
+  left: 35px;
+  top: 10px;
+  font-size: 16px;
 }

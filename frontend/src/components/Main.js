@@ -39,7 +39,9 @@ const Main = ({ mode, placeData, set_default, data_filter }) => {
                         alt={profile}
                       ></img>
                       <p className="tiles-profile-title">{profile.name}</p>
-                      <p className="tiles-profile-intro">{profile.intro}</p>
+                      <p className="tiles-profile-intro">
+                        {"(" + profile.intro + ")"}
+                      </p>
                       <p style={{ marginTop: "10px" }}>
                         구독자: <span>{profile.sub}</span>
                       </p>

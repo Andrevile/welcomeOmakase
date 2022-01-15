@@ -10,11 +10,20 @@ const Dining = () => {
   const [initialize, changeInitialize] = useState(true);
   const [currentPlace, setPlace] = useState();
   const movetoIntro = useRef(null);
+  useEffect(() => {}, []);
 
   useEffect(() => {
+    let Timer;
     if (currentPlace) {
-      movetoIntro.current.scrollIntoView({ behavior: "smooth" });
+      Timer = setTimeout(() => {
+        movetoIntro.current.scrollIntoView({
+          behavior: "smooth",
+        });
+      }, 100);
     }
+    return () => {
+      Timer = null;
+    };
   }, [currentPlace]);
   return (
     <>
@@ -24,8 +33,9 @@ const Dining = () => {
           <NaverMap location={location} setPlace={setPlace}></NaverMap>
         </div>
       </div>
-      {!currentPlace ? null : <IntroInfo ref={movetoIntro}></IntroInfo>}
-      {/* <DefaultIntro></DefaultIntro> */}
+      <div ref={movetoIntro}></div>
+      {!currentPlace ? null : <IntroInfo></IntroInfo>}
+      {/* <IntroInfo></IntroInfo> */}
     </>
   );
 };

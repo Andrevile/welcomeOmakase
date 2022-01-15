@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-const IntroInfo = forwardRef((props, ref) => {
+const IntroInfo = (props) => {
   return (
-    <div ref={ref} className="default-intro-container">
+    <div className="default-intro-container">
       <div className="default-intro-box">
         <div className="default-intro-title">
           <h1>DEFAULT PAGE</h1>
@@ -10,6 +10,6 @@ const IntroInfo = forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
 export default IntroInfo;

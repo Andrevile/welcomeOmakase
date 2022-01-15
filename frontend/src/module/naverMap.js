@@ -37,7 +37,6 @@ export const callMap = async (mode, placeData, setPlace) => {
     let N_map;
     // let placeMap = new Map(); //객체와 Map의 다른점은 객체는 객체키를 사용할 수 없지만 Map은 객체키를 사용가능함.
     if (mode === "initialize") {
-      console.log(window.naver.maps.Map.__instances);
       if (window.naver.maps.Map.__instances.length !== 0) {
         window.naver.maps.Map.__instances.pop(); //렌더링 할 때마다 네이버 지도 객체가 생겨서 쌓이는 걸 방지
       }
@@ -54,38 +53,57 @@ export const callMap = async (mode, placeData, setPlace) => {
             place.longitude
           ),
           map: N_map,
-          animation: window.naver.maps.Animation.DROP,
+          // animation: window.naver.maps.Animation.DROP,
+          icon: {
+            content: [
+              '<div class="cs_mapbridge">',
+              '<div class="map_group _map_group">',
+              '<div class="map_marker _marker tvhp tvhp_big">',
+              '<i class="fa-solid fa-utensils"></i>',
+              `<span class="shd">${place.place_name}</span>`,
+              "</div>",
+              "</div>",
+              "</div>",
+            ].join(""),
+            size: new window.naver.maps.Size(38, 58),
+            anchor: new window.naver.maps.Point(19, 58),
+          },
         });
 
-        const infoWindow = new window.naver.maps.InfoWindow({
-          content: contentString(place)[0],
-          maxWidth: 500,
-          backgroundColor: "white",
-          borderColor: "#B0E0E6",
-          borderWidth: 1,
-          disableAnchor: true,
-          pixelOffset: new window.naver.maps.Point(150, -50),
-        });
-        window.naver.maps.Event.addListener(
-          makeMarker,
-          "mouseover",
-          function (e) {
-            if (!infoWindow.getMap()) {
-              infoWindow.open(N_map, makeMarker);
-            }
-          }
-        );
-        window.naver.maps.Event.addListener(
-          makeMarker,
-          "mouseout",
-          function (e) {
-            if (infoWindow.getMap()) {
-              infoWindow.close();
-            }
-          }
-        );
+        // const infoWindow = new window.naver.maps.InfoWindow({
+        //   content: contentString(place)[0],
+        //   maxWidth: 500,
+        //   backgroundColor: "white",
+        //   borderColor: "#B0E0E6",
+        //   borderWidth: 1,
+        //   disableAnchor: true,
+        //   pixelOffset: new window.naver.maps.Point(150, -50),
+        // });
+        // window.naver.maps.Event.addListener(
+        //   makeMarker,
+        //   "mouseover",
+        //   function (e) {
+        //     if (!infoWindow.getMap()) {
+        //       infoWindow.open(N_map, makeMarker);
+        //     }
+        //   }
+        // );
+        // window.naver.maps.Event.addListener(
+        //   makeMarker,
+        //   "mouseout",
+        //   function (e) {
+        //     if (infoWindow.getMap()) {
+        //       infoWindow.close();
+        //     }
+        //   }
+        // );
         window.naver.maps.Event.addListener(makeMarker, "click", function (e) {
-          setPlace(place);
+          setPlace({ ...place });
+          // setTimeout(() => {
+          //   movetoIntro.current.scrollIntoView({
+          //     behavior: "smooth",
+          //   });
+          // }, 100);
         });
         // console.log(place);
         // placeMap.set(place, makeMarker);
