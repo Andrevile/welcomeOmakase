@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import NaverMap from "../components/NaverMap";
 import { connect } from "react-redux";
 import { setdefault, datafilter } from "../module/redux/filtering";
-import { Axios } from "../module/axiosmodule";
+
 const NaverMapContainer = ({
   location,
   mode,

@@ -1,17 +1,17 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import NavBarContainer from "./containers/NavBarContainer";
-import MainContainer from "./containers/MainContainer";
+import NavBar from "./components/NavBar";
+import Main from "./components/Main";
 import Dining from "./components/Dining";
 
 function App() {
   return (
     <>
-      <NavBarContainer></NavBarContainer>
+      <NavBar></NavBar>
 
       <Routes>
-        <Route path="/" element={<MainContainer></MainContainer>}></Route>
+        <Route path="/" element={<Main></Main>}></Route>
         <Route path="/dining" element={<Dining></Dining>}></Route>
       </Routes>
     </>

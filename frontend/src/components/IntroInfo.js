@@ -1,4 +1,4 @@
-const DefaultIntro = () => {
+const IntroInfo = () => {
   return (
     <div className="default-intro-container">
       <div className="default-intro-box">
@@ -11,4 +11,4 @@ const DefaultIntro = () => {
   );
 };
 
-export default DefaultIntro;
+export default IntroInfo;

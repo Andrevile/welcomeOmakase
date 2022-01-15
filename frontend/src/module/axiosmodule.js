@@ -32,6 +32,8 @@ export const Axios = async (Url, Method, Data) => {
         method: Method,
       };
       break;
+    default:
+      break;
   }
   try {
     let response = await axios(option);

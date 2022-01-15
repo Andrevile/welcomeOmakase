@@ -1,8 +1,7 @@
 import React from "react";
-import { Routes, Link, NavLink } from "react-router-dom";
-import { Axios } from "../module/axiosmodule";
+import { Link } from "react-router-dom";
 
-const NavBar = ({ set_default, data_filtering }) => {
+const NavBar = () => {
   return (
     <div className="section">
       <div className="inner">
