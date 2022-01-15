@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { clickYoutuberProfile } from "../module/filteringPlace";
 import { Axios } from "../module/axiosmodule";
 const Main = ({ mode, placeData, set_default, data_filter }) => {
-  const profileList = ["먹적", "더들리", "마리아주"];
+  const profileList = [
+    { name: "먹적", intro: "스시에 대출 박는 놈", sub: "19.2만명" },
+    { name: "더들리", intro: "더들리의 하루한끼", sub: "25.8만명" },
+    {
+      name: "마리아주",
+      intro: "맛 칼럼니스트",
+      sub: "18.2만명",
+    },
+  ];
   return (
     <>
       <div className="Jumbo">
@@ -21,16 +29,20 @@ const Main = ({ mode, placeData, set_default, data_filter }) => {
               return (
                 <Link
                   key={idx}
-                  to={"/dining?youtuber=" + encodeURI(profile)}
+                  to={"/dining?youtuber=" + encodeURI(profile.name)}
                   className="tiles-card"
                 >
                   <li>
                     <div className="tiles-profile-picture">
                       <img
-                        src={"img/youtuber/" + profile + ".jpeg"}
+                        src={"img/youtuber/" + profile.name + ".jpeg"}
                         alt={profile}
                       ></img>
-                      <p className="tiles-profile-title">{profile}</p>
+                      <p className="tiles-profile-title">{profile.name}</p>
+                      <p className="tiles-profile-intro">{profile.intro}</p>
+                      <p style={{ marginTop: "10px" }}>
+                        구독자: <span>{profile.sub}</span>
+                      </p>
                     </div>
                   </li>
                 </Link>

@@ -34,6 +34,7 @@
 }
 .section .menu-group .title {
   margin-right: 10px;
+  margin-left: 20px;
 }
 .section .menu-group .title p {
   display: block;
@@ -215,6 +216,14 @@
   /* box-sizing: border-box; */
 }
 
+.tiles-profile-title {
+  font-size: 60px;
+}
+
+.tiles-profile-intro {
+  margin-top: 10px;
+  padding: 20px;
+}
 /* 컨텐츠 페이지 */
 
 .dining-container {
@@ -290,17 +299,18 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  float: right;
+  /* float: right; */
   box-sizing: border-box;
+  margin-top: 15px;
 }
 
 #filtering-place {
-  float: left;
-  width: 28%;
+  /* float: left; */
+  width: 100%;
   border: 1px solid var(--border-color);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  height: 80vh;
+  height: 8vh;
   box-sizing: border-box;
   margin-right: 5px;
 }

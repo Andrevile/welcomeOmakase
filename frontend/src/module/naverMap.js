@@ -1,12 +1,12 @@
 export const contentString = (data) => {
   //네이버 infoWindow 스타일 문자열 반환.
   const arr = [
-    `<div class="iw_inner"style=" padding:0; font-size: 10px; width:200px; height: 100px;  box-sizing:border-box;">
+    `<div class="iw_inner"style=" padding-top:5px; font-size: 10px; width:200px; height: 100px;  box-sizing:border-box;">
     <div style="padding: 3px 3px;">
     <div style="margin:0 auto;">
     <h3 style="font-size:12px; text-align:center; margin: 0;">${data.place_name}</h3>
     </div>
-    <div style="margin: 0 auto;  height:auto; border:1px solid #B0E0E6; padding: 10px; ">
+    <div style="margin: 0 auto;  height:auto; padding: 10px; ">
       <img
         src="${data.place_imgPath}"
         width="100%"
@@ -44,7 +44,7 @@ export const callMap = async (mode, placeData, setPlace) => {
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
         zoom: 13,
-        scrollWheel: true,
+        scrollWheel: false,
       };
       N_map = new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {
