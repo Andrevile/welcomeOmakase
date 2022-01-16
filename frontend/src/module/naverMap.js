@@ -43,7 +43,7 @@ export const callMap = async (mode, placeData, setPlace) => {
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
         zoom: 13,
-        scrollWheel: false,
+        scrollWheel: true,
       };
       N_map = new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {

@@ -29,13 +29,13 @@ const Dining = () => {
     <>
       <div className="dining-container">
         <div className="map-container">
-          <div id="filtering-place"></div>{" "}
           <NaverMap location={location} setPlace={setPlace}></NaverMap>
+          <div id="filtering-place"></div>
         </div>
       </div>
       <div ref={movetoIntro}></div>
-      {!currentPlace ? null : <IntroInfo></IntroInfo>}
-      {/* <IntroInfo></IntroInfo> */}
+      {/* {!currentPlace ? null : <IntroInfo></IntroInfo>} */}
+      <IntroInfo placeIntro={currentPlace}></IntroInfo>
     </>
   );
 };
