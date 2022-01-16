@@ -1,9 +1,20 @@
 const express = require("express");
 const User = require("../schemas/user");
-const Joi = require("joi");
 const router = express.Router();
-
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrpyt = require("bcrypt");
+const { signUp } = require("../module/auth");
 //./api/signup
-router.post("/signup", async (req, res) => {});
+router.post("/signup", signUp, async (req, res, next) => {
+  try {
+    const newUser = await new User(req.body);
+    console.log(newUser);
+    const registerUser = await newUser.save();
+    console.log(registerUser);
+
+    res.json({ message: "회원가입이 완료되었습니다." });
+  } catch (err) {}
+});
 
 module.exports = router;
