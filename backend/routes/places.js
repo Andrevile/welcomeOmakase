@@ -3,8 +3,8 @@ const Place = require("../schemas/place");
 
 const router = express.Router();
 
-//./places
-router.get("/places", async (req, res, next) => {
+//.api/places
+router.get("/", async (req, res, next) => {
   //dining에 오게되면 /api/places로
   console.log(req.query);
   const query = req.query;

@@ -22,7 +22,8 @@ if (process.env.NODE_MODE !== "DEV") {
 connect(); //DB 연결
 
 // 라우터 등록
-app.use("/api", placesRouter); //dining에서 데이터 불러올 때,
+app.use("/api/places", placesRouter); //dining에서 데이터 불러올 때,
+app.use("/api/users", usersRouter);
 
 // 배포 테스트용 코드
 // app.get("/", (req, res) => {
@@ -33,12 +34,6 @@ app.use("/api", placesRouter); //dining에서 데이터 불러올 때,
 //   } else {
 //     res.send("hello");
 //   }
-// });
-
-// Dining 데이터 필터링 api
-
-// app.get("/places", (req, res) => {
-//   console.log("her");
 // });
 
 //404 에러처리 미들웨어 = 일치하는 라우터가 없을 때,
