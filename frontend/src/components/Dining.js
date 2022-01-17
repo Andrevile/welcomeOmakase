@@ -22,7 +22,7 @@ const Dining = () => {
       }, 100);
     }
     return () => {
-      Timer = null;
+      clearTimeout(Timer);
     };
   }, [currentPlace]);
   return (

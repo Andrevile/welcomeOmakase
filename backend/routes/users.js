@@ -13,7 +13,9 @@ router.post("/signup", signUp, async (req, res, next) => {
     const registerUser = await newUser.save();
     console.log(registerUser);
 
-    res.json({ message: "회원가입이 완료되었습니다." });
+    res
+      .status(200)
+      .json({ message: "회원가입이 완료되었습니다.", status: 200 });
   } catch (err) {}
 });
 

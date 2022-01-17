@@ -4,6 +4,8 @@
 @import url("./css/Dining.css");
 @import url("./css/NaverMap.css");
 @import url("./css/IntroInfo.css");
+@import url("./css/SignUp.css");
+@import url("./css/SignIn.css");
 :root {
   --text-color: black;
   --font-size: 16px;

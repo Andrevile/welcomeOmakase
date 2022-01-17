@@ -1,0 +1,87 @@
+.signUp-container {
+  /* background-color: red; */
+}
+
+.auth-logo {
+  width: 300px;
+  /* background-color: royalblue; */
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.auth-logo > p {
+  font-family: var(--font-family);
+  font-size: 30px;
+}
+
+.auth-description {
+  margin-top: 20px;
+  text-align: center;
+  font-family: var(--font-normal);
+  font-size: 17px;
+  color: gray;
+}
+
+.signUp-form-container {
+  margin: 30px auto 0;
+  width: 50vw;
+  border: 1px solid var(--border-color);
+  margin-bottom: 30px;
+}
+
+.formData {
+  padding: 20px;
+}
+.formData > input {
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 10px;
+  height: 30px;
+  border-color: var(--border-color);
+}
+
+.formData > label {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  font-family: var(--font-normal);
+}
+
+.signUp-form {
+  position: relative;
+}
+
+.formSubmit {
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+.formSubmit > button {
+  border: 1px solid var(--border-color);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 17px;
+  font-family: var(--font-normal);
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.signUp-warning {
+  width: 300px;
+  height: 30px;
+  /* background-color: red; */
+  margin: 0 auto;
+}
+.signUp-warning > p {
+  font-family: var(--font-normal);
+  color: rgb(255, 49, 49);
+  text-align: center;
+}
+@media screen and (max-width: 600px) {
+  .signUp-form-container {
+    width: 280px;
+  }
+}
