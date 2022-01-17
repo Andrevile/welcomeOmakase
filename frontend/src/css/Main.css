@@ -1,0 +1,167 @@
+.Jumbo {
+  width: 100%;
+  position: relative;
+  height: 500px;
+  background-image: url("../../public/jumbo-picture4.jpeg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.Jumbo .Jumbo-description {
+  color: white;
+  position: absolute;
+  width: 170px;
+  padding: 30px;
+  font-family: var(--font-family);
+}
+
+.Jumbo .Jumbo-description h1 {
+  opacity: 0;
+  font-size: 40px;
+  margin-bottom: 20px;
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+  animation-fill-mode: forwards;
+}
+
+.Jumbo .Jumbo-description p {
+  opacity: 0;
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translate(-10px);
+    /* display: none; */
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px);
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.Jumbo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.Youtuber {
+  position: relative;
+}
+
+.Youtuber .tiles {
+  /* max-width: 1200px; */
+  margin-top: 30px;
+}
+
+.Youtuber .tiles .tiles-title {
+  display: flex;
+  /* text-align: center; */
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+  font-size: 40px;
+}
+.Youtuber .tiles ul {
+  height: 500px;
+  list-style: none;
+  /* padding: 0 0; */
+  margin: 0 auto;
+  /* margin-top: 0; */
+}
+.tiles-card {
+  text-decoration: none;
+  color: black;
+}
+
+.Youtuber .tiles ul li {
+  float: left;
+  width: calc((100% - 30px) / 3);
+  font-family: var(--font-normal);
+  text-align: center;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 10%;
+  box-sizing: border-box;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+  height: 500px;
+}
+
+.Youtuber .tiles ul li img {
+  border-radius: 50%;
+  padding: 30px;
+  width: 40%;
+}
+
+.Youtuber .tiles ul li:hover {
+  background: rgba(0, 0, 0, 0.1);
+  /* background-color: red; */
+}
+.Youtuber .tiles ul li:nth-child(3) {
+  /* width: 33%; */
+  /* background-color: lightgray; */
+  border-right: none;
+  /* box-sizing: border-box; */
+}
+
+.tiles-profile-title {
+  font-size: 60px;
+}
+
+.tiles-profile-intro {
+  margin-top: 3px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .Youtuber .tiles ul li {
+    width: 100%;
+  }
+}

@@ -1,0 +1,54 @@
+#map {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  margin-right: 10px;
+  height: 100%;
+}
+/* 마커 */
+.cs_mapbridge {
+  width: 120px;
+  height: 36px;
+  background-color: #0475f4;
+  border: 1px solid black;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 23px;
+  box-sizing: border-box;
+  padding: 5px;
+  position: absolute;
+}
+
+.cs_mapbridge:hover {
+  z-index: 100;
+}
+
+.cs_mapbridge i {
+  background-color: white;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  position: absolute;
+}
+.map_marker {
+}
+.shd {
+  display: block;
+  color: white;
+  font-family: var(--font-family);
+  position: absolute;
+  left: 35px;
+  top: 10px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  #map {
+    height: 70vh;
+    /* height: 540px; */
+  }
+}
