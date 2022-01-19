@@ -6,6 +6,7 @@
 @import url("./css/IntroInfo.css");
 @import url("./css/SignUp.css");
 @import url("./css/SignIn.css");
+@import url("./css/Loading.css");
 :root {
   --text-color: black;
   --font-size: 16px;
@@ -16,4 +17,16 @@
 
 body {
   min-width: 330px;
+}
+
+.menu-title-container {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.menu-title-container > p {
+  font-family: var(--font-normal);
+  font-weight: bold;
+  font-size: 30px;
 }

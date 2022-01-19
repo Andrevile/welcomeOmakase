@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = ({ user }) => {
   console.log(user);
@@ -22,19 +22,19 @@ const NavBar = ({ user }) => {
           </div>
           <ul className="main-menu toggle">
             <li className="menu-item">
-              <Link to="/" className="link">
+              <NavLink to="/" className="link">
                 소개
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/dining?youtuber=all" className="link">
+              <NavLink to="/dining" className="link">
                 맛집
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/share" className="link">
+              <NavLink to="/share" className="link">
                 공유
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <div className="sm-device">

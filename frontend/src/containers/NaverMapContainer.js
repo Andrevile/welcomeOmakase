@@ -1,6 +1,6 @@
 import NaverMap from "../components/NaverMap";
 import { connect } from "react-redux";
-import { setdefault, datafilter } from "../module/redux/filtering";
+import { datafilter } from "../module/redux/filtering";
 
 const NaverMapContainer = ({
   location,
@@ -24,11 +24,11 @@ const NaverMapContainer = ({
 
 export default connect(
   (state) => ({
-    mode: state.places.mode,
-    placeData: state.places.placeData,
+    place_name: state.places.place_name,
+    youtuber: state.places.youtuber,
+    place_position: state.places.place_position,
   }),
   (dispatch) => ({
-    set_default: (data) => dispatch(setdefault(data)),
     data_filter: (data) => dispatch(datafilter(data)),
   })
 )(NaverMapContainer);

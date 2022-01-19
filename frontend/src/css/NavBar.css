@@ -42,7 +42,9 @@
 
   padding: 10px;
 }
-
+.section .menu-group .main-menu .menu-item > .active {
+  color: #61dafb;
+}
 .section .menu-group .main-menu .link {
   text-decoration: none;
   color: black;

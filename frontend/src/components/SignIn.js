@@ -14,7 +14,7 @@ const SignIn = () => {
           <form>
             <div className="signData">
               <div className="signIn-border">
-                <i class="fa-solid fa-user"></i>
+                <i className="fa-solid fa-user"></i>
                 <input
                   name="id"
                   pattern="[a-zA-Z0-9]{6,}$"
@@ -27,7 +27,7 @@ const SignIn = () => {
                 ></input>
               </div>
               <div className="signIn-border">
-                <i class="fa-solid fa-key"></i>
+                <i className="fa-solid fa-key"></i>
                 <input
                   name="pw"
                   minLength={7}

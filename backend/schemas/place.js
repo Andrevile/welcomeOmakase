@@ -7,17 +7,25 @@ const placeSchema = new Schema({
     required: true,
   },
   place_name: {
+    //매장 명
     type: String,
     required: true,
     unique: true,
   },
   place_position: {
+    //매장 주소
     type: String,
   },
   place_imgPath: {
+    //매장 사진
     type: String,
   },
   place_youtubeURL: {
+    //유튜버 링크
+    type: String,
+  },
+  place_number: {
+    //매장 전화번호
     type: String,
   },
   latitude: {

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Axios } from "../module/axiosmodule";
+import { datafilter } from "../module/redux/filtering";
 const SignUp = () => {
   const [Warning, setWarning] = useState("");
   let navigate = useNavigate();
@@ -29,10 +30,15 @@ const SignUp = () => {
     }
   }
   useEffect(() => {
+    console.log(signUpform.current);
     signUpform.current.addEventListener("submit", dataSubmit);
 
     return () => {
-      signUpform.current.removeEventListner("submit", dataSubmit);
+      //   console.log(signUpform.current);
+      //   signUpform.current.removeEventListener("submit", dataSubmit);
+      if (signUpform.current) {
+        signUpform.current.removeEventListner("submit", dataSubmit);
+      }
     };
   }, []);
 

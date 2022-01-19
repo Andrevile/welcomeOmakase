@@ -42,8 +42,12 @@ export const callMap = async (mode, placeData, setPlace) => {
       }
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
-        zoom: 13,
+        zoom: 12,
         scrollWheel: true,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.naver.maps.Position.TOP_RIGHT,
+        },
       };
       N_map = new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {
@@ -112,5 +116,9 @@ export const callMap = async (mode, placeData, setPlace) => {
         // placeMap.get(place).setMap(N_map); 마커 다시 지도에 연결
       });
     }
-  } catch (err) {}
+    return true;
+  } catch (err) {
+    console.log("네이버 지도 못불러옴");
+    return false;
+  }
 };
