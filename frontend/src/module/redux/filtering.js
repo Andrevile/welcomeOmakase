@@ -11,7 +11,6 @@ const initialState = {
 const places = (state = initialState, action) => {
   switch (action.type) {
     case DATAFILTER:
-      console.log(action.data);
       return {
         ...state,
         ...action.data,

@@ -56,6 +56,9 @@
 .intro-description > div {
   display: flex;
 }
+.intro-description > div:nth-child(2) {
+  margin-top: 10px;
+}
 .intro-description > div > span:nth-child(1) {
   display: block;
   width: 25%;

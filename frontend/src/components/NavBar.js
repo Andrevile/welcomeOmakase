@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const NavBar = ({ user }) => {
-  console.log(user);
   return (
     <div className="section">
       <div className="inner">

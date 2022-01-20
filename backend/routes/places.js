@@ -17,15 +17,15 @@ router.post("/", async (req, res, next) => {
   if ("place_name" in filter_condition) {
     filter_condition.place_name = new RegExp(filter_condition.place_name);
   }
+  if ("place_position" in filter_condition) {
+    filter_condition.place_position = new RegExp(
+      filter_condition.place_position
+    );
+  }
 
   try {
     let places;
-    //데이터 베이스 안에 있는 places collection의 데이터를 모두 가져옴
-    // if (query.youtuber === "all" || query === {}) {
-    //   places = await Place.find();
-    // } else {
-    //   places = await Place.find(query);
-    // }
+
     places = await Place.find(filter_condition);
 
     console.log("here", places);

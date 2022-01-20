@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { callMap } from "../module/naverMap";
+import React, { useEffect, useState, useRef } from "react";
+import { callMap, Markerfilter } from "../module/naverMap";
 import { Axios } from "../module/axiosmodule";
 import { connect } from "react-redux";
 import { datafilter } from "../module/redux/filtering";
@@ -7,14 +7,33 @@ import { gdata } from "../module/gdata";
 const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   const [loading, loadingState] = useState(false);
 
-  async function fetchData(mode, condition, setPlace) {
+  const filterForm = useRef();
+  async function fetchData(condition) {
+    let res = await Axios("/api/places", "POST", condition);
+    return res;
+  }
+
+  async function filterData(e) {
+    e.preventDefault();
+    let condition = {
+      place_name: this.place_name.value,
+      youtuber: this.select_person.value,
+      place_position: this.select_area.value,
+    };
+    data_filter(condition);
     let res = await Axios("/api/places", "POST", condition);
     res = await res.data;
-    await callMap(mode, res, setPlace);
+    Markerfilter(res);
   }
   useEffect(() => {
-    console.log(gdata.youtuber);
-    loadingState(fetchData("initialize", filter_condition, setPlace)); //마커 모두 등록
+    loadingState(
+      fetchData(filter_condition).then((res) => {
+        let loading = callMap("initialize", res.data, setPlace);
+        return loading;
+      })
+    );
+
+    filterForm.current.addEventListener("submit", filterData);
     return () => {
       data_filter({
         place_name: "",
@@ -27,7 +46,7 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   return (
     <>
       <div className="filtering-place">
-        <form className="filtering-form">
+        <form className="filtering-form" ref={filterForm}>
           <div className="filtering-input">
             <input
               type="text"
@@ -36,16 +55,24 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
             ></input>
           </div>
           <div className="filtering-select">
-            <select name="select-person">
+            <select name="select_person">
               <option value="">유튜버</option>
-              {gdata.youtuber.map((person) => {
-                return <option value={person}>{person}</option>;
+              {gdata.youtuber.map((person, idx) => {
+                return (
+                  <option key={idx} value={person}>
+                    {person}
+                  </option>
+                );
               })}
             </select>
-            <select name="select-area">
+            <select name="select_area">
               <option value="">지역</option>
-              {gdata.area.map((each_area) => {
-                return <option value={each_area}>{each_area}</option>;
+              {gdata.area.map((each_area, idx) => {
+                return (
+                  <option key={idx} value={each_area}>
+                    {each_area}
+                  </option>
+                );
               })}
             </select>
           </div>

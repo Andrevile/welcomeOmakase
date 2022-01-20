@@ -1,19 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import { Link } from "react-router-dom";
-import { clickYoutuberProfile } from "../module/filteringPlace";
-import { Axios } from "../module/axiosmodule";
 import { connect } from "react-redux";
 import { datafilter } from "../module/redux/filtering";
+import { profileList } from "../module/gdata";
 const Main = ({ data_filter }) => {
-  const profileList = [
-    { name: "먹적", intro: "스시에 대출 박는 놈", sub: "19.2만명" },
-    { name: "더들리", intro: "더들리의 하루한끼", sub: "25.8만명" },
-    {
-      name: "마리아주",
-      intro: "맛 칼럼니스트",
-      sub: "18.2만명",
-    },
-  ];
   return (
     <>
       <div className="Jumbo">
@@ -29,16 +19,20 @@ const Main = ({ data_filter }) => {
           <ul>
             {profileList.map((profile, idx) => {
               return (
-                <Link key={idx} to="/dining" className="tiles-card">
-                  <li
-                    onClick={() => {
-                      data_filter({
-                        place_name: "",
-                        youtuber: profile.name,
-                        place_position: "",
-                      });
-                    }}
-                  >
+                <Link
+                  key={idx}
+                  to="/dining"
+                  className="tiles-card"
+                  onClick={async (e) => {
+                    let condition = {
+                      place_name: "",
+                      youtuber: profile.name,
+                      place_position: "",
+                    };
+                    data_filter(condition);
+                  }}
+                >
+                  <li>
                     <div className="tiles-profile-picture">
                       <img
                         src={"img/youtuber/" + profile.name + ".jpeg"}
@@ -53,7 +47,6 @@ const Main = ({ data_filter }) => {
                       </p>
                     </div>
                   </li>
-                  {/* <iframe width="1280" height="720" src="https://www.youtube.com/embed/joBuDahQc4M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
                 </Link>
               );
             })}
@@ -64,7 +57,6 @@ const Main = ({ data_filter }) => {
   );
 };
 
-// export default Main;
 export default connect(
   (state) => ({
     place_name: state.places.place_name,

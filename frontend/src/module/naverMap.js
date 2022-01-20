@@ -26,7 +26,8 @@ export const contentString = (data) => {
   ];
   return arr;
 };
-
+var N_map;
+var MarkerArr = new Map();
 export const callMap = async (mode, placeData, setPlace) => {
   //케이스 고려사항
   //1. 처음 렌더링 되면 모든 데이터 마커 표시
@@ -34,12 +35,7 @@ export const callMap = async (mode, placeData, setPlace) => {
   //3. 이미 필터링된 마커 표시 상황에서 다른 필터링폼을 적용할 때 즉각반영
   //4. 언마운트나 초기화 적용시 모든 마커 표시
   try {
-    let N_map;
-    // let placeMap = new Map(); //객체와 Map의 다른점은 객체는 객체키를 사용할 수 없지만 Map은 객체키를 사용가능함.
     if (mode === "initialize") {
-      if (window.naver.maps.Map.__instances.length !== 0) {
-        window.naver.maps.Map.__instances.pop(); //렌더링 할 때마다 네이버 지도 객체가 생겨서 쌓이는 걸 방지
-      }
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
         zoom: 12,
@@ -51,7 +47,7 @@ export const callMap = async (mode, placeData, setPlace) => {
       };
       N_map = new window.naver.maps.Map("map", mapOptions);
       placeData.map((place) => {
-        const makeMarker = new window.naver.maps.Marker({
+        let makeMarker = new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(
             place.latitude,
             place.longitude
@@ -73,7 +69,7 @@ export const callMap = async (mode, placeData, setPlace) => {
             anchor: new window.naver.maps.Point(19, 58),
           },
         });
-
+        MarkerArr.set(JSON.stringify(place), makeMarker);
         // const infoWindow = new window.naver.maps.InfoWindow({
         //   content: contentString(place)[0],
         //   maxWidth: 500,
@@ -103,17 +99,7 @@ export const callMap = async (mode, placeData, setPlace) => {
         // );
         window.naver.maps.Event.addListener(makeMarker, "click", function (e) {
           setPlace({ ...place });
-          // setTimeout(() => {
-          //   movetoIntro.current.scrollIntoView({
-          //     behavior: "smooth",
-          //   });
-          // }, 100);
         });
-        // console.log(place);
-        // placeMap.set(place, makeMarker);
-        // console.log(placeMap.get(place));
-        // placeMap.get(place).setMap(null); 마커 삭제
-        // placeMap.get(place).setMap(N_map); 마커 다시 지도에 연결
       });
     }
     return true;
@@ -121,4 +107,19 @@ export const callMap = async (mode, placeData, setPlace) => {
     console.log("네이버 지도 못불러옴");
     return false;
   }
+};
+
+export const Markerfilter = async function (placeData) {
+  let filter = new Map();
+  placeData.map((item) => {
+    filter.set(JSON.stringify(item), N_map);
+  });
+  MarkerArr.forEach((value, key) => {
+    if (filter.get(key) !== undefined) {
+      //걸러진 마커 종류에 현재 마커가 존재하면 그리기
+      MarkerArr.get(key).setMap(N_map);
+    } else {
+      MarkerArr.get(key).setMap(null);
+    }
+  });
 };

@@ -52,8 +52,8 @@
   font-family: var(--font-family);
   position: absolute;
   left: 35px;
-  top: 10px;
-  font-size: 16px;
+  top: 12px;
+  font-size: 14px;
 }
 .filtering-place {
   min-width: 100px;

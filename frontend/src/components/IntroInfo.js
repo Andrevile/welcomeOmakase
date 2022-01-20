@@ -1,6 +1,4 @@
-import { forwardRef } from "react";
 const IntroInfo = ({ placeIntro }) => {
-  console.log(placeIntro);
   return (
     <div className="default-intro-container">
       {placeIntro ? (
@@ -10,7 +8,10 @@ const IntroInfo = ({ placeIntro }) => {
           </div>
           <div className="place-intro-description">
             <div className="place-img">
-              <img src={placeIntro.place_imgPath}></img>
+              <img
+                src={placeIntro.place_imgPath}
+                alt={placeIntro.place_name}
+              ></img>
             </div>
             <div className="intro-description">
               <div>
