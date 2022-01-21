@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const NavBar = ({ user }) => {
+const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
   return (
     <div className="section">
       <div className="inner">
@@ -37,7 +37,7 @@ const NavBar = ({ user }) => {
             </li>
           </ul>
           <div className="sm-device">
-            {user !== null ? (
+            {!hasCookie ? (
               <>
                 <Link to="/login" className="signIn-icon" title="로그인">
                   <i className="fa-solid fa-right-to-bracket"></i>
@@ -47,14 +47,20 @@ const NavBar = ({ user }) => {
                 </Link>
               </>
             ) : (
-              <button className="signOut-icon">
+              <button
+                className="signOut-icon"
+                onClick={() => {
+                  setHasCookie(false);
+                  removeCookie("user");
+                }}
+              >
                 <i className="fa-solid fa-power-off"></i>
               </button>
             )}
           </div>
 
           <ul className="side-menu">
-            {user !== null ? (
+            {!hasCookie ? (
               <>
                 {" "}
                 <li className="menu-item SignIn-btn">
@@ -66,7 +72,15 @@ const NavBar = ({ user }) => {
               </>
             ) : (
               <li className="menu-item">
-                <button className="SignOut-btn">로그 아웃</button>
+                <button
+                  className="SignOut-btn"
+                  onClick={() => {
+                    setHasCookie(false);
+                    removeCookie("user");
+                  }}
+                >
+                  로그 아웃
+                </button>
               </li>
             )}
           </ul>

@@ -17,6 +17,10 @@ const Userschema = new Schema(
       required: true,
       unique: true,
     },
+    auth: {
+      type: String,
+      required: true,
+    },
   },
   {
     versionKey: false,

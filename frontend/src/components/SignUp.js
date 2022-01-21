@@ -12,6 +12,7 @@ const SignUp = () => {
       user_ID: this.id.value,
       user_PW: this.pw.value,
       email: this.email.value,
+      auth: "user",
     };
     const PW = this.pw.value;
     const PW_compare = this.pw_compare.value;

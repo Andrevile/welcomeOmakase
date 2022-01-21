@@ -61,6 +61,18 @@
   box-shadow: 0px 0px 0 rgba(0, 0, 0, 0.2);
   transform: translateY(0px);
 }
+
+.signIn-warning {
+  width: 300px;
+  height: 30px;
+  /* background-color: red; */
+  margin: 30px auto 0;
+}
+.signIn-warning > p {
+  font-family: var(--font-normal);
+  color: rgb(255, 49, 49);
+  text-align: center;
+}
 @media screen and (min-width: 601px) {
   .signin-form-container {
     display: flex;

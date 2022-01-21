@@ -1,4 +1,35 @@
-const SignIn = () => {
+import React, { useState, useRef, useEffect } from "react";
+import { Axios } from "../module/axiosmodule";
+import { useNavigate } from "react-router-dom";
+const SignIn = ({ setHasCookie }) => {
+  const [Warning, setWarning] = useState("");
+  let navigate = useNavigate();
+  const signInform = useRef();
+  async function signInSubmit(e) {
+    e.preventDefault();
+    const signInform = {
+      ID: this.id.value,
+      PW: this.pw.value,
+    };
+    let res = await Axios("/api/users/signin", "POST", signInform);
+    console.log(res);
+    if (res.token) {
+      setHasCookie(true);
+      navigate("../");
+    } else {
+      setWarning(res.message);
+    }
+  }
+  useEffect(() => {
+    console.log(signInform.current);
+    signInform.current.addEventListener("submit", signInSubmit);
+
+    return () => {
+      if (signInform.current) {
+        signInform.current.removeEventListner("submit", signInSubmit);
+      }
+    };
+  }, []);
   return (
     <div className="signin-container">
       <div className="auth-logo">
@@ -11,13 +42,12 @@ const SignIn = () => {
 
       <div className="signin-form-container">
         <div className="signin-form">
-          <form>
+          <form ref={signInform}>
             <div className="signData">
               <div className="signIn-border">
                 <i className="fa-solid fa-user"></i>
                 <input
                   name="id"
-                  pattern="[a-zA-Z0-9]{6,}$"
                   type="text"
                   id="signIn-ID"
                   required
@@ -30,7 +60,6 @@ const SignIn = () => {
                 <i className="fa-solid fa-key"></i>
                 <input
                   name="pw"
-                  minLength={7}
                   type="password"
                   id="signIn-PW"
                   required
@@ -44,6 +73,11 @@ const SignIn = () => {
           </form>
         </div>
       </div>
+      {Warning.length === 0 ? null : (
+        <div className="signIn-warning">
+          <p>{Warning}</p>
+        </div>
+      )}
     </div>
   );
 };
