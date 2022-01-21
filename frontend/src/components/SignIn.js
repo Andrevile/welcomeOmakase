@@ -7,21 +7,20 @@ const SignIn = ({ setHasCookie }) => {
   const signInform = useRef();
   async function signInSubmit(e) {
     e.preventDefault();
+    setWarning("");
     const signInform = {
       ID: this.id.value,
       PW: this.pw.value,
     };
     let res = await Axios("/api/users/signin", "POST", signInform);
-    console.log(res);
     if (res.token) {
       setHasCookie(true);
-      navigate("../");
+      navigate("/");
     } else {
       setWarning(res.message);
     }
   }
   useEffect(() => {
-    console.log(signInform.current);
     signInform.current.addEventListener("submit", signInSubmit);
 
     return () => {

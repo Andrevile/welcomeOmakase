@@ -8,6 +8,7 @@ const SignUp = () => {
   const signUpform = useRef();
   async function dataSubmit(e) {
     e.preventDefault();
+    setWarning("");
     const registerUser = {
       user_ID: this.id.value,
       user_PW: this.pw.value,
@@ -24,7 +25,7 @@ const SignUp = () => {
       console.log(res);
       if (res.status === 200) {
         alert(res.message);
-        navigate("../login");
+        navigate("/signin");
       } else {
         setWarning(res.message);
       }

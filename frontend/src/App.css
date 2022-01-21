@@ -7,6 +7,7 @@
 @import url("./css/SignUp.css");
 @import url("./css/SignIn.css");
 @import url("./css/Loading.css");
+@import url("./css/Modal.css");
 :root {
   --text-color: black;
   --font-size: 16px;

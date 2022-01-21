@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
-const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
+const NavBar = ({ hasCookie, removeCookie, setHasCookie, modalOn }) => {
+  let navigate = useNavigate();
   return (
     <div className="section">
       <div className="inner">
@@ -31,7 +32,18 @@ const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
               </NavLink>
             </li>
             <li className="menu-item">
-              <NavLink to="/share" className="link">
+              <NavLink
+                to="/share"
+                className="link"
+                onClick={
+                  hasCookie
+                    ? null
+                    : (e) => {
+                        e.preventDefault();
+                        modalOn(true);
+                      }
+                }
+              >
                 공유
               </NavLink>
             </li>
@@ -39,7 +51,7 @@ const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
           <div className="sm-device">
             {!hasCookie ? (
               <>
-                <Link to="/login" className="signIn-icon" title="로그인">
+                <Link to="/signin" className="signIn-icon" title="로그인">
                   <i className="fa-solid fa-right-to-bracket"></i>
                 </Link>
                 <Link to="/signup" className="signUp-icon" title="회원가입">
@@ -52,6 +64,7 @@ const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
                 onClick={() => {
                   setHasCookie(false);
                   removeCookie("user");
+                  navigate("/");
                 }}
               >
                 <i className="fa-solid fa-power-off"></i>
@@ -64,7 +77,7 @@ const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
               <>
                 {" "}
                 <li className="menu-item SignIn-btn">
-                  <Link to="/login">로그인</Link>
+                  <Link to="/signin">로그인</Link>
                 </li>
                 <li className="menu-item SignUp-btn">
                   <Link to="/signup">회원가입</Link>
@@ -77,6 +90,7 @@ const NavBar = ({ hasCookie, removeCookie, setHasCookie }) => {
                   onClick={() => {
                     setHasCookie(false);
                     removeCookie("user");
+                    navigate("/");
                   }}
                 >
                   로그 아웃
