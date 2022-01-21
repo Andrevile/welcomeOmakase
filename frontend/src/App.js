@@ -22,6 +22,7 @@ function App() {
   }, [cookies]);
 
   useEffect(() => {
+    console.log(modalOff);
     if (modalOff) {
       document.body.style.overflow = "hidden";
     } else {
