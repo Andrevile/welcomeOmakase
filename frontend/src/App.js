@@ -5,10 +5,11 @@ import { withCookies, useCookies } from "react-cookie";
 import NavBar from "./components/NavBar";
 import Main from "./components/Main";
 import Dining from "./components/Dining";
-import NotFound from "./components/NotFount";
+import NotFound from "./components/NotFound";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Modal from "./components/Modal";
+import Share from "./components/Share";
 function App() {
   const [modalOff, modalOn] = useState(false);
   const [cookies, removeCookie] = useCookies(["user"]);
@@ -22,7 +23,6 @@ function App() {
   }, [cookies]);
 
   useEffect(() => {
-    console.log(modalOff);
     if (modalOff) {
       document.body.style.overflow = "hidden";
     } else {
@@ -47,7 +47,7 @@ function App() {
           path="/signin"
           element={<SignIn setHasCookie={setHasCookie}></SignIn>}
         ></Route>
-        <Route path="/share" element={<h1>공유 공간</h1>}></Route>
+        <Route path="/share" element={<Share></Share>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
     </div>

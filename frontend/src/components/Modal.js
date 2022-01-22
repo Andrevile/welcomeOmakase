@@ -1,8 +1,16 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 const Modal = ({ modalOn }) => {
   let navigate = useNavigate();
+  let modalRef = useRef();
   return (
-    <div className="modal">
+    <div
+      className="modal"
+      ref={modalRef}
+      onClick={(e) => {
+        return modalRef.current === e.target ? modalOn(false) : null;
+      }}
+    >
       <div className="modal-body">
         <header className="modal-header">
           <button
@@ -25,6 +33,14 @@ const Modal = ({ modalOn }) => {
             }}
           >
             로그인
+          </button>
+          <button
+            onClick={() => {
+              modalOn(false);
+              navigate("/signup");
+            }}
+          >
+            회원가입
           </button>
         </footer>
       </div>

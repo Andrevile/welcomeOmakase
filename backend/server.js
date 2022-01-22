@@ -5,6 +5,7 @@ const connect = require("./schemas");
 
 const usersRouter = require("./routes/users");
 const placesRouter = require("./routes/places");
+const postsRouter = require("./routes/posts");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const LocalStrategy = require("passport-local").Strategy;
@@ -33,6 +34,7 @@ connect(); //DB 연결
 // 라우터 등록
 app.use("/api/places", placesRouter); //dining에서 데이터 불러올 때,
 app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
 app.use(passport.initialize());
 passport.use("local", new LocalStrategy(passportConfig, passportVerify));
 passport.use("jwt", new JWTStrategy(JWTConfig, JWTVerify));

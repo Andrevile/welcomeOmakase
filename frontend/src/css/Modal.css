@@ -58,6 +58,46 @@
   font-family: var(--font-normal);
   font-size: 16px;
 }
+.modal-footer > button:nth-child(1) {
+  margin-right: 10px;
+}
+
+.post-modal {
+  width: 500px;
+  min-height: 600px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+.post-modal > section {
+  font-family: var(--font-normal);
+}
+.post-modal > section > p {
+  font-size: 20px;
+}
+
+.post-modal > section > h1 {
+  font-weight: bold;
+  font-size: 30px;
+}
+.post-modal > footer {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  padding: 30px;
+}
+.post-header {
+  height: 40px;
+  justify-content: unset;
+  font-family: var(--font-normal);
+  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.post-header > span {
+  margin-left: auto;
+}
 @media screen and (max-width: 800px) {
   .modal_body {
     width: 350px;

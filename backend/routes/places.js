@@ -6,10 +6,8 @@ const router = express.Router();
 //.api/places
 router.post("/", async (req, res, next) => {
   //dining에 오게되면 /api/places로
-  console.log(req.body);
   const filter_condition = {};
   for (const item in req.body) {
-    console.log(item);
     if (req.body[item] !== "") {
       filter_condition[item] = req.body[item];
     }
@@ -22,13 +20,10 @@ router.post("/", async (req, res, next) => {
       filter_condition.place_position
     );
   }
-
   try {
     let places;
-
     places = await Place.find(filter_condition);
-
-    console.log("here", places);
+    console.log(places);
     res.json({ data: places });
   } catch (err) {
     console.error(err);

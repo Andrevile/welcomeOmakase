@@ -36,9 +36,14 @@ export const callMap = async (mode, placeData, setPlace) => {
   //4. 언마운트나 초기화 적용시 모든 마커 표시
   try {
     if (mode === "initialize") {
+      let zoomOption = 12;
+      if (window.innerWidth < 800) {
+        console.log("here");
+        zoomOption = 11;
+      }
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
-        zoom: 12,
+        zoom: zoomOption,
         scrollWheel: true,
         zoomControl: true,
         zoomControlOptions: {
@@ -117,8 +122,10 @@ export const Markerfilter = async function (placeData) {
   MarkerArr.forEach((value, key) => {
     if (filter.get(key) !== undefined) {
       //걸러진 마커 종류에 현재 마커가 존재하면 그리기
+      // console.log(MarkerArr.get(key));
       MarkerArr.get(key).setMap(N_map);
     } else {
+      // console.log(MarkerArr.get(key));
       MarkerArr.get(key).setMap(null);
     }
   });

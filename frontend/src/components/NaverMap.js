@@ -3,7 +3,7 @@ import { callMap, Markerfilter } from "../module/naverMap";
 import { Axios } from "../module/axiosmodule";
 import { connect } from "react-redux";
 import { datafilter } from "../module/redux/filtering";
-import { gdata } from "../module/gdata";
+import { gdata, filter_condition_form } from "../module/gdata";
 const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   const [loading, loadingState] = useState(false);
 
@@ -27,11 +27,17 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   }
   useEffect(() => {
     loadingState(
-      fetchData(filter_condition).then((res) => {
+      fetchData(filter_condition_form).then((res) => {
         let loading = callMap("initialize", res.data, setPlace);
         return loading;
       })
     );
+    (async function (filter_condition) {
+      let res = await Axios("/api/places", "POST", filter_condition);
+      res = await res.data;
+      Markerfilter(res);
+    })(filter_condition);
+    // Markerfilter(data);
 
     filterForm.current.addEventListener("submit", filterData);
     return () => {

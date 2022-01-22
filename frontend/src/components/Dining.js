@@ -21,19 +21,17 @@ const Dining = () => {
     };
   }, [currentPlace]);
   return (
-    <>
-      <div className="dining-container">
-        <div className="menu-title-container">
-          <p>맛집 검색</p>
-        </div>
-        <div className="map-container">
-          <NaverMap setPlace={setPlace}></NaverMap>
-        </div>
-        <div ref={movetoIntro}></div>
-
-        <IntroInfo placeIntro={currentPlace}></IntroInfo>
+    <div className="dining-container">
+      <div className="menu-title-container">
+        <p>맛집 검색</p>
       </div>
-    </>
+      <div className="map-container">
+        <NaverMap setPlace={setPlace}></NaverMap>
+      </div>
+      <div ref={movetoIntro}></div>
+
+      <IntroInfo placeIntro={currentPlace}></IntroInfo>
+    </div>
   );
 };
 

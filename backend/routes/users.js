@@ -25,7 +25,6 @@ router.post("/signup", signUp, async (req, res, next) => {
 
 router.post("/signin", async (req, res, next) => {
   try {
-    console.log(req.body);
     passport.authenticate("local", async (passportErr, user, info) => {
       if (passportErr || !user) {
         res.json({ message: info.reason });

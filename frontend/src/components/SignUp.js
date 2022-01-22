@@ -17,7 +17,7 @@ const SignUp = () => {
     };
     const PW = this.pw.value;
     const PW_compare = this.pw_compare.value;
-    console.log(PW);
+
     if (PW !== PW_compare) {
       setWarning("비밀번호가 일치하지 않습니다.");
     } else {
@@ -32,7 +32,6 @@ const SignUp = () => {
     }
   }
   useEffect(() => {
-    console.log(signUpform.current);
     signUpform.current.addEventListener("submit", dataSubmit);
 
     return () => {
