@@ -18,16 +18,18 @@
   box-sizing: border-box;
   padding: 5px;
   position: relative;
+  z-index: 10;
 }
-.shd::before {
-  content: "";
+.cs_mapbridge::before {
+  content: '';
   position: absolute;
   border-top: 10px solid #0475f4;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  top: 20px;
-  left: -10px;
+  top: 32px;
+  left: 25px;
+  z-index: -1;
 }
 .cs_mapbridge:hover {
   z-index: 100;
@@ -52,7 +54,7 @@
   font-family: var(--font-family);
   position: absolute;
   left: 35px;
-  top: 12px;
+  top: 10px;
   font-size: 14px;
 }
 .filtering-place {
@@ -81,7 +83,7 @@
   height: 100%;
 }
 
-.filtering-form > .filtering-input > input[type="text"] {
+.filtering-form > .filtering-input > input[type='text'] {
   /* display: block; */
   border-radius: 5px;
   width: 100%;
@@ -132,7 +134,7 @@
   .filtering-input {
     height: 35px;
   }
-  .filtering-form > .filtering-input .input[type="text"] {
+  .filtering-form > .filtering-input .input[type='text'] {
     width: 100%;
     padding: 0;
     box-sizing: border-box;

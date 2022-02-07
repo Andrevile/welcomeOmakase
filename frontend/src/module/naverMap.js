@@ -35,11 +35,11 @@ export const callMap = async (mode, placeData, setPlace) => {
   //3. 이미 필터링된 마커 표시 상황에서 다른 필터링폼을 적용할 때 즉각반영
   //4. 언마운트나 초기화 적용시 모든 마커 표시
   try {
-    if (mode === "initialize") {
-      let zoomOption = 12;
+    if (mode === 'initialize') {
+      let zoomOption = 10;
       if (window.innerWidth < 800) {
-        console.log("here");
-        zoomOption = 11;
+        console.log('here');
+        zoomOption = 10;
       }
       const mapOptions = {
         center: new window.naver.maps.LatLng(37.554722, 126.970833),
@@ -50,26 +50,24 @@ export const callMap = async (mode, placeData, setPlace) => {
           position: window.naver.maps.Position.TOP_RIGHT,
         },
       };
-      N_map = new window.naver.maps.Map("map", mapOptions);
+      N_map = new window.naver.maps.Map('map', mapOptions);
       placeData.map((place) => {
         let makeMarker = new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(
-            place.latitude,
-            place.longitude
-          ),
+          position: new window.naver.maps.LatLng(place.latitude, place.longitude),
           map: N_map,
           // animation: window.naver.maps.Animation.DROP,
           icon: {
             content: [
               '<div class="cs_mapbridge">',
+              `<span class="shd">${place.place_name}</span>`,
               '<div class="map_group _map_group">',
               '<div class="map_marker _marker tvhp tvhp_big">',
               '<i class="fa-solid fa-utensils"></i>',
-              `<span class="shd">${place.place_name}</span>`,
-              "</div>",
-              "</div>",
-              "</div>",
-            ].join(""),
+              '</div>',
+              '</div>',
+
+              '</div>',
+            ].join(''),
             size: new window.naver.maps.Size(38, 58),
             anchor: new window.naver.maps.Point(19, 58),
           },
@@ -102,14 +100,14 @@ export const callMap = async (mode, placeData, setPlace) => {
         //     }
         //   }
         // );
-        window.naver.maps.Event.addListener(makeMarker, "click", function (e) {
+        window.naver.maps.Event.addListener(makeMarker, 'click', function (e) {
           setPlace({ ...place });
         });
       });
     }
     return true;
   } catch (err) {
-    console.log("네이버 지도 못불러옴");
+    console.log('네이버 지도 못불러옴');
     return false;
   }
 };
