@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
-import { callMap, Markerfilter } from "../module/naverMap";
-import { Axios } from "../module/axiosmodule";
-import { connect } from "react-redux";
-import { datafilter } from "../module/redux/filtering";
-import { gdata, filter_condition_form } from "../module/gdata";
+import React, { useEffect, useState, useRef } from 'react';
+import { callMap, Markerfilter } from '../module/naverMap';
+import { Axios } from '../module/axiosmodule';
+import { connect } from 'react-redux';
+import { datafilter } from '../module/redux/filtering';
+import { gdata, filter_condition_form } from '../module/gdata';
 const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   const [loading, loadingState] = useState(false);
 
   const filterForm = useRef();
   async function fetchData(condition) {
-    let res = await Axios("/api/places", "POST", condition);
+    let res = await Axios('/api/places', 'POST', condition);
     return res;
   }
 
@@ -21,48 +21,54 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
       place_position: this.select_area.value,
     };
     data_filter(condition);
-    let res = await Axios("/api/places", "POST", condition);
+    let res = await Axios('/api/places', 'POST', condition);
     res = await res.data;
     Markerfilter(res);
   }
+
   useEffect(() => {
     loadingState(
       fetchData(filter_condition_form).then((res) => {
-        let loading = callMap("initialize", res.data, setPlace);
+        let loading = callMap('initialize', res.data, setPlace);
         return loading;
       })
     );
-    (async function (filter_condition) {
-      let res = await Axios("/api/places", "POST", filter_condition);
-      res = await res.data;
-      Markerfilter(res);
-    })(filter_condition);
-    // Markerfilter(data);
 
-    filterForm.current.addEventListener("submit", filterData);
+    filterForm.current.addEventListener('submit', filterData);
     return () => {
       data_filter({
-        place_name: "",
-        youtuber: "",
-        place_position: "",
+        place_name: '',
+        youtuber: '',
+        place_position: '',
       });
     };
   }, []);
 
+  useEffect(() => {
+    let T;
+    (async function (filter_condition) {
+      T = setTimeout(async () => {
+        let res = await Axios('/api/places', 'POST', filter_condition);
+        res = await res.data;
+        Markerfilter(res);
+      }, 50);
+    })(filter_condition);
+
+    return () => {
+      clearTimeout(T);
+    };
+  }, [filter_condition]);
+
   return (
     <>
-      <div className="filtering-place">
-        <form className="filtering-form" ref={filterForm}>
-          <div className="filtering-input">
-            <input
-              type="text"
-              name="place_name"
-              placeholder="가게 이름을 적어주세요"
-            ></input>
+      <div className='filtering-place'>
+        <form className='filtering-form' ref={filterForm}>
+          <div className='filtering-input'>
+            <input type='text' name='place_name' placeholder='가게 이름을 적어주세요'></input>
           </div>
-          <div className="filtering-select">
-            <select name="select_person">
-              <option value="">유튜버</option>
+          <div className='filtering-select'>
+            <select name='select_person'>
+              <option value=''>유튜버</option>
               {gdata.youtuber.map((person, idx) => {
                 return (
                   <option key={idx} value={person}>
@@ -71,8 +77,8 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
                 );
               })}
             </select>
-            <select name="select_area">
-              <option value="">지역</option>
+            <select name='select_area'>
+              <option value=''>지역</option>
               {gdata.area.map((each_area, idx) => {
                 return (
                   <option key={idx} value={each_area}>
@@ -82,19 +88,19 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
               })}
             </select>
           </div>
-          <button className="filtering-submit">
-            <i className="fa-solid fa-magnifying-glass">
+          <button className='filtering-submit'>
+            <i className='fa-solid fa-magnifying-glass'>
               <span>검색</span>
             </i>
           </button>
         </form>
       </div>
       {loading === false ? (
-        <div className="loading-modal">
-          <div className="loading"></div>
+        <div className='loading-modal'>
+          <div className='loading'></div>
         </div>
       ) : (
-        <div id="map" style={{ width: "100%" }}></div>
+        <div id='map' style={{ width: '100%' }}></div>
       )}
     </>
   );
