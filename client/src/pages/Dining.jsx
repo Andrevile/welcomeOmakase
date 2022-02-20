@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 
-import NaverMap from "../components/NaverMap";
-import IntroInfo from "./IntroInfo";
+import NaverMap from 'components/NaverMap';
+import IntroInfo from 'components/IntroInfo';
 const Dining = () => {
   const [currentPlace, setPlace] = useState();
   const movetoIntro = useRef(null);
-  useEffect(() => {}, []);
 
   useEffect(() => {
     let Timer;
     if (currentPlace) {
       Timer = setTimeout(() => {
         movetoIntro.current.scrollIntoView({
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       }, 100);
     }
@@ -21,11 +20,11 @@ const Dining = () => {
     };
   }, [currentPlace]);
   return (
-    <div className="dining-container">
-      <div className="menu-title-container">
+    <div className='dining-container'>
+      <div className='menu-title-container'>
         <p>맛집 검색</p>
       </div>
-      <div className="map-container">
+      <div className='map-container'>
         <NaverMap setPlace={setPlace}></NaverMap>
       </div>
       <div ref={movetoIntro}></div>

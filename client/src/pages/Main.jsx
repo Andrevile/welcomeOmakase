@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { datafilter } from '../module/redux/filtering';
+import { datafilter } from 'redux/actions/filtering';
 import { profileList } from 'static/constants/profileList';
 const Main = ({ data_filter }) => {
   return (

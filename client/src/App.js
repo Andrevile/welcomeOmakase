@@ -2,13 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { withCookies, useCookies } from 'react-cookie';
 import NavBar from 'components/NavBar';
-import Main from 'components/Main';
-import Dining from 'components/Dining';
-import NotFound from 'components/NotFound';
-import SignUp from 'components/SignUp';
-import SignIn from 'components/SignIn';
+
+import NotFound from 'pages/NotFound';
+
 import Modal from 'components/Modal';
-import Share from 'components/Share';
+
+import Main from 'pages/Main';
+import Dining from 'pages/Dining';
+import Share from 'pages/Share';
+import SignUp from 'pages/SignUp';
+import SignIn from 'pages/SignIn';
+
 import './App.css';
 function App() {
   const [modalOff, modalOn] = useState(false);
