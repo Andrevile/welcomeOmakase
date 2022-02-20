@@ -37,7 +37,7 @@ const Main = ({ data_filter }) => {
                       <img src={'img/youtuber/' + profile.name + '.jpeg'} alt={profile}></img>
                       <p className='tiles-profile-title'>{profile.name}</p>
                       <p className='tiles-profile-intro'>{'(' + profile.intro + ')'}</p>
-                      <p style={{ marginTop: '10px' }}>
+                      <p className='tiles-profile-sub' style={{ marginTop: '10px' }}>
                         구독자: <span>{profile.sub}</span>
                       </p>
                     </div>

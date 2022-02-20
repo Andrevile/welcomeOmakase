@@ -123,7 +123,7 @@ td {
   --color-red: #b22222;
   --color-beige: #d2b69e;
   --color-blue: #567593;
-  --color-black: #3d3d3d;
+  --color-black: black;
   --box-padding: 3rem 0;
   /* z-index */
   --modal-index: 10;
@@ -159,10 +159,10 @@ textarea {
   color: var(--color-black);
 }
 
-button {
-  background: none;
-  border: none;
-}
+// button {
+//   background: none;
+//   border: none;
+// }
 
 @media only screen and (min-width: 368px) {
   /* PC버전 rem 상대단위 기준점 */

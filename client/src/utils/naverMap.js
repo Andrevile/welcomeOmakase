@@ -2,27 +2,27 @@ export const contentString = (data) => {
   //네이버 infoWindow 스타일 문자열 반환.
   const arr = [
     `<div class="iw_inner"style=" padding-top:5px; font-size: 10px; width:200px; height: 100px;  box-sizing:border-box;">
-    <div style="padding: 3px 3px;">
-    <div style="margin:0 auto;">
-    <h3 style="font-size:12px; text-align:center; margin: 0;">${data.place_name}</h3>
-    </div>
-    <div style="margin: 0 auto;  height:auto; padding: 10px; ">
-      <img
-        src="${data.place_imgPath}"
-        width="100%"
-        alt=${data.place_name}
-        class="thumb"
-        style="padding:0; margin:0;"
-      />
-    </div>
-    <div style="width: 100%; padding:5px;">
-    <p style="margin: 0;"> 주소:</p>
-    <p style="margin: 0;">${data.place_position}ㅎㅂㄷㅎㄱㄷㅂㅎㅂㄷㅎㄱㅂㅎㅂㄷㅎㄱㅂㄷㅎㄱㅎㄷㅂㄱㅎㅂ</p>
-    </div>
-    
-    </div>
-    </div>
-  </div>`,
+      <div style="padding: 3px 3px;">
+      <div style="margin:0 auto;">
+      <h3 style="font-size:12px; text-align:center; margin: 0;">${data.place_name}</h3>
+      </div>
+      <div style="margin: 0 auto;  height:auto; padding: 10px; ">
+        <img
+          src="${data.place_imgPath}"
+          width="100%"
+          alt=${data.place_name}
+          class="thumb"
+          style="padding:0; margin:0;"
+        />
+      </div>
+      <div style="width: 100%; padding:5px;">
+      <p style="margin: 0;"> 주소:</p>
+      <p style="margin: 0;">${data.place_position}ㅎㅂㄷㅎㄱㄷㅂㅎㅂㄷㅎㄱㅂㅎㅂㄷㅎㄱㅂㄷㅎㄱㅎㄷㅂㄱㅎㅂ</p>
+      </div>
+      
+      </div>
+      </div>
+    </div>`,
   ];
   return arr;
 };
