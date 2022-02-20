@@ -2,7 +2,7 @@
   width: 100%;
   position: relative;
   height: 500px;
-  background-image: url('../../public/jumbo-picture4.jpeg');
+  background-image: url('static/assets/img/jumbo/jumbo-picture4.jpeg');
   background-size: 100%;
   background-repeat: no-repeat;
   background-size: cover;

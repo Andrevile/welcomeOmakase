@@ -21,7 +21,9 @@ router.post('/', async (req, res, next) => {
   try {
     let places;
     places = await Place.find(filter_condition);
+    console.log(new Date());
     console.log(places);
+    console.log('==================================================================');
     res.json({ data: places });
   } catch (err) {
     console.error(err);
