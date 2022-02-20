@@ -1,31 +1,32 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { callMap, Markerfilter } from '../module/naverMap';
+import { callMap, Markerfilter } from 'utils/naverMap';
 import { Axios } from 'utils/axiosmodule';
 import { connect } from 'react-redux';
-import { datafilter } from '../module/redux/filtering';
+import { datafilter } from 'redux/actions/filtering';
 import { filter_condition_form } from 'static/constants/filteringConditionForm';
 import { gdata } from 'static/constants/gdata';
+import useFormData from 'hooks/useFormData';
 const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
   const [loading, loadingState] = useState(false);
+  const { values, changeHandler } = useFormData({
+    initialValues: {
+      place_name: '',
+      youtuber: '',
+      place_position: '',
+    },
+  });
 
-  const filterForm = useRef();
   async function fetchData(condition) {
     let res = await Axios('/api/places', 'POST', condition);
     return res;
   }
-
-  async function filterData(e) {
+  const filterSubmit = async (e) => {
     e.preventDefault();
-    let condition = {
-      place_name: this.place_name.value,
-      youtuber: this.select_person.value,
-      place_position: this.select_area.value,
-    };
-    data_filter(condition);
-    let res = await Axios('/api/places', 'POST', condition);
+    data_filter(values);
+    let res = await Axios('/api/places', 'POST', values);
     res = await res.data;
     Markerfilter(res);
-  }
+  };
 
   useEffect(() => {
     loadingState(
@@ -35,7 +36,6 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
       })
     );
 
-    filterForm.current.addEventListener('submit', filterData);
     return () => {
       data_filter({
         place_name: '',
@@ -58,17 +58,21 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
     return () => {
       clearTimeout(T);
     };
-  }, [filter_condition]);
+  }, []);
+
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
 
   return (
     <>
       <div className='filtering-place'>
-        <form className='filtering-form' ref={filterForm}>
+        <form className='filtering-form' onSubmit={filterSubmit}>
           <div className='filtering-input'>
-            <input type='text' name='place_name' placeholder='가게 이름을 적어주세요'></input>
+            <input type='text' name='place_name' placeholder='가게 이름을 적어주세요' onChange={changeHandler}></input>
           </div>
           <div className='filtering-select'>
-            <select name='select_person'>
+            <select name='youtuber' onChange={changeHandler}>
               <option value=''>유튜버</option>
               {gdata.youtuber.map((person, idx) => {
                 return (
@@ -78,7 +82,7 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
                 );
               })}
             </select>
-            <select name='select_area'>
+            <select name='place_position' onChange={changeHandler}>
               <option value=''>지역</option>
               {gdata.area.map((each_area, idx) => {
                 return (
