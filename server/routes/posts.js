@@ -1,5 +1,5 @@
-const express = require("express");
-const Post = require("../schemas/post");
+const express = require('express');
+const Post = require('../db/schemas/post');
 const router = express.Router();
 
 module.exports = router;

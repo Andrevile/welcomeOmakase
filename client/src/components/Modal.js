@@ -1,20 +1,20 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Modal = ({ modalOn }) => {
   let navigate = useNavigate();
   let modalRef = useRef();
   return (
     <div
-      className="modal"
+      className='modal'
       ref={modalRef}
       onClick={(e) => {
         return modalRef.current === e.target ? modalOn(false) : null;
       }}
     >
-      <div className="modal-body">
-        <header className="modal-header">
+      <div className='modal-body'>
+        <header className='modal-header'>
           <button
-            className="modal-close"
+            className='modal-close'
             onClick={() => {
               modalOn(false);
             }}
@@ -22,14 +22,14 @@ const Modal = ({ modalOn }) => {
             닫기
           </button>
         </header>
-        <section className="modal-contents">
+        <section className='modal-contents'>
           <p>로그인이 필요한 페이지 입니다.</p>
         </section>
-        <footer className="modal-footer">
+        <footer className='modal-footer'>
           <button
             onClick={() => {
               modalOn(false);
-              navigate("/signin");
+              navigate('/signin');
             }}
           >
             로그인
@@ -37,7 +37,7 @@ const Modal = ({ modalOn }) => {
           <button
             onClick={() => {
               modalOn(false);
-              navigate("/signup");
+              navigate('/signup');
             }}
           >
             회원가입
