@@ -5,7 +5,7 @@ import NavBar from 'components/NavBar';
 
 import NotFound from 'pages/NotFound';
 
-import Modal from 'components/Modal';
+import Modal from 'components/Common/Modal';
 
 import Main from 'pages/Main';
 import Dining from 'pages/Dining';
