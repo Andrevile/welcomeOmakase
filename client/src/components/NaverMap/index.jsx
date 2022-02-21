@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { callMap, Markerfilter } from 'utils/naverMap';
 import { Axios } from 'utils/axiosmodule';
 import { connect } from 'react-redux';
@@ -6,7 +6,10 @@ import { datafilter } from 'redux/actions/filtering';
 import { filter_condition_form } from 'static/constants/filteringConditionForm';
 import { gdata } from 'static/constants/gdata';
 import useFormData from 'hooks/useFormData';
-const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
+import SelectBox from './SelectBox';
+import Loading from 'components/Common/Loading';
+
+function NaverMap({ setPlace, data_filter, filter_condition }) {
   const [loading, loadingState] = useState(false);
   const { values, changeHandler } = useFormData({
     initialValues: {
@@ -16,18 +19,6 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
     },
   });
 
-  async function fetchData(condition) {
-    let res = await Axios('/api/places', 'POST', condition);
-    return res;
-  }
-  const filterSubmit = async (e) => {
-    e.preventDefault();
-    data_filter(values);
-    let res = await Axios('/api/places', 'POST', values);
-    res = await res.data;
-    Markerfilter(res);
-  };
-
   useEffect(() => {
     loadingState(
       fetchData(filter_condition_form).then((res) => {
@@ -35,17 +26,6 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
         return loading;
       })
     );
-
-    return () => {
-      data_filter({
-        place_name: '',
-        youtuber: '',
-        place_position: '',
-      });
-    };
-  }, []);
-
-  useEffect(() => {
     let T;
     (async function (filter_condition) {
       T = setTimeout(async () => {
@@ -56,13 +36,27 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
     })(filter_condition);
 
     return () => {
+      data_filter({
+        place_name: '',
+        youtuber: '',
+        place_position: '',
+      });
       clearTimeout(T);
     };
-  }, []);
+  }, [data_filter, filter_condition, setPlace]);
 
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
+  const fetchData = async (condition) => {
+    let res = await Axios('/api/places', 'POST', condition);
+    return res;
+  };
+
+  const filterSubmit = async (e) => {
+    e.preventDefault();
+    data_filter(values);
+    let res = await Axios('/api/places', 'POST', values);
+    res = await res.data;
+    Markerfilter(res);
+  };
 
   return (
     <>
@@ -72,26 +66,8 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
             <input type='text' name='place_name' placeholder='가게 이름을 적어주세요' onChange={changeHandler}></input>
           </div>
           <div className='filtering-select'>
-            <select name='youtuber' onChange={changeHandler}>
-              <option value=''>유튜버</option>
-              {gdata.youtuber.map((person, idx) => {
-                return (
-                  <option key={idx} value={person}>
-                    {person}
-                  </option>
-                );
-              })}
-            </select>
-            <select name='place_position' onChange={changeHandler}>
-              <option value=''>지역</option>
-              {gdata.area.map((each_area, idx) => {
-                return (
-                  <option key={idx} value={each_area}>
-                    {each_area}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectBox name='yotuber' text='유튜버' data={gdata.youtuber} changeHandler={changeHandler}></SelectBox>
+            <SelectBox name='place_position' text='지역' data={gdata.area} changeHandler={changeHandler}></SelectBox>
           </div>
           <button className='filtering-submit'>
             <i className='fa-solid fa-magnifying-glass'>
@@ -100,18 +76,11 @@ const NaverMap = ({ setPlace, data_filter, filter_condition }) => {
           </button>
         </form>
       </div>
-      {loading === false ? (
-        <div className='loading-modal'>
-          <div className='loading'></div>
-        </div>
-      ) : (
-        <div id='map' style={{ width: '100%' }}></div>
-      )}
+      {loading === false ? <Loading></Loading> : <div id='map' style={{ width: '100%' }}></div>}
     </>
   );
-};
+}
 
-// export default NaverMap;
 export default connect(
   (state) => ({
     filter_condition: {

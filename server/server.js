@@ -12,6 +12,8 @@ const postsRouter = require('./routes/posts');
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
 const { passportConfig, passportVerify, JWTConfig, JWTVerify } = require('./module/auth');
+
+
 dotenv.config();
 const app = express();
 
