@@ -23,8 +23,8 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
             </Link>
           </div>
           <ul className='main-menu toggle'>
-            <MenuItem path='/' text='소개'></MenuItem>
-            <MenuItem path='/dining' text='맛집'></MenuItem>
+            <MenuItem path='/' text='소개' />
+            <MenuItem path='/dining' text='맛집' />
 
             <li className='menu-item'>
               <NavLink
@@ -38,14 +38,13 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
                         modalOn(true);
                       }
                 }
-              >
-                공유
-              </NavLink>
+              />
+              공유
             </li>
           </ul>
 
-          <SmSideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie}></SmSideMenu>
-          <SideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie}></SideMenu>
+          <SmSideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} />
+          <SideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} />
         </div>
       </div>
     </div>

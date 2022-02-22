@@ -39,12 +39,12 @@ function App() {
       <NavBar hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} modalOn={modalOn}></NavBar>
 
       <Routes>
-        <Route path='/' element={<Main></Main>}></Route>
-        <Route path='/dining' element={<Dining></Dining>}></Route>
-        <Route path='/signup' element={<SignUp></SignUp>}></Route>
-        <Route path='/signin' element={<SignIn setHasCookie={setHasCookie}></SignIn>}></Route>
-        <Route path='/share' element={<Share></Share>}></Route>
-        <Route path='*' element={<NotFound></NotFound>}></Route>
+        <Route path='/' element={<Main />}></Route>
+        <Route path='/dining' element={<Dining />}></Route>
+        <Route path='/signup' element={<SignUp />}></Route>
+        <Route path='/signin' element={<SignIn setHasCookie={setHasCookie} />}></Route>
+        <Route path='/share' element={<Share />}></Route>
+        <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </div>
   );
