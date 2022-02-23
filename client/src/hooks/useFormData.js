@@ -7,9 +7,6 @@ const useFormData = ({ initialValues }) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
-  useEffect(() => {
-    console.log(values);
-  }, []);
 
   return {
     values,

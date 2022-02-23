@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { datafilter } from 'redux/actions/filtering';
 import { profileList } from 'static/constants/profileList';
+import { defaultCondition } from 'static/constants/defaultCondition';
+import Profile from 'components/Profile';
+
 const Main = ({ data_filter }) => {
+  const onClickHandler = (name) => () => {
+    data_filter({ ...defaultCondition, youtuber: name });
+  };
   return (
     <>
       <div className='Jumbo'>
@@ -18,32 +24,7 @@ const Main = ({ data_filter }) => {
           <div className='tiles-title'>LIST</div>
           <ul>
             {profileList.map((profile, idx) => {
-              return (
-                <Link
-                  key={idx}
-                  to='/dining'
-                  className='tiles-card'
-                  onClick={async (e) => {
-                    let condition = {
-                      place_name: '',
-                      youtuber: profile.name,
-                      place_position: '',
-                    };
-                    data_filter(condition);
-                  }}
-                >
-                  <li>
-                    <div className='tiles-profile-picture'>
-                      <img src={'img/youtuber/' + profile.name + '.jpeg'} alt={profile}></img>
-                      <p className='tiles-profile-title'>{profile.name}</p>
-                      <p className='tiles-profile-intro'>{'(' + profile.intro + ')'}</p>
-                      <p className='tiles-profile-sub' style={{ marginTop: '10px' }}>
-                        구독자: <span>{profile.sub}</span>
-                      </p>
-                    </div>
-                  </li>
-                </Link>
-              );
+              return <Profile key={idx} profile={profile} handler={onClickHandler} />;
             })}
           </ul>
         </div>
