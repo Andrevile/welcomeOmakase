@@ -25,7 +25,6 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
           <ul className='main-menu toggle'>
             <MenuItem path='/' text='소개' />
             <MenuItem path='/dining' text='맛집' />
-
             <li className='menu-item'>
               <NavLink
                 to='/share'
@@ -38,8 +37,9 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
                         modalOn(true);
                       }
                 }
-              />
-              공유
+              >
+                공유
+              </NavLink>
             </li>
           </ul>
 
