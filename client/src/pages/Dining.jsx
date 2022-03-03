@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import Layout from 'components/Common/Layout';
 import NaverMap from 'components/NaverMap';
 import IntroInfo from 'components/IntroInfo';
+import PageTitle from 'components/Common/PageTitle';
+
 const Dining = () => {
   const [currentPlace, setPlace] = useState();
   const movetoIntro = useRef(null);
@@ -20,17 +23,15 @@ const Dining = () => {
     };
   }, [currentPlace]);
   return (
-    <div className='dining-container'>
-      <div className='menu-title-container'>
-        <p>맛집 검색</p>
-      </div>
+    <Layout>
+      <PageTitle>맛집검색</PageTitle>
       <div className='map-container'>
         <NaverMap setPlace={setPlace}></NaverMap>
       </div>
       <div ref={movetoIntro}></div>
 
       <IntroInfo placeIntro={currentPlace}></IntroInfo>
-    </div>
+    </Layout>
   );
 };
 
