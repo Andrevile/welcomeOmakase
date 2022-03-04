@@ -101,7 +101,7 @@
     margin-right: 5px;
   }
   .SignUp-btn::before {
-    content: "/";
+    content: '/';
     position: relative;
     right: 10px;
   }

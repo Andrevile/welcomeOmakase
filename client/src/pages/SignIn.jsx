@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Axios } from 'utils/axiosmodule';
 import { useNavigate } from 'react-router-dom';
 import InputBox from 'components/Auth/InputBox';
 import SignLogo from 'components/Auth/SignLogo';
 import useFormData from 'hooks/useFormData';
+import userSlice from 'redux/reducers/userSlice';
 const SignIn = ({ setHasCookie }) => {
+  const { user, isLogginIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { values, changeHandler } = useFormData({
     initialValues: { user_ID: '', user_PW: '' },
   });
@@ -14,10 +18,9 @@ const SignIn = ({ setHasCookie }) => {
   const dataSubmit = async (e) => {
     e.preventDefault();
     setWarning('');
-
     let res = await Axios('/api/users/signin', 'POST', values);
-    console.log(res);
     if (res.token) {
+      dispatch(userSlice.actions.logIn({ user_ID: values.user_ID }));
       setHasCookie(true);
       navigate('/');
     } else {

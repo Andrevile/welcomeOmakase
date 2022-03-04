@@ -11,6 +11,7 @@ const useFormData = ({ initialValues }) => {
   return {
     values,
     changeHandler,
+    setValues,
   };
 };
 
