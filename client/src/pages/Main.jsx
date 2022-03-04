@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { profileList } from 'static/constants/profileList';
@@ -11,11 +11,12 @@ const Main = () => {
   const onClickHandler = (name) => () => {
     dispatch(filteringSlice.actions.datafilter({ ...defaultCondition, youtuber: name }));
   };
+
   return (
     <>
       <div className='Jumbo'>
         <div className='Jumbo-description'>
-          <h1>이랏샤이 おまかせ</h1>
+          <p className='Jumbo-title'>이랏샤이 おまかせ</p>
           <p>먹을거에 목숨 건 유튜버들 추천 리스트...</p>
         </div>
       </div>

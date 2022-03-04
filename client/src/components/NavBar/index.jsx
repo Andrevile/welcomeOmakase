@@ -38,7 +38,7 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
                       }
                 }
               >
-                공유
+                글 목록
               </NavLink>
             </li>
           </ul>

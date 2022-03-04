@@ -8,7 +8,7 @@
 @import url('static/styles/SignUp.css');
 @import url('static/styles/SignIn.css');
 @import url('static/styles/Loading.css');
-@import url('static/styles/Share.css');
+
 :root {
   --text-color: black;
   --font-size: 16px;
@@ -19,16 +19,4 @@
 
 body {
   min-width: 330px;
-}
-
-.menu-title-container {
-  height: 50px;
-  display: flex;
-  align-items: center;
-}
-
-.menu-title-container > p {
-  font-family: var(--font-normal);
-  font-weight: bold;
-  font-size: 30px;
 }
