@@ -38,7 +38,7 @@ router.post('/signin', async (req, res, next) => {
           expiresIn: '1d',
         });
 
-        res.cookie('user', token);
+        res.cookie('user', { user: user.user_ID, token: token });
         res.status(201).json({
           message: 'OK',
           token,

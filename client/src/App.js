@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { withCookies, useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import userSlice from 'redux/reducers/userSlice';
 import NavBar from 'components/NavBar';
 
 import NotFound from 'pages/NotFound';
@@ -19,10 +21,14 @@ function App() {
   const [cookies, removeCookie] = useCookies(['user']);
   const [hasCookie, setHasCookie] = useState(false);
   const appRef = useRef();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (cookies.user && cookies.user !== 'undefined') {
       setHasCookie(true);
+      let alreadyLogIn = { ...cookies.user };
+
+      dispatch(userSlice.actions.logIn({ user_ID: alreadyLogIn.user }));
     }
   }, [cookies]);
 

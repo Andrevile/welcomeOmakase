@@ -1,1 +1,4 @@
-const { createAsyncThunk } = require('@reduxjs/toolkit');
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+
+const likePost = createAsyncThunk('')
