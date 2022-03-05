@@ -8,10 +8,13 @@ const ImagesWrapper = styled.div`
   align-items: center;
   border: 1px solid #f0f0f0;
   backgroundcolor: #f0f0f0;
+  position: relative;
 `;
 const ShowMoreImg = styled.div`
   width: 50%;
   text-align: center;
+  height: 100%;
+  cursor: pointer;
 `;
 
 function PostImages({ images }) {
