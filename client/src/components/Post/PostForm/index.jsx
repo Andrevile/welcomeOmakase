@@ -31,6 +31,7 @@ function PostForm() {
   return (
     <FormWrapper encType='multipart/form-data' onFinish={onSubmit}>
       <Input.TextArea
+        style={{ fontSize: 18 }}
         placeholder='후기를 남겨주세요.'
         autoSize={{ minRows: 3, maxRows: 5 }}
         value={values.content}

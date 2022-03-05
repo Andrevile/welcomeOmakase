@@ -24,19 +24,18 @@ const initialState = {
       user: 'abg1000',
       content: 'test',
       images: [{ src: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E' }],
-      comments: [
-        {
-          user: 'errrrrrr',
-          content: '웕',
-        },
-      ],
+      comments: [],
       likes: ['test', 'test2'],
     },
     {
       id: 3,
       user: 'test123456789',
       content: 'test',
-      images: [{ src: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E' }],
+      images: [
+        { src: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E' },
+        { src: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E' },
+        { src: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E' },
+      ],
       comments: [
         {
           user: 'errrrrrr',

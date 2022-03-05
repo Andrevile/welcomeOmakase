@@ -2,20 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card, Popover, Button, List, Space } from 'antd';
 
-import {
-  CommentOutlined,
-  EllipsisOutlined,
-  LikeTwoTone,
-  MessageOutlined,
-  LikeOutlined,
-  StarOutlined,
-} from '@ant-design/icons';
+import { CommentOutlined, EllipsisOutlined, LikeTwoTone, LikeOutlined } from '@ant-design/icons';
+
+import CommentArea from 'components/Post/CommentArea';
 import styled from 'styled-components';
 import PostImages from './PostImages';
 import IconText from './IconText';
+import PostWriter from './PostWriter';
 const CardWrapper = styled.div`
   border: 1px solid #d9d9d9;
-  margin-bottom: 20px;
 `;
 
 function PostCard({ post }) {
@@ -28,54 +23,75 @@ function PostCard({ post }) {
   }, []);
 
   const onToggleLike = useCallback(() => {
-    console.log('ger');
     setLikes(!likes);
   }, [setLikes, likes]);
 
   const onToggleComment = useCallback(() => {
-    console.log('gertew');
     setComment(!comment);
   }, [setComment, comment]);
   return (
-    <CardWrapper>
-      <Card
-        cover={post.images[0] && <PostImages images={post.images}></PostImages>}
-        actions={[
-          <IconText key='comment' icon={<CommentOutlined />} text={post.comments.length} handler={onToggleComment} />,
-          likes ? (
-            <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
-          ) : (
-            <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
-          ),
-          <Popover
-            key='ellipsis'
-            content={
-              <Button.Group>
-                {user && post.user === user.user_ID ? (
-                  <>
-                    <Button>수정</Button>
-                    <Button type='danger'>삭제</Button>
-                  </>
-                ) : (
-                  <Button>신고</Button>
-                )}
-              </Button.Group>
-            }
+    <div style={{ marginBottom: 20 }}>
+      <CardWrapper>
+        {user && post.user === user.user_ID ? (
+          <Card
+            cover={post.images[0] && <PostImages images={post.images}></PostImages>}
+            actions={[
+              <IconText
+                key='comment'
+                icon={<CommentOutlined />}
+                text={post.comments.length}
+                handler={onToggleComment}
+              />,
+              likes ? (
+                <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
+              ) : (
+                <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
+              ),
+              user && post.user === user.user_ID && (
+                <Popover
+                  key='ellipsis'
+                  content={
+                    <Button.Group>
+                      <>
+                        <Button>수정</Button>
+                        <Button type='danger'>삭제</Button>
+                      </>
+                    </Button.Group>
+                  }
+                >
+                  <EllipsisOutlined />
+                </Popover>
+              ),
+            ]}
           >
-            <EllipsisOutlined />
-          </Popover>,
-        ]}
-      >
-        <Card.Meta
-          description={post.content}
-          title={
-            <>
-              <span style={{ fontWeight: 'bold' }}>{`글쓴이:\u00A0 ${post.user}`}</span>
-            </>
-          }
-        ></Card.Meta>
-      </Card>
-    </CardWrapper>
+            <Card.Meta
+              description={post.content} //PostContent 컴포넌트 삽입 할 공간
+              title={<PostWriter postUser={post.user} />}
+            ></Card.Meta>
+          </Card>
+        ) : (
+          <Card
+            cover={post.images[0] && <PostImages images={post.images}></PostImages>}
+            actions={[
+              <IconText
+                key='comment'
+                icon={<CommentOutlined />}
+                text={post.comments.length}
+                handler={onToggleComment}
+              />,
+              likes ? (
+                <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
+              ) : (
+                <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
+              ),
+            ]}
+          >
+            <Card.Meta description={post.content} title={<PostWriter postUser={post.user} />}></Card.Meta>
+          </Card>
+        )}
+      </CardWrapper>
+      {comment && <CommentArea comments={post.comments}></CommentArea>}
+    </div>
   );
 }
 

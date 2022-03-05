@@ -100,6 +100,7 @@ body {
   /* 스크롤바 제거 */
   -ms-overflow-style: none;
   scrollbar-width: none;
+  user-select: none;
 }
 body::-webkit-scrollbar {
   display: none;
@@ -136,7 +137,7 @@ td {
 /** global css **/
 html {
   /* 모바일버전 rem 상대단위 기준점 */
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
