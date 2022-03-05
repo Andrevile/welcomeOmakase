@@ -69,13 +69,13 @@ const SlickWrapper = styled.div`
 `;
 
 const ImgWrapper = styled.div`
-  padding: 32px;
+  padding: 0px 32px 32px 32px;
   text-align: center;
 
   & img {
     margin: 0 auto;
     max-height: 750px;
-    width: 100%;
+    width: 80%;
   }
 `;
 
