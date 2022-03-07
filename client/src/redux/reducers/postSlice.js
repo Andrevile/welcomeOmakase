@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addPost, deletePost, loadPosts } from 'redux/actions/post';
+import { addPost, deletePost, loadPosts, addComment } from 'redux/actions/post';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import _concat from 'lodash/concat';
 import _remove from 'lodash/remove';
@@ -24,6 +24,14 @@ const initialState = {
   removeCommentDone: false,
   removeCommentError: null,
 };
+
+//type
+// id: shortid.generate(),
+// user: shortid.generate(),
+// content: faker.lorem.paragraph(),
+// images: [{ src: faker.image.image() }],
+// comments: [{ user: shortid.generate(), content: faker.lorem.paragraph() }],
+// likes: [shortid.generate(), shortid.generate()],
 
 const postSlice = createSlice({
   name: 'post',
@@ -72,12 +80,32 @@ const postSlice = createSlice({
         state.removePostLoading = false;
         state.removePostDone = true;
         state.removePostError = null;
-        state.posts = state.posts.filter((post) => post.id !== action.payload);
+        state.posts = _remove(state.posts, (post) => post.id !== action.payload);
+        // state.posts = state.posts.filter((post) => post.id !== action.payload);
       })
       .addCase(deletePost.rejected, (state, action) => {
         state.removePostLoading = true;
         state.removePostDone = false;
         state.removePostError = action.error.message;
+      }) // 댓글 작성
+      .addCase(addComment.pending, (state) => {
+        state.addCommentLoading = true;
+        state.addCommentDone = false;
+        state.addCommentError = null;
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        const post = _find(state.posts, { id: action.payload.id });
+        state.addCommentLoading = false;
+        state.addCommentDone = true;
+        state.addCommentError = null;
+        post.comments = _concat([action.payload.comment], post.comments);
+
+        // state.posts = state.posts.filter((post) => post.id !== action.payload);
+      })
+      .addCase(addComment.rejected, (state, action) => {
+        state.addCommentLoading = true;
+        state.addCommentDone = false;
+        state.addCommentError = action.error.message;
       }),
 });
 

@@ -10,10 +10,10 @@ const CommentItem = styled(Comment)`
     font-size: 18px;
   }
 `;
-function CommentArea({ comments }) {
+function CommentArea({ post, comments }) {
   return (
     <>
-      <CommentForm />
+      <CommentForm post={post} />
       <List
         style={{ fontSize: 16, padding: '0px 3px' }}
         header={`${comments.length}개의 댓글`}
