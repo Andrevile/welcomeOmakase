@@ -8,7 +8,7 @@ export const generateDummyPost = (number) => {
       user: shortid.generate(),
       content: faker.lorem.paragraph(),
       images: [{ src: faker.image.image() }],
-      comments: [{ user: shortid.generate(), content: faker.lorem.paragraph() }],
+      comments: [{ id: shortid.generate(), user: shortid.generate(), content: faker.lorem.paragraph() }],
       likes: [shortid.generate(), shortid.generate()],
     }));
 };
