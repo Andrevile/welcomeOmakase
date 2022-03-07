@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Axios } from 'utils/axiosmodule';
-import { connect } from 'react-redux';
-import { datafilter } from 'redux/actions/filtering';
+import { useSelector, useDispatch } from 'react-redux';
 import { defaultCondition } from 'static/constants/defaultCondition';
 import { gdata } from 'static/constants/gdata';
 import useFormData from 'hooks/useFormData';
@@ -10,8 +9,12 @@ import useCallMap from 'hooks/useCallMap';
 import Loading from 'components/Common/Loading';
 import Map from './Map';
 import useMarker from 'hooks/useMarker';
+import filteringSlice from 'redux/reducers/filteringSlice';
 
-function NaverMap({ setPlace, data_filter, filter_condition }) {
+function NaverMap({ setPlace }) {
+  const filter_condition = useSelector((state) => state.filtering);
+
+  const dispatch = useDispatch();
   const { mapRef, loading } = useCallMap();
   const { markerList, initMarker, markerFiltering } = useMarker(mapRef, setPlace, filter_condition);
   const { values, changeHandler } = useFormData({
@@ -35,8 +38,9 @@ function NaverMap({ setPlace, data_filter, filter_condition }) {
 
   useEffect(() => {
     return () => {
-      data_filter(defaultCondition);
+      dispatch(filteringSlice.actions.datafilter(defaultCondition));
       mapRef.current = null;
+      setPlace(null);
     };
   }, []);
 
@@ -63,17 +67,6 @@ function NaverMap({ setPlace, data_filter, filter_condition }) {
   );
 }
 
-export default connect(
-  (state) => ({
-    filter_condition: {
-      place_name: state.places.place_name,
-      youtuber: state.places.youtuber,
-      place_position: state.places.place_position,
-    },
-  }),
-  (dispatch) => ({
-    data_filter: (data) => dispatch(datafilter(data)),
-  })
-)(NaverMap);
+export default NaverMap;
 
 //여기에 리덕스 연결

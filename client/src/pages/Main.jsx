@@ -1,20 +1,22 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { datafilter } from 'redux/actions/filtering';
+import React, { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { profileList } from 'static/constants/profileList';
 import { defaultCondition } from 'static/constants/defaultCondition';
 import Profile from 'components/Profile';
+import filteringSlice from 'redux/reducers/filteringSlice';
 
-const Main = ({ data_filter }) => {
+const Main = () => {
+  const dispatch = useDispatch();
   const onClickHandler = (name) => () => {
-    data_filter({ ...defaultCondition, youtuber: name });
+    dispatch(filteringSlice.actions.datafilter({ ...defaultCondition, youtuber: name }));
   };
+
   return (
     <>
       <div className='Jumbo'>
         <div className='Jumbo-description'>
-          <h1>이랏샤이 おまかせ</h1>
+          <p className='Jumbo-title'>이랏샤이 おまかせ</p>
           <p>먹을거에 목숨 건 유튜버들 추천 리스트...</p>
         </div>
       </div>
@@ -32,14 +34,4 @@ const Main = ({ data_filter }) => {
     </>
   );
 };
-
-export default connect(
-  (state) => ({
-    place_name: state.places.place_name,
-    youtuber: state.places.youtuber,
-    place_position: state.places.place_position,
-  }),
-  (dispatch) => ({
-    data_filter: (data) => dispatch(datafilter(data)),
-  })
-)(Main);
+export default Main;

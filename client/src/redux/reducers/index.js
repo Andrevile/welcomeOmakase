@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import places from './filteringReducer';
+import filteringSlice from './filteringSlice';
+import postSlice from './postSlice';
+import userSlice from './userSlice';
 
 const rootReducer = combineReducers({
-  places,
+  filtering: filteringSlice.reducer,
+  post: postSlice.reducer,
+  user: userSlice.reducer,
 });
 
 export default rootReducer;

@@ -1,0 +1,11 @@
+.menu-title-container {
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+  & > p {
+    font-family: var(--font-normal);
+    font-weight: bold;
+    font-size: 30px;
+  }
+}

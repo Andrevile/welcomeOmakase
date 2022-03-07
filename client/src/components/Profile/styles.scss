@@ -1,0 +1,22 @@
+// .tiles-profile-picture {
+//   p {
+//     &:hover {
+//       color: black;
+//     }
+//   }
+// }
+.tiles-card {
+  &:hover {
+    color: black;
+  }
+}
+
+.tiles-profile-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > span {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+}

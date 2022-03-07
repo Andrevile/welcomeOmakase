@@ -42,6 +42,9 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
     Axios('/api/places', 'POST', filter_condition).then((res) => {
       initMarker(res.data);
     });
+    return () => {
+      setPlace(null);
+    };
   }, []);
 
   return { markerList, initMarker, markerFiltering };

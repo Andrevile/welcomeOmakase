@@ -25,7 +25,6 @@
 }
 .section .menu-group .title {
   margin-right: 10px;
-  margin-left: 20px;
 }
 .section .menu-group .title p {
   display: block;
@@ -100,8 +99,9 @@
   .side-menu > li:nth-child(1) {
     margin-right: 5px;
   }
+
   .SignUp-btn::before {
-    content: "/";
+    content: '/';
     position: relative;
     right: 10px;
   }
