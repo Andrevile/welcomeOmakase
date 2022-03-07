@@ -1,9 +1,14 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Form, Input, Upload, Button } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import useFormData from 'hooks/useFormData';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from 'redux/actions/post';
+import userSlice from 'redux/reducers/userSlice';
+import shortid from 'shortid';
 const FormWrapper = styled(Form)`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -20,10 +25,26 @@ function PostForm() {
   const imageInput = useRef(null);
   const { values, changeHandler, setValues } = useFormData({ initialValues: { content: '' } });
 
-  const onSubmit = useCallback(() => {
-    setValues({ content: '' });
-  }, []);
+  const { user } = useSelector((state) => state.user);
+  const { posts, addPostDone } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
 
+  const onSubmit = () => {
+    dispatch(
+      addPost({
+        id: shortid.generate(),
+        user: JSON.parse(localStorage.getItem('user')).user_ID,
+        content: values.content,
+        images: [],
+        comments: [],
+        likes: [],
+      })
+    );
+  };
+
+  useEffect(() => {
+    setValues({ content: '' });
+  }, [addPostDone]);
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);

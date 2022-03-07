@@ -40,6 +40,7 @@ function NaverMap({ setPlace }) {
     return () => {
       dispatch(filteringSlice.actions.datafilter(defaultCondition));
       mapRef.current = null;
+      setPlace(null);
     };
   }, []);
 

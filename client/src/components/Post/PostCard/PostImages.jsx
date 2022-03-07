@@ -9,6 +9,7 @@ const ImagesWrapper = styled.div`
   border: 1px solid #f0f0f0;
   backgroundcolor: #f0f0f0;
   position: relative;
+  cursor: pointer;
 `;
 const ShowMoreImg = styled.div`
   width: 50%;
@@ -33,6 +34,7 @@ function PostImages({ images }) {
     <>
       <div>
         <ImagesWrapper
+          onClick={onZoom}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -42,7 +44,7 @@ function PostImages({ images }) {
           }}
         >
           {images.length === 1 ? (
-            <img src={images[0].src} style={{ width: '100%' }} alt='포스트이미지' onClick={onZoom}></img>
+            <img src={images[0].src} style={{ width: '100%' }} alt='포스트이미지'></img>
           ) : images.length === 2 ? (
             images.map((img, idx) => {
               return (
@@ -57,8 +59,8 @@ function PostImages({ images }) {
             })
           ) : (
             <>
-              <img src={images[0].src} style={{ width: '50%' }} alt='포스트이미지' onClick={onZoom}></img>
-              <ShowMoreImg onClick={onZoom}>
+              <img src={images[0].src} style={{ width: '50%' }} alt='포스트이미지'></img>
+              <ShowMoreImg>
                 <PlusOutlined />
                 <br />
                 {images.length - 1}

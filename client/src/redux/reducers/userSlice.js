@@ -7,7 +7,7 @@ const dummyUser = {
 };
 const initialState = {
   isLogginIn: false,
-  user: dummyUser.user,
+  user: JSON.parse(localStorage.getItem('user')) || null,
 };
 
 const userSlice = createSlice({
@@ -16,10 +16,12 @@ const userSlice = createSlice({
   reducers: {
     logIn(state, action) {
       state.user = action.payload;
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
     logOut(state, action) {
       state.user = null;
       state.isLogginIn = false;
+      localStorage.removeItem('user');
     },
   },
   extraReducers: {},

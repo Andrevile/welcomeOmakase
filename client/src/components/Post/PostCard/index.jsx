@@ -47,21 +47,20 @@ function PostCard({ post }) {
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
               ),
-              user && post.user === user.user_ID && (
-                <Popover
-                  key='ellipsis'
-                  content={
-                    <Button.Group>
-                      <>
-                        <Button>수정</Button>
-                        <Button type='danger'>삭제</Button>
-                      </>
-                    </Button.Group>
-                  }
-                >
-                  <EllipsisOutlined />
-                </Popover>
-              ),
+
+              <Popover
+                key='ellipsis'
+                content={
+                  <Button.Group>
+                    <>
+                      <Button>수정</Button>
+                      <Button type='danger'>삭제</Button>
+                    </>
+                  </Button.Group>
+                }
+              >
+                <EllipsisOutlined />
+              </Popover>,
             ]}
           >
             <Card.Meta
