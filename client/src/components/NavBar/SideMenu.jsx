@@ -1,12 +1,15 @@
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import userSlice from 'redux/reducers/userSlice';
 
 function SideMenu({ hasCookie, removeCookie, setHasCookie }) {
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const onClickHandler = () => {
     setHasCookie(false);
     removeCookie('user');
     navigate('/');
+    dispatch(userSlice.actions.logOut());
   };
 
   return (

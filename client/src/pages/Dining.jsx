@@ -6,7 +6,7 @@ import IntroInfo from 'components/IntroInfo';
 import PageTitle from 'components/Common/PageTitle';
 
 const Dining = () => {
-  const [currentPlace, setPlace] = useState();
+  const [currentPlace, setPlace] = useState(null);
   const movetoIntro = useRef(null);
 
   useEffect(() => {

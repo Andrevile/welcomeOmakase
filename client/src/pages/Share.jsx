@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSeletor } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PageTitle from 'components/Common/PageTitle';
 import Layout from 'components/Common/Layout';
 import PostForm from 'components/Post/PostForm';
 import Posts from 'components/Post/Posts';
 import styled, { createGlobalStyle } from 'styled-components';
-
+import { loadPosts } from 'redux/actions/post';
 export const Global = createGlobalStyle`
   .slick-slide {
     display: inline-block;
@@ -23,6 +23,10 @@ export const Global = createGlobalStyle`
   
 `;
 const Share = () => {
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    console.log(user.user_ID);
+  }, []);
   return (
     <Layout>
       <Global />
