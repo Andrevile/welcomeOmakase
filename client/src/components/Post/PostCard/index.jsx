@@ -18,9 +18,6 @@ function PostCard({ post }) {
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  useEffect(() => {
-    console.log(post, user);
-  }, []);
 
   const onToggleLike = useCallback(() => {
     setLikes(!likes);
@@ -31,7 +28,6 @@ function PostCard({ post }) {
   }, [setComment, comment]);
 
   const deletePostHandler = useCallback(() => {
-    console.log(post.id);
     dispatch(deletePost(post.id));
   }, []);
   return (
@@ -96,7 +92,7 @@ function PostCard({ post }) {
           </Card>
         )}
       </CardWrapper>
-      {comment && <CommentArea comments={post.comments}></CommentArea>}
+      {comment && <CommentArea post={post} comments={post.comments}></CommentArea>}
     </div>
   );
 }
