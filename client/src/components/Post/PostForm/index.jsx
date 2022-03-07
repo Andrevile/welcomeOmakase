@@ -43,7 +43,9 @@ function PostForm() {
   };
 
   useEffect(() => {
-    setValues({ content: '' });
+    if (addPostDone) {
+      setValues({ content: '' });
+    }
   }, [addPostDone]);
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addPost, deletePost, loadPosts, addComment } from 'redux/actions/post';
+import { addPost, deletePost, loadPosts, addComment, deleteComment } from 'redux/actions/post';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import _concat from 'lodash/concat';
 import _remove from 'lodash/remove';
@@ -30,7 +30,7 @@ const initialState = {
 // user: shortid.generate(),
 // content: faker.lorem.paragraph(),
 // images: [{ src: faker.image.image() }],
-// comments: [{ user: shortid.generate(), content: faker.lorem.paragraph() }],
+// comments: [{ id: shorid.generate(), user: shortid.generate(), content: faker.lorem.paragraph() }],
 // likes: [shortid.generate(), shortid.generate()],
 
 const postSlice = createSlice({
@@ -99,13 +99,28 @@ const postSlice = createSlice({
         state.addCommentDone = true;
         state.addCommentError = null;
         post.comments = _concat([action.payload.comment], post.comments);
-
-        // state.posts = state.posts.filter((post) => post.id !== action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {
         state.addCommentLoading = true;
         state.addCommentDone = false;
         state.addCommentError = action.error.message;
+      }) // 댓글 삭제
+      .addCase(deleteComment.pending, (state) => {
+        state.removeCommentLoading = true;
+        state.removeCommentDone = false;
+        state.removeCommentError = null;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        const post = _find(state.posts, { id: action.payload.id });
+        state.removeCommentLoading = false;
+        state.removeCommentDone = true;
+        state.removeCommentError = null;
+        post.comments = _remove(post.comments, (comment) => comment.id !== action.payload.commentID);
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
+        state.removeCommentLoading = true;
+        state.removeCommentDone = false;
+        state.removeCommentError = action.error.message;
       }),
 });
 
