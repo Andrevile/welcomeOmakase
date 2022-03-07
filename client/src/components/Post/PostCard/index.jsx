@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Popover, Button, List, Space } from 'antd';
 
 import { CommentOutlined, EllipsisOutlined, LikeTwoTone, LikeOutlined } from '@ant-design/icons';
-
+import { deletePost } from 'redux/actions/post';
 import CommentArea from 'components/Post/CommentArea';
 import styled from 'styled-components';
 import PostImages from './PostImages';
@@ -16,7 +16,7 @@ const CardWrapper = styled.div`
 function PostCard({ post }) {
   const [likes, setLikes] = useState(false); // 리덕스로 연결 필요
   const [comment, setComment] = useState(false);
-
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
     console.log(post, user);
@@ -29,6 +29,11 @@ function PostCard({ post }) {
   const onToggleComment = useCallback(() => {
     setComment(!comment);
   }, [setComment, comment]);
+
+  const deletePostHandler = useCallback(() => {
+    console.log(post.id);
+    dispatch(deletePost(post.id));
+  }, []);
   return (
     <div style={{ marginBottom: 20 }}>
       <CardWrapper>
@@ -54,7 +59,9 @@ function PostCard({ post }) {
                   <Button.Group>
                     <>
                       <Button>수정</Button>
-                      <Button type='danger'>삭제</Button>
+                      <Button type='danger' onClick={deletePostHandler}>
+                        삭제
+                      </Button>
                     </>
                   </Button.Group>
                 }

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addPost, loadPosts } from 'redux/actions/post';
+import { addPost, deletePost, loadPosts } from 'redux/actions/post';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import _concat from 'lodash/concat';
 import _remove from 'lodash/remove';
@@ -62,6 +62,22 @@ const postSlice = createSlice({
       .addCase(addPost.rejected, (state, action) => {
         state.addPostLoading = false;
         state.addPostError = action.errror.message;
+      }) //글 삭제
+      .addCase(deletePost.pending, (state) => {
+        state.removePostLoading = true;
+        state.removePostDone = false;
+        state.removePostError = null;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.removePostLoading = false;
+        state.removePostDone = true;
+        state.removePostError = null;
+        state.posts = state.posts.filter((post) => post.id !== action.payload);
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.removePostLoading = true;
+        state.removePostDone = false;
+        state.removePostError = action.error.message;
       }),
 });
 
