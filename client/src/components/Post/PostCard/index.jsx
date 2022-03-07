@@ -46,7 +46,7 @@ function PostCard({ post }) {
               likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
               ) : (
-                <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
+                <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
               ),
 
               <Popover
@@ -84,7 +84,7 @@ function PostCard({ post }) {
               likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
               ) : (
-                <IconText key='liked' icon={<LikeOutlined />} text={post.comments.length} handler={onToggleLike} />
+                <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
               ),
             ]}
           >
