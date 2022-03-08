@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addPost, deletePost, loadPosts, addComment, deleteComment } from 'redux/actions/post';
+import {
+  addPost,
+  deletePost,
+  loadPosts,
+  addComment,
+  deleteComment,
+  likeAction,
+  unLikeAction,
+} from 'redux/actions/post';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import _concat from 'lodash/concat';
 import _remove from 'lodash/remove';
@@ -23,6 +31,13 @@ const initialState = {
   removeCommentLoading: false,
   removeCommentDone: false,
   removeCommentError: null,
+  likeToggle: false,
+  likeLoading: false,
+  likeDone: false,
+  likeError: null,
+  unLikeLoading: false,
+  unLikeDone: false,
+  unLikeError: null,
 };
 
 //type
@@ -31,7 +46,7 @@ const initialState = {
 // content: faker.lorem.paragraph(),
 // images: [{ src: faker.image.image() }],
 // comments: [{ id: shorid.generate(), user: shortid.generate(), content: faker.lorem.paragraph() }],
-// likes: [shortid.generate(), shortid.generate()],
+// likes: [ shortid.generate(), shortid.generate()],
 
 const postSlice = createSlice({
   name: 'post',
@@ -121,6 +136,42 @@ const postSlice = createSlice({
         state.removeCommentLoading = true;
         state.removeCommentDone = false;
         state.removeCommentError = action.error.message;
+      }) // 좋아요 추가
+      .addCase(likeAction.pending, (state) => {
+        state.likeLoading = true;
+        state.likeDone = false;
+        state.likeError = null;
+      })
+      .addCase(likeAction.fulfilled, (state, action) => {
+        const post = _find(state.posts, { id: action.payload.id });
+        state.likeLoading = false;
+        state.likeDone = true;
+        state.likeError = null;
+        state.likeToggle = true;
+        post.likes = _concat([action.payload.user], post.likes);
+      })
+      .addCase(likeAction.rejected, (state, action) => {
+        state.likeLoading = false;
+        state.likeDone = false;
+        state.likeError = action.error.message;
+      }) // 좋아요 취소
+      .addCase(unLikeAction.pending, (state) => {
+        state.unLikeLoading = true;
+        state.unLikeDone = false;
+        state.unLikeError = null;
+      })
+      .addCase(unLikeAction.fulfilled, (state, action) => {
+        const post = _find(state.posts, { id: action.payload.id });
+        state.unLikeLoading = false;
+        state.unLikeDone = true;
+        state.unLikeError = null;
+        state.likeToggle = false;
+        post.likes = _remove(post.likes, (like) => like !== action.payload.user);
+      })
+      .addCase(unLikeAction.rejected, (state, action) => {
+        state.unLikeLoading = false;
+        state.unLikeDone = false;
+        state.unLikeError = action.error.message;
       }),
 });
 

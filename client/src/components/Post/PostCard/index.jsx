@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Popover, Button, List, Space } from 'antd';
 
 import { CommentOutlined, EllipsisOutlined, LikeTwoTone, LikeOutlined } from '@ant-design/icons';
-import { deletePost } from 'redux/actions/post';
+import { deletePost, likeAction, unLikeAction } from 'redux/actions/post';
 import CommentArea from 'components/Post/CommentArea';
 import styled from 'styled-components';
 import PostImages from './PostImages';
@@ -14,15 +14,17 @@ const CardWrapper = styled.div`
 `;
 
 function PostCard({ post }) {
-  const [likes, setLikes] = useState(false); // 리덕스로 연결 필요
+  // const [likes, setLikes] = useState(false);
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-
+  const { likeToggle } = useSelector((state) => state.post);
   const onToggleLike = useCallback(() => {
-    setLikes(!likes);
-  }, [setLikes, likes]);
-
+    dispatch(likeAction({ id: post.id, user: user.user_ID }));
+  }, [likeToggle, post.likes]);
+  const onToggleUnLike = useCallback(() => {
+    dispatch(unLikeAction({ id: post.id, user: user.user_ID }));
+  }, [likeToggle, post.likes]);
   const onToggleComment = useCallback(() => {
     setComment(!comment);
   }, [setComment, comment]);
@@ -43,8 +45,8 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likes ? (
-                <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
+              likeToggle ? (
+                <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
               ),
@@ -81,8 +83,8 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likes ? (
-                <IconText key='liked' icon={<LikeTwoTone />} text={post.comments.length} handler={onToggleLike} />
+              likeToggle ? (
+                <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
               ),
