@@ -1,35 +1,23 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const imgSchema = new Schema({ src: { type: String } });
 const postSchema = new Schema({
   //스키마 정의
-  user_ID: {
-    //작성자
+  user: {
     type: String,
     required: true,
   },
-  place_name: {
-    //매장 명
+  content: {
     type: String,
     required: true,
   },
-  post_title: {
-    //글제목
+  content: {
     type: String,
     required: true,
   },
-  post_content: {
-    //글 내용
-    type: String,
-    required: true,
-  },
-  post_up: {
-    //따봉 업
-    type: Number,
-  },
-  post_down: {
-    //따봉 다운
-    type: Number,
-  },
+  images: [imgSchema],
+  comments: [String],
+  likes: [String],
 });
 
-module.exports = mongoose.model("Post", postSchema); //Post란 이름으로 모델 정의
+module.exports = mongoose.model('Post', postSchema); //Post란 이름으로 모델 정의
