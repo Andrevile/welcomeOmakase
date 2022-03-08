@@ -14,17 +14,18 @@ const CardWrapper = styled.div`
 `;
 
 function PostCard({ post }) {
-  // const [likes, setLikes] = useState(false);
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { likeToggle } = useSelector((state) => state.post);
+
   const onToggleLike = useCallback(() => {
     dispatch(likeAction({ id: post.id, user: user.user_ID }));
-  }, [likeToggle, post.likes]);
+  }, [post.likes]);
+
   const onToggleUnLike = useCallback(() => {
     dispatch(unLikeAction({ id: post.id, user: user.user_ID }));
-  }, [likeToggle, post.likes]);
+  }, [post.likes]);
+
   const onToggleComment = useCallback(() => {
     setComment(!comment);
   }, [setComment, comment]);
@@ -32,6 +33,8 @@ function PostCard({ post }) {
   const deletePostHandler = useCallback(() => {
     dispatch(deletePost(post.id));
   }, []);
+
+  const likes = post.likes.find((v) => v === user.user_ID);
   return (
     <div style={{ marginBottom: 20 }}>
       <CardWrapper>
@@ -45,7 +48,7 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likeToggle ? (
+              likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
@@ -83,7 +86,7 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likeToggle ? (
+              likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
