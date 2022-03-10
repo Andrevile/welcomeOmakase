@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { generateDummyPost } from 'utils/generateDummyPost';
 export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async (data) => {
   console.log('포스팅 불러오는중');
   const promise = new Promise((resolve, reject) => {
@@ -9,7 +10,7 @@ export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async (data) => {
 
   const response = await promise;
   console.log('포스팅 불러오기 성공', response);
-  return response;
+  return generateDummyPost(10);
 });
 
 export const addPost = createAsyncThunk('POST/ADD_POST', async (data) => {

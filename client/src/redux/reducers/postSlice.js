@@ -16,6 +16,7 @@ import _find from 'lodash/find';
 const initialState = {
   posts: [],
   imgPaths: [],
+  hasMorePosts: true,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -61,7 +62,8 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.loadPostsError = null;
-        state.posts = _concat(state.posts, [...generateDummyPost(10)]);
+        state.hasMorePosts = state.posts.length < 50;
+        state.posts = _concat(state.posts, [...action.payload]);
       })
       .addCase(loadPosts.rejected, (state, action) => {
         state.loadPostsLoading = false;
