@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import api from 'utils/axiosmodule';
+import api from 'utils/api';
 import { useNavigate } from 'react-router-dom';
 import InputBox from 'components/Auth/InputBox';
 import SignLogo from 'components/Auth/SignLogo';
