@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Axios } from 'utils/axiosmodule';
+import api from 'utils/axiosmodule';
 import { useNavigate } from 'react-router-dom';
 import InputBox from 'components/Auth/InputBox';
 import SignLogo from 'components/Auth/SignLogo';
@@ -18,7 +18,7 @@ const SignIn = ({ setHasCookie }) => {
   const dataSubmit = async (e) => {
     e.preventDefault();
     setWarning('');
-    let res = await Axios('/api/users/signin', 'POST', values);
+    let res = await api.post('/users/signin', values);
     if (res.token) {
       dispatch(userSlice.actions.logIn({ user_ID: values.user_ID }));
       setHasCookie(true);

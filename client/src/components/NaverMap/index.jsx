@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Axios } from 'utils/axiosmodule';
+import api from 'utils/axiosmodule';
 import { useSelector, useDispatch } from 'react-redux';
 import { defaultCondition } from 'static/constants/defaultCondition';
 import { gdata } from 'static/constants/gdata';
@@ -25,7 +25,8 @@ function NaverMap({ setPlace }) {
     },
   });
   const fetchData = async (condition) => {
-    let res = await Axios('/api/places', 'POST', condition);
+    let res = await api.post('/places', condition);
+    // let res = await Axios('/places', 'POST', condition);
     return res.data;
   };
 
