@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { generateDummyPost } from 'utils/generateDummyPost';
+import api from 'utils/api';
 export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async (data) => {
   console.log('포스팅 불러오는중');
   const promise = new Promise((resolve, reject) => {
@@ -15,14 +16,20 @@ export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async (data) => {
 
 export const addPost = createAsyncThunk('POST/ADD_POST', async (data) => {
   console.log('글 게시중', data);
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 2000);
-  });
-  const response = await promise;
-  console.log('글 게시 성공', response);
-  return data;
+
+  // const promise = new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve(1);
+  //   }, 2000);
+  // });
+  try {
+    const response = await api.post('/addpost', data);
+    console.log('글 게시 성공', response);
+    return data;
+  } catch (err) {
+    console.error('호출', err);
+    return err;
+  }
 });
 
 export const deletePost = createAsyncThunk('POST/DELETE_POST', async (data) => {

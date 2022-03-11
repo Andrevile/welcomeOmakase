@@ -6,6 +6,7 @@ class api {
   constructor() {
     this.instance = axios.create({
       baseURL: 'http://localhost:5000',
+      withCredentials: true,
     });
   }
   async get(url) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import api from 'utils/axiosmodule';
+import api from 'utils/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { defaultCondition } from 'static/constants/defaultCondition';
 import { gdata } from 'static/constants/gdata';

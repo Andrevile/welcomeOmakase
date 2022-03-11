@@ -14,7 +14,7 @@ router.post('/signup', signUp, async (req, res, next) => {
     console.log('회원가입 요청 폼:', newUser);
     const registerUser = await newUser.save();
 
-    res.status(200).json({ message: '회원가입이 완료되었습니다.', status: 200 });
+    return res.status(200).json({ message: '회원가입이 완료되었습니다.', status: 200 });
   } catch (err) {
     next(err);
   }
@@ -37,9 +37,8 @@ router.post('/signin', async (req, res, next) => {
         const token = jwt.sign({ user_ID: user.user_ID, email: user.email, auth: user.auth }, process.env.JWT_KEY, {
           expiresIn: '1d',
         });
-
         res.cookie('user', { user: user.user_ID, token: token });
-        res.status(201).json({
+        return res.status(201).json({
           message: 'OK',
           token,
         });

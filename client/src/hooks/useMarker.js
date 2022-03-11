@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import api from 'utils/axiosmodule';
+import api from 'utils/api';
 import { generateMarker } from 'utils/generateMarker';
 const useMarker = (naverMap, setPlace, filter_condition) => {
   const [markerList, setMarkerList] = useState({});

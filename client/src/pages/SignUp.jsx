@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from 'utils/axiosmodule';
+import api from 'utils/api';
 import InputBox from 'components/Auth/InputBox';
 import useFormData from 'hooks/useFormData';
 import SignLogo from 'components/Auth/SignLogo';
