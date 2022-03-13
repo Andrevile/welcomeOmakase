@@ -25,8 +25,7 @@ function NaverMap({ setPlace }) {
     },
   });
   const fetchData = async (condition) => {
-    let res = await api.post('/places', condition);
-    // let res = await Axios('/places', 'POST', condition);
+    let res = await api.post('/place', condition);
     return res.data;
   };
 

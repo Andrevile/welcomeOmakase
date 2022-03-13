@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const imgSchema = new Schema({ src: { type: String } });
+
 const postSchema = new Schema({
   //스키마 정의
+  // _id: {
+  //   type: String,
+  //   required: true,
+  // },
   user: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
   content: {
     type: String,
@@ -15,9 +19,9 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
-  images: [imgSchema],
-  comments: [String],
-  likes: [String],
+  images: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
-module.exports = mongoose.model('Post', postSchema); //Post란 이름으로 모델 정의
+module.exports = mongoose.model('Post', postSchema);

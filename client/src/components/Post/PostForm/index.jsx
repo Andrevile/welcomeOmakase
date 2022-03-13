@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from 'redux/actions/post';
 import userSlice from 'redux/reducers/userSlice';
 import shortid from 'shortid';
+import faker from 'faker';
 const FormWrapper = styled(Form)`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -32,7 +33,7 @@ function PostForm() {
   const onSubmit = () => {
     dispatch(
       addPost({
-        id: shortid.generate(),
+        _id: shortid.generate(),
         user: JSON.parse(localStorage.getItem('user')).user_ID,
         content: values.content,
         images: [],
@@ -52,6 +53,7 @@ function PostForm() {
   }, [imageInput.current]);
 
   return (
+    // <FormWrapper encType='multipart/form-data' onFinish={onSubmit}>
     <FormWrapper encType='multipart/form-data' onFinish={onSubmit}>
       <Input.TextArea
         style={{ fontSize: 18 }}

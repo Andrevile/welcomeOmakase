@@ -39,7 +39,7 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
   }, []);
 
   useEffect(() => {
-    api.post('/places', filter_condition).then((res) => {
+    api.post('/place', filter_condition).then((res) => {
       initMarker(res.data);
     });
 

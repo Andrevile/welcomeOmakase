@@ -14,14 +14,16 @@ function Posts() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadPosts(1));
+    if (posts.length === 0) {
+      dispatch(loadPosts());
+    }
   }, []);
   useEffect(() => {
     const scrollY = () => {
       console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (!loadPostsLoading && hasMorePosts) {
-          dispatch(loadPosts(1));
+          dispatch(loadPosts());
         }
       }
     };
@@ -34,7 +36,7 @@ function Posts() {
     <>
       <CardList>
         {posts.map((post) => {
-          return <PostCard key={post.id} post={post} />;
+          return <PostCard key={post._id} post={post} />;
         })}
       </CardList>
       {loadPostsLoading && <h1> 로딩중...</h1>}
