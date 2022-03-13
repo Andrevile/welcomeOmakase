@@ -19,8 +19,9 @@ const SignIn = ({ setHasCookie }) => {
     e.preventDefault();
     setWarning('');
     let res = await api.post('/user/signin', values);
+    console.log(res);
     if (res.token) {
-      dispatch(userSlice.actions.logIn({ user_ID: values.user_ID }));
+      dispatch(userSlice.actions.logIn({ _id: res.user._id, user_ID: values.user_ID }));
       setHasCookie(true);
       navigate('/');
     } else {

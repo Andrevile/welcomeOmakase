@@ -74,7 +74,6 @@ const postSlice = createSlice({
         state.addPostError = null;
       })
       .addCase(addPost.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.addPostLoading = false;
         state.addPostDone = true;
         state.addPostError = null;

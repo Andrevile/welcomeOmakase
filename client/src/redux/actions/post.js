@@ -16,8 +16,8 @@ export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async () => {
 export const addPost = createAsyncThunk('POST/ADD_POST', async (data) => {
   try {
     const response = await api.post('/post/addpost', data);
-
-    return data;
+    console.log('추가한 데이터', response);
+    return response;
   } catch (err) {
     console.error('addpost', err);
     return err;
@@ -38,17 +38,13 @@ export const addComment = createAsyncThunk('POST/ADD_COMMENT', async (data) => {
   console.log('댓글 작성중', data);
   const response = await api.put(`/post/addcomment/${data.id}`, data.comment);
   console.log('댓글 작성 성공');
-  return data;
+  return response;
 });
 
 export const deleteComment = createAsyncThunk('POST/DELETE_COMMENT', async (data) => {
   console.log('댓글 삭제중', data);
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 2000);
-  });
-  const response = await promise;
+  const response = await api.post(`/post/deletecomment`, data);
+
   console.log('댓글 삭제 성공');
   return data;
 });

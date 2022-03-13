@@ -33,12 +33,14 @@ function PostForm() {
   const onSubmit = () => {
     dispatch(
       addPost({
-        _id: shortid.generate(),
-        user: JSON.parse(localStorage.getItem('user')).user_ID,
-        content: values.content,
-        images: [],
-        comments: [],
-        likes: [],
+        user_ID: JSON.parse(localStorage.getItem('user')).user_ID,
+        content: {
+          user: JSON.parse(localStorage.getItem('user'))._id,
+          content: values.content,
+          images: [],
+          comments: [],
+          likes: [],
+        },
       })
     );
   };
