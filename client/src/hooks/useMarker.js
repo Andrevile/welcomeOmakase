@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Axios } from 'utils/axiosmodule';
+import api from 'utils/api';
 import { generateMarker } from 'utils/generateMarker';
 const useMarker = (naverMap, setPlace, filter_condition) => {
   const [markerList, setMarkerList] = useState({});
@@ -39,9 +39,10 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
   }, []);
 
   useEffect(() => {
-    Axios('/api/places', 'POST', filter_condition).then((res) => {
+    api.post('/place', filter_condition).then((res) => {
       initMarker(res.data);
     });
+
     return () => {
       setPlace(null);
     };

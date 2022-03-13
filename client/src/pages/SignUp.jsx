@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Axios } from 'utils/axiosmodule';
+import api from 'utils/api';
 import InputBox from 'components/Auth/InputBox';
 import useFormData from 'hooks/useFormData';
 import SignLogo from 'components/Auth/SignLogo';
@@ -17,7 +17,7 @@ const SignUp = () => {
     if (values.user_PW !== values.user_PW_compare) {
       setWarning('비밀번호가 일치하지 않습니다.');
     } else {
-      let res = await Axios('/api/users/signup', 'POST', values);
+      let res = await api.post('/user/signup', values);
       console.log(res);
       if (res.status === 200) {
         alert(res.message);

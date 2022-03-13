@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 const passport = require('passport');
@@ -13,12 +14,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
 const { passportConfig, passportVerify, JWTConfig, JWTVerify } = require('./module/auth');
 
-
 dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
-
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -30,9 +30,9 @@ if (process.env.NODE_MODE !== 'DEV') {
 connect(); //DB 연결
 
 // 라우터 등록
-app.use('/api/places', placesRouter); //dining에서 데이터 불러올 때,
-app.use('/api/users', usersRouter);
-app.use('/api/posts', postsRouter);
+app.use('/place', placesRouter); //dining에서 데이터 불러올 때,
+app.use('/user', usersRouter);
+app.use('/post', postsRouter);
 app.use(passport.initialize());
 passport.use('local', new LocalStrategy(passportConfig, passportVerify));
 passport.use('jwt', new JWTStrategy(JWTConfig, JWTVerify));
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 // 에러처리 미들웨어
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500), send(err.message);
+  res.status(500).send(err.message);
 });
 
 app.listen(app.get('port'), () => {

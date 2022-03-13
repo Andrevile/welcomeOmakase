@@ -16,6 +16,7 @@ import _find from 'lodash/find';
 const initialState = {
   posts: [],
   imgPaths: [],
+  hasMorePosts: true,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -31,21 +32,17 @@ const initialState = {
   removeCommentLoading: false,
   removeCommentDone: false,
   removeCommentError: null,
-  likeToggle: false,
+
   likeLoading: false,
   likeDone: false,
   likeError: null,
-  unLikeLoading: false,
-  unLikeDone: false,
-  unLikeError: null,
 };
 
 //type
-// id: shortid.generate(),
 // user: shortid.generate(),
 // content: faker.lorem.paragraph(),
 // images: [{ src: faker.image.image() }],
-// comments: [{ id: shorid.generate(), user: shortid.generate(), content: faker.lorem.paragraph() }],
+// comments: [{ user: shortid.generate(), content: faker.lorem.paragraph() }],
 // likes: [ shortid.generate(), shortid.generate()],
 
 const postSlice = createSlice({
@@ -64,7 +61,8 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.loadPostsError = null;
-        state.posts = _concat(state.posts, [...generateDummyPost(10)]);
+        state.hasMorePosts = state.posts.length < 50;
+        state.posts = _concat(state.posts, [...action.payload]);
       })
       .addCase(loadPosts.rejected, (state, action) => {
         state.loadPostsLoading = false;
@@ -76,7 +74,6 @@ const postSlice = createSlice({
         state.addPostError = null;
       })
       .addCase(addPost.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.addPostLoading = false;
         state.addPostDone = true;
         state.addPostError = null;
@@ -95,7 +92,7 @@ const postSlice = createSlice({
         state.removePostLoading = false;
         state.removePostDone = true;
         state.removePostError = null;
-        state.posts = _remove(state.posts, (post) => post.id !== action.payload);
+        state.posts = _remove(state.posts, (post) => post._id !== action.payload);
         // state.posts = state.posts.filter((post) => post.id !== action.payload);
       })
       .addCase(deletePost.rejected, (state, action) => {
@@ -109,7 +106,7 @@ const postSlice = createSlice({
         state.addCommentError = null;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.addCommentLoading = false;
         state.addCommentDone = true;
         state.addCommentError = null;
@@ -126,11 +123,11 @@ const postSlice = createSlice({
         state.removeCommentError = null;
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.removeCommentLoading = false;
         state.removeCommentDone = true;
         state.removeCommentError = null;
-        post.comments = _remove(post.comments, (comment) => comment.id !== action.payload.commentID);
+        post.comments = _remove(post.comments, (comment) => comment._id !== action.payload.commentID);
       })
       .addCase(deleteComment.rejected, (state, action) => {
         state.removeCommentLoading = true;
@@ -143,11 +140,11 @@ const postSlice = createSlice({
         state.likeError = null;
       })
       .addCase(likeAction.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.likeLoading = false;
         state.likeDone = true;
         state.likeError = null;
-        state.likeToggle = true;
+
         post.likes = _concat([action.payload.user], post.likes);
       })
       .addCase(likeAction.rejected, (state, action) => {
@@ -156,22 +153,22 @@ const postSlice = createSlice({
         state.likeError = action.error.message;
       }) // 좋아요 취소
       .addCase(unLikeAction.pending, (state) => {
-        state.unLikeLoading = true;
-        state.unLikeDone = false;
-        state.unLikeError = null;
+        state.likeLoading = true;
+        state.likeDone = false;
+        state.likeError = null;
       })
       .addCase(unLikeAction.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
-        state.unLikeLoading = false;
-        state.unLikeDone = true;
-        state.unLikeError = null;
-        state.likeToggle = false;
+        const post = _find(state.posts, { _id: action.payload.id });
+        state.likeLoading = false;
+        state.likeDone = true;
+        state.likeError = null;
+
         post.likes = _remove(post.likes, (like) => like !== action.payload.user);
       })
       .addCase(unLikeAction.rejected, (state, action) => {
-        state.unLikeLoading = false;
-        state.unLikeDone = false;
-        state.unLikeError = action.error.message;
+        state.likeLoading = false;
+        state.likeDone = false;
+        state.likeError = action.error.message;
       }),
 });
 

@@ -14,28 +14,33 @@ const CardWrapper = styled.div`
 `;
 
 function PostCard({ post }) {
-  // const [likes, setLikes] = useState(false);
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { likeToggle } = useSelector((state) => state.post);
+
   const onToggleLike = useCallback(() => {
-    dispatch(likeAction({ id: post.id, user: user.user_ID }));
-  }, [likeToggle, post.likes]);
+    console.log(user.user_ID);
+    dispatch(likeAction({ id: post._id, user: user.user_ID }));
+  }, [post.likes]);
+
   const onToggleUnLike = useCallback(() => {
-    dispatch(unLikeAction({ id: post.id, user: user.user_ID }));
-  }, [likeToggle, post.likes]);
+    console.log(user.user_ID);
+    dispatch(unLikeAction({ id: post._id, user: user.user_ID }));
+  }, [post.likes]);
+
   const onToggleComment = useCallback(() => {
     setComment(!comment);
   }, [setComment, comment]);
 
   const deletePostHandler = useCallback(() => {
-    dispatch(deletePost(post.id));
+    dispatch(deletePost(post._id));
   }, []);
+
+  const likes = post.likes.find((v) => v === user.user_ID);
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div key={post._id} style={{ marginBottom: 20 }}>
       <CardWrapper>
-        {user && post.user === user.user_ID ? (
+        {user && post.user.user_ID === user.user_ID ? (
           <Card
             cover={post.images[0] && <PostImages images={post.images}></PostImages>}
             actions={[
@@ -45,7 +50,7 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likeToggle ? (
+              likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
@@ -70,7 +75,7 @@ function PostCard({ post }) {
           >
             <Card.Meta
               description={post.content} //PostContent 컴포넌트 삽입 할 공간
-              title={<PostWriter postUser={post.user} />}
+              title={<PostWriter postUser={post.user.user_ID} />}
             ></Card.Meta>
           </Card>
         ) : (
@@ -83,14 +88,14 @@ function PostCard({ post }) {
                 text={post.comments.length}
                 handler={onToggleComment}
               />,
-              likeToggle ? (
+              likes ? (
                 <IconText key='liked' icon={<LikeTwoTone />} text={post.likes.length} handler={onToggleUnLike} />
               ) : (
                 <IconText key='liked' icon={<LikeOutlined />} text={post.likes.length} handler={onToggleLike} />
               ),
             ]}
           >
-            <Card.Meta description={post.content} title={<PostWriter postUser={post.user} />}></Card.Meta>
+            <Card.Meta description={post.content} title={<PostWriter postUser={post.user.user_ID} />}></Card.Meta>
           </Card>
         )}
       </CardWrapper>
