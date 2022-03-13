@@ -60,6 +60,9 @@ router.post('/deletecomment', async (req, res, next) => {
 
 router.put('/like/:postId', async (req, res, next) => {
   try {
+    console.log(req.body);
+    await Post.updateOne({ _id: req.params.postId }, { $addToSet: { likes: req.body.user } });
+    res.status(201).send('ok');
   } catch (err) {
     next(err);
   }
@@ -67,6 +70,9 @@ router.put('/like/:postId', async (req, res, next) => {
 
 router.put('/unlike/:postId', async (req, res, next) => {
   try {
+    console.log(req.body);
+    await Post.updateOne({ _id: req.params.postId }, { $pull: { likes: req.body.user } });
+    res.status(201).send('ok');
   } catch (err) {
     next(err);
   }

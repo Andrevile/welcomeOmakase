@@ -51,24 +51,15 @@ export const deleteComment = createAsyncThunk('POST/DELETE_COMMENT', async (data
 
 export const likeAction = createAsyncThunk('POST/LIKE_ACTION', async (data) => {
   console.log('좋아요 시도중', data);
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 2000);
-  });
-  const response = await promise;
+  const response = await api.put(`/post/like/${data.id}`, data);
   console.log('좋아요 성공');
   return data;
 });
 
 export const unLikeAction = createAsyncThunk('POST/UNLIKE_ACTION', async (data) => {
   console.log('좋아요 취소 시도중', data);
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 2000);
-  });
-  const response = await promise;
+  const response = await api.put(`/post/unlike/${data.id}`, data);
+
   console.log('좋아요 취소  성공');
   return data;
 });

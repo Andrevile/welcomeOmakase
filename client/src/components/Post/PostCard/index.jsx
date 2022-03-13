@@ -19,10 +19,12 @@ function PostCard({ post }) {
   const { user } = useSelector((state) => state.user);
 
   const onToggleLike = useCallback(() => {
+    console.log(user.user_ID);
     dispatch(likeAction({ id: post._id, user: user.user_ID }));
   }, [post.likes]);
 
   const onToggleUnLike = useCallback(() => {
+    console.log(user.user_ID);
     dispatch(unLikeAction({ id: post._id, user: user.user_ID }));
   }, [post.likes]);
 
