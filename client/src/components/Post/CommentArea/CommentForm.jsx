@@ -14,10 +14,9 @@ function CommentForm({ post }) {
       addComment({
         id: post._id,
         comment: {
-          _id: shortid.generate(),
-          user: JSON.parse(localStorage.getItem('user')).user_ID,
+          post: post._id,
+          user: JSON.parse(localStorage.getItem('user'))._id,
           content: values.comment,
-          sequence: '0',
         },
       })
     );

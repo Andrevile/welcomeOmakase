@@ -38,7 +38,7 @@ function PostCard({ post }) {
   return (
     <div key={post._id} style={{ marginBottom: 20 }}>
       <CardWrapper>
-        {user && post.user === user.user_ID ? (
+        {user && post.user.user_ID === user.user_ID ? (
           <Card
             cover={post.images[0] && <PostImages images={post.images}></PostImages>}
             actions={[
@@ -73,7 +73,7 @@ function PostCard({ post }) {
           >
             <Card.Meta
               description={post.content} //PostContent 컴포넌트 삽입 할 공간
-              title={<PostWriter postUser={post.user} />}
+              title={<PostWriter postUser={post.user.user_ID} />}
             ></Card.Meta>
           </Card>
         ) : (
@@ -93,7 +93,7 @@ function PostCard({ post }) {
               ),
             ]}
           >
-            <Card.Meta description={post.content} title={<PostWriter postUser={post.user} />}></Card.Meta>
+            <Card.Meta description={post.content} title={<PostWriter postUser={post.user.user_ID} />}></Card.Meta>
           </Card>
         )}
       </CardWrapper>

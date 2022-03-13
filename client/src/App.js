@@ -26,9 +26,9 @@ function App() {
   useEffect(() => {
     if (cookies.user && cookies.user !== 'undefined') {
       setHasCookie(true);
-      let alreadyLogIn = { ...cookies.user };
-
-      dispatch(userSlice.actions.logIn({ user_ID: alreadyLogIn.user }));
+      // let alreadyLogIn = { id: cookies.id, user: cookies.user };
+      console.log(cookies);
+      dispatch(userSlice.actions.logIn({ _id: cookies.user.id, user_ID: cookies.user.user }));
     }
   }, [cookies]);
 

@@ -34,13 +34,18 @@ router.post('/signin', async (req, res, next) => {
           res.json({ message: '로그인에 실패하였습니다.' });
           return;
         }
-        const token = jwt.sign({ user_ID: user.user_ID, email: user.email, auth: user.auth }, process.env.JWT_KEY, {
-          expiresIn: '1d',
-        });
-        res.cookie('user', { user: user.user_ID, token: token });
+        const token = jwt.sign(
+          { id: user._id, user_ID: user.user_ID, email: user.email, auth: user.auth },
+          process.env.JWT_KEY,
+          {
+            expiresIn: '1d',
+          }
+        );
+        res.cookie('user', { id: user._id, user: user.user_ID, token: token });
         return res.status(201).json({
           message: 'OK',
           token,
+          user,
         });
       });
     })(req, res);

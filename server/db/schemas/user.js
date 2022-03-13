@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 const Userschema = new Schema(
   {
     user_ID: {
@@ -21,10 +21,14 @@ const Userschema = new Schema(
       type: String,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     versionKey: false,
   }
 );
 
-module.exports = mongoose.model("User", Userschema);
+module.exports = mongoose.model('User', Userschema);
