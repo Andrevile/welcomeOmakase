@@ -18,7 +18,7 @@ const SignIn = ({ setHasCookie }) => {
   const dataSubmit = async (e) => {
     e.preventDefault();
     setWarning('');
-    let res = await api.post('/users/signin', values);
+    let res = await api.post('/user/signin', values);
     if (res.token) {
       dispatch(userSlice.actions.logIn({ user_ID: values.user_ID }));
       setHasCookie(true);

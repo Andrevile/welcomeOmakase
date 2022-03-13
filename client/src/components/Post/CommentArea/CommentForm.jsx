@@ -12,11 +12,12 @@ function CommentForm({ post }) {
     console.log(values);
     dispatch(
       addComment({
-        id: post.id,
+        id: post._id,
         comment: {
-          id: shortid.generate(),
+          _id: shortid.generate(),
           user: JSON.parse(localStorage.getItem('user')).user_ID,
           content: values.comment,
+          sequence: '0',
         },
       })
     );

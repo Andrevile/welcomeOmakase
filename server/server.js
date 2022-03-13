@@ -30,9 +30,9 @@ if (process.env.NODE_MODE !== 'DEV') {
 connect(); //DB 연결
 
 // 라우터 등록
-app.use('/places', placesRouter); //dining에서 데이터 불러올 때,
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
+app.use('/place', placesRouter); //dining에서 데이터 불러올 때,
+app.use('/user', usersRouter);
+app.use('/post', postsRouter);
 app.use(passport.initialize());
 passport.use('local', new LocalStrategy(passportConfig, passportVerify));
 passport.use('jwt', new JWTStrategy(JWTConfig, JWTVerify));
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 // 에러처리 미들웨어
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500), send(err.message);
+  res.status(500).send(err.message);
 });
 
 app.listen(app.get('port'), () => {

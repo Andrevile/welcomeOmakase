@@ -17,6 +17,15 @@ class api {
     const response = await this.instance.post(url, data);
     return response.data;
   }
+
+  async put(url, data) {
+    const response = await this.instance.put(url, data);
+    return response.data;
+  }
+  async delete(url) {
+    const response = await this.instance.delete(url);
+    return response.data;
+  }
 }
 
 export default new api();

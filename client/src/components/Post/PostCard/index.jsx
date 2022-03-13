@@ -19,11 +19,11 @@ function PostCard({ post }) {
   const { user } = useSelector((state) => state.user);
 
   const onToggleLike = useCallback(() => {
-    dispatch(likeAction({ id: post.id, user: user.user_ID }));
+    dispatch(likeAction({ id: post._id, user: user.user_ID }));
   }, [post.likes]);
 
   const onToggleUnLike = useCallback(() => {
-    dispatch(unLikeAction({ id: post.id, user: user.user_ID }));
+    dispatch(unLikeAction({ id: post._id, user: user.user_ID }));
   }, [post.likes]);
 
   const onToggleComment = useCallback(() => {
@@ -31,12 +31,12 @@ function PostCard({ post }) {
   }, [setComment, comment]);
 
   const deletePostHandler = useCallback(() => {
-    dispatch(deletePost(post.id));
+    dispatch(deletePost(post._id));
   }, []);
 
   const likes = post.likes.find((v) => v === user.user_ID);
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div key={post._id} style={{ marginBottom: 20 }}>
       <CardWrapper>
         {user && post.user === user.user_ID ? (
           <Card

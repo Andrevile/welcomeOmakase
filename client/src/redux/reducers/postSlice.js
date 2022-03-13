@@ -39,11 +39,10 @@ const initialState = {
 };
 
 //type
-// id: shortid.generate(),
 // user: shortid.generate(),
 // content: faker.lorem.paragraph(),
 // images: [{ src: faker.image.image() }],
-// comments: [{ id: shorid.generate(), user: shortid.generate(), content: faker.lorem.paragraph() }],
+// comments: [{ user: shortid.generate(), content: faker.lorem.paragraph() }],
 // likes: [ shortid.generate(), shortid.generate()],
 
 const postSlice = createSlice({
@@ -94,7 +93,7 @@ const postSlice = createSlice({
         state.removePostLoading = false;
         state.removePostDone = true;
         state.removePostError = null;
-        state.posts = _remove(state.posts, (post) => post.id !== action.payload);
+        state.posts = _remove(state.posts, (post) => post._id !== action.payload);
         // state.posts = state.posts.filter((post) => post.id !== action.payload);
       })
       .addCase(deletePost.rejected, (state, action) => {
@@ -108,7 +107,7 @@ const postSlice = createSlice({
         state.addCommentError = null;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.addCommentLoading = false;
         state.addCommentDone = true;
         state.addCommentError = null;
@@ -125,11 +124,11 @@ const postSlice = createSlice({
         state.removeCommentError = null;
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.removeCommentLoading = false;
         state.removeCommentDone = true;
         state.removeCommentError = null;
-        post.comments = _remove(post.comments, (comment) => comment.id !== action.payload.commentID);
+        post.comments = _remove(post.comments, (comment) => comment._id !== action.payload.commentID);
       })
       .addCase(deleteComment.rejected, (state, action) => {
         state.removeCommentLoading = true;
@@ -142,7 +141,7 @@ const postSlice = createSlice({
         state.likeError = null;
       })
       .addCase(likeAction.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.likeLoading = false;
         state.likeDone = true;
         state.likeError = null;
@@ -160,7 +159,7 @@ const postSlice = createSlice({
         state.likeError = null;
       })
       .addCase(unLikeAction.fulfilled, (state, action) => {
-        const post = _find(state.posts, { id: action.payload.id });
+        const post = _find(state.posts, { _id: action.payload.id });
         state.likeLoading = false;
         state.likeDone = true;
         state.likeError = null;

@@ -17,7 +17,7 @@ const SignUp = () => {
     if (values.user_PW !== values.user_PW_compare) {
       setWarning('비밀번호가 일치하지 않습니다.');
     } else {
-      let res = await api.post('/users/signup', values);
+      let res = await api.post('/user/signup', values);
       console.log(res);
       if (res.status === 200) {
         alert(res.message);
