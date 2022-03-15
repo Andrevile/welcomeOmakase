@@ -3,7 +3,6 @@ const Place = require('../db/schemas/place');
 
 const router = express.Router();
 
-//.api/places
 router.post('/', async (req, res, next) => {
   //dining에 오게되면 /api/places로
   const filter_condition = {};

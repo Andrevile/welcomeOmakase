@@ -28,7 +28,11 @@ function App() {
       setHasCookie(true);
       // let alreadyLogIn = { id: cookies.id, user: cookies.user };
       console.log(cookies);
-      dispatch(userSlice.actions.logIn({ _id: cookies.user.id, user_ID: cookies.user.user }));
+      // dispatch(userSlice.actions.logIn({ _id: cookies.user.id, user_ID: cookies.user.user }));
+    } else {
+      setHasCookie(false);
+      console.log('없어짐');
+      // dispatch(userSlice.actions.logOut());
     }
   }, [cookies]);
 

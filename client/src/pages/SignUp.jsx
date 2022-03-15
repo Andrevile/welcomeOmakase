@@ -1,30 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import api from 'utils/api';
 import InputBox from 'components/Auth/InputBox';
 import useFormData from 'hooks/useFormData';
 import SignLogo from 'components/Auth/SignLogo';
+import { registerUser } from 'redux/actions/user';
+import userSlice from 'redux/reducers/userSlice';
 const SignUp = () => {
   const { values, changeHandler } = useFormData({
     initialValues: { user_ID: '', email: '', user_PW: '', user_PW_compare: '', auth: 'user' },
   });
+  const { registerErr, registerMessage, registerDone } = useSelector((state) => state.user);
   const [Warning, setWarning] = useState('');
+
+  const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (registerErr.length > 0) {
+      setWarning(registerErr);
+    }
+  }, [registerErr]);
 
   const dataSubmit = async (e) => {
     e.preventDefault();
-    setWarning('');
+
     if (values.user_PW !== values.user_PW_compare) {
       setWarning('비밀번호가 일치하지 않습니다.');
     } else {
-      let res = await api.post('/user/signup', values);
-      console.log(res);
-      if (res.status === 200) {
-        alert(res.message);
-        navigate('/signin');
-      } else {
-        setWarning(res.message);
-      }
+      dispatch(registerUser(values)).then(({ type }) => {
+        if (type !== 'USER/REGISTER_USER/rejected') navigate('/signin');
+      });
     }
   };
 
@@ -102,7 +109,7 @@ const SignUp = () => {
           </div>
         </form>
       </div>
-      {Warning.length === 0 ? null : (
+      {registerErr.length > 0 && (
         <div className='signUp-warning'>
           <p>{Warning}</p>
         </div>
