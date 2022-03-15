@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../db/schemas/user');
-const { signUp, JWTMiddleware } = require('../module/auth');
+const { signUp } = require('../module/auth');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -11,7 +11,6 @@ dotenv.config();
 router.post('/signup', signUp, async (req, res, next) => {
   try {
     const newUser = await new User(req.body);
-    console.log('회원가입 요청 폼:', newUser);
     const registerUser = await newUser.save();
 
     return res.status(200).json({ message: '회원가입이 완료되었습니다.', status: 200 });
@@ -41,7 +40,14 @@ router.post('/signin', async (req, res, next) => {
             expiresIn: '1d',
           }
         );
-        res.cookie('user', { id: user._id, user: user.user_ID, token: token });
+        res.cookie(
+          'user',
+          { id: user._id, user: user.user_ID, token: token },
+          {
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true,
+          }
+        );
         return res.status(201).json({
           message: 'OK',
           token,
@@ -55,12 +61,4 @@ router.post('/signin', async (req, res, next) => {
   }
 });
 
-router.post('/share', JWTMiddleware, async (req, res, next) => {
-  try {
-    //포스트들 데이터베이스에서 가져옴
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-});
 module.exports = router;

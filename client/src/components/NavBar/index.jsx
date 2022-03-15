@@ -25,7 +25,8 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
           <ul className='main-menu toggle'>
             <MenuItem path='/' text='소개' />
             <MenuItem path='/dining' text='맛집' />
-            <li className='menu-item'>
+            <MenuItem path='/share' text='글 목록' />
+            {/* <li className='menu-item'>
               <NavLink
                 to='/share'
                 className='link'
@@ -40,7 +41,7 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
               >
                 글 목록
               </NavLink>
-            </li>
+            </li> */}
           </ul>
 
           <SmSideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} />
