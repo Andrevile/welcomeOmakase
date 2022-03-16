@@ -1,23 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import build from 'shortid/lib/build';
-import { registerUser } from 'redux/actions/user';
+import { registerUser, signIn, logOut, checkSignIn } from 'redux/actions/user';
 const dummyUser = {
   user: {
     user_ID: 'test123456789',
   },
 };
 const initialState = {
+  isLoggedIn: JSON.parse(localStorage.getItem('omakase_user')) ? true : false,
+  checkLoading: false,
+  checkDone: false,
+  checkErr: '',
   registerLoading: false,
   registerDone: false,
   registerMessage: '',
   registerErr: '',
   logInLoading: false,
   logInDone: false,
-  logInError: null,
+  logInError: '',
   logOutLoading: false,
   logOutDone: false,
   logOutError: false,
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  userInfo: null,
 };
 
 const userSlice = createSlice({
@@ -43,7 +47,6 @@ const userSlice = createSlice({
         state.registerDone = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        console.log(action.payload.message);
         state.registerLoading = false;
         state.registerDone = true;
         state.registerErr = '';
@@ -53,6 +56,53 @@ const userSlice = createSlice({
         state.registerLoading = false;
         state.registerErr = action.payload;
         state.registerMessage = '';
+      })
+      .addCase(signIn.pending, (state) => {
+        state.logInLoading = true;
+        state.logInDone = false;
+      })
+      .addCase(signIn.fulfilled, (state, action) => {
+        localStorage.setItem('omakase_user', JSON.stringify(action.payload));
+        state.logInLoading = false;
+        state.logInDone = true;
+        state.userInfo = action.payload;
+        state.isLoggedIn = true;
+      })
+      .addCase(signIn.rejected, (state, action) => {
+        state.logInLoading = false;
+        state.logInError = action.payload;
+      })
+      .addCase(logOut.pending, (state) => {
+        state.logOutLoading = true;
+        state.logOutDone = false;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.logOutLoading = false;
+        localStorage.removeItem('omakase_user');
+        state.logOutDone = true;
+        state.userInfo = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(logOut.rejected, (state, action) => {
+        state.logInLoading = false;
+        state.logOutError = action.payload;
+      })
+      .addCase(checkSignIn.pending, (state) => {
+        state.checkLoading = true;
+        state.checkDone = false;
+      })
+      .addCase(checkSignIn.fulfilled, (state, action) => {
+        localStorage.setItem('omakase_user', JSON.stringify(action.payload));
+        state.checkLoading = false;
+        state.checkDone = true;
+        state.isLoggedIn = true;
+        state.userInfo = action.payload;
+      })
+      .addCase(checkSignIn.rejected, (state) => {
+        state.checkLoading = false;
+        state.checkDone = true;
+        localStorage.removeItem('omakase_use');
+        state.isLoggedIn = false;
       }),
 });
 

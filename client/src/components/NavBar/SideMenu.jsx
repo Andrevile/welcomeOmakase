@@ -1,21 +1,24 @@
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import userSlice from 'redux/reducers/userSlice';
+import { logOut } from 'redux/actions/user';
 
-function SideMenu({ hasCookie, removeCookie, setHasCookie }) {
+function SideMenu() {
+  const { isLoggedIn } = useSelector((state) => state.user);
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const onClickHandler = () => {
-    setHasCookie(false);
-    removeCookie('user');
     navigate('/');
-    dispatch(userSlice.actions.logOut());
+    dispatch(logOut()).then(({ type }) => {
+      // if (type !== 'USER/LOG_OUT/rejected') {
+      //   navigate('/');
+      // }
+    });
   };
 
   return (
     <>
       <ul className='side-menu'>
-        {!hasCookie ? (
+        {!isLoggedIn ? (
           <>
             {' '}
             <li className='menu-item SignIn-btn'>

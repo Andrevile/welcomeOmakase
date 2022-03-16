@@ -6,12 +6,12 @@ const Writer = styled.span`
 `;
 
 function PostWriter({ postUser }) {
-  const { user } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
 
   return (
     <>
       <Writer style={{ fontWeight: 'bold' }}>
-        {user.user_ID === postUser ? `글쓴이:\u00A0 ${postUser} (나)` : `글쓴이:\u00A0 ${postUser}`}
+        {userInfo.user_ID === postUser ? `글쓴이:\u00A0 ${postUser} (나)` : `글쓴이:\u00A0 ${postUser}`}
       </Writer>
     </>
   );

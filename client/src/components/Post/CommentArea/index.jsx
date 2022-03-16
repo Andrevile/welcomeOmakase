@@ -23,7 +23,7 @@ const CommentBtn = styled.button`
 `;
 function CommentArea({ post, comments }) {
   const dispatch = useDispatch();
-
+  const { userInfo } = useSelector((state) => state.user);
   const deleteCommentHandler = useCallback(
     (comment) => () => {
       dispatch(deleteComment({ id: post._id, commentID: comment._id }));
@@ -44,7 +44,7 @@ function CommentArea({ post, comments }) {
               author={
                 <CommentAuthor>
                   <span>{item.user.user_ID}</span>
-                  {item.user.user_ID === JSON.parse(localStorage.getItem('user')).user_ID && (
+                  {item.user.user_ID === userInfo.user_ID && (
                     <CommentBtn onClick={deleteCommentHandler(item)}>삭제</CommentBtn>
                   )}
                 </CommentAuthor>
