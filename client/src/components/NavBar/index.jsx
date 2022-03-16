@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import SideMenu from './SideMenu';
 import SmSideMenu from './SmSideMenu';
 
-function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
+function NavBar({ modalOn }) {
+  const { isLoggedIn } = useSelector((state) => state.user);
   return (
     <div className='section'>
       <div className='inner'>
@@ -25,13 +27,13 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
           <ul className='main-menu toggle'>
             <MenuItem path='/' text='소개' />
             <MenuItem path='/dining' text='맛집' />
-            <MenuItem path='/share' text='글 목록' />
-            {/* <li className='menu-item'>
+            {/* <MenuItem path='/share' text='글 목록' /> */}
+            <li className='menu-item'>
               <NavLink
                 to='/share'
                 className='link'
                 onClick={
-                  hasCookie
+                  isLoggedIn
                     ? null
                     : (e) => {
                         e.preventDefault();
@@ -41,11 +43,11 @@ function NavBar({ hasCookie, removeCookie, setHasCookie, modalOn }) {
               >
                 글 목록
               </NavLink>
-            </li> */}
+            </li>
           </ul>
 
-          <SmSideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} />
-          <SideMenu hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} />
+          <SmSideMenu />
+          <SideMenu />
         </div>
       </div>
     </div>

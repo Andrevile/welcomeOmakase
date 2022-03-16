@@ -6,6 +6,7 @@ import { addComment } from 'redux/actions/post';
 import shortid from 'shortid';
 function CommentForm({ post }) {
   const { values, changeHandler, setValues } = useFormData({ initialValues: { comment: '' } });
+  const { userInfo } = useSelector((state) => state.user);
   const { addCommentDone } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const onSubmitHandler = useCallback(() => {
@@ -15,7 +16,7 @@ function CommentForm({ post }) {
         id: post._id,
         comment: {
           post: post._id,
-          user: JSON.parse(localStorage.getItem('user'))._id,
+          user: userInfo._id,
           content: values.comment,
         },
       })

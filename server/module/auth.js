@@ -64,13 +64,13 @@ exports.passportVerify = async (ID, PW, done) => {
 };
 
 const cookieExtractor = (req) => {
-  const { user } = req.cookies;
+  const { omakase_user } = req.cookies;
 
-  return user.token;
+  return omakase_user.token;
 };
 exports.JWTConfig = {
   // cookieExtractor
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: cookieExtractor, //ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_KEY,
 };
 

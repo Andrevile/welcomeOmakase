@@ -1,16 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-function SmSideMenu({ hasCookie, removeCookie, setHasCookie }) {
+import { logOut } from 'redux/actions/user';
+function SmSideMenu() {
+  const { isLoggedIn } = useSelector((state) => state.user);
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const onClickHandler = () => {
-    setHasCookie(false);
-    removeCookie('user');
     navigate('/');
+    dispatch(logOut()).then(({ type }) => {
+      // if (type !== 'USER/LOG_OUT/rejected') {
+      //   navigate('/');
+      // }
+    });
   };
 
   return (
     <div className='sm-device'>
-      {!hasCookie ? (
+      {!isLoggedIn ? (
         <>
           <Link to='/signin' className='signIn-icon' title='로그인'>
             <i className='fa-solid fa-right-to-bracket'></i>

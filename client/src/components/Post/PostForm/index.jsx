@@ -26,16 +26,16 @@ function PostForm() {
   const imageInput = useRef(null);
   const { values, changeHandler, setValues } = useFormData({ initialValues: { content: '' } });
 
-  const { user } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
   const { posts, addPostDone } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const onSubmit = () => {
     dispatch(
       addPost({
-        user_ID: JSON.parse(localStorage.getItem('user')).user_ID,
+        user_ID: userInfo.user_ID,
         content: {
-          user: JSON.parse(localStorage.getItem('user'))._id,
+          user: userInfo._id,
           content: values.content,
           images: [],
           comments: [],

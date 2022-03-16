@@ -16,16 +16,16 @@ const CardWrapper = styled.div`
 function PostCard({ post }) {
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
 
   const onToggleLike = useCallback(() => {
-    console.log(user.user_ID);
-    dispatch(likeAction({ id: post._id, user: user.user_ID }));
+    console.log(userInfo.user_ID);
+    dispatch(likeAction({ id: post._id, user: userInfo.user_ID }));
   }, [post.likes]);
 
   const onToggleUnLike = useCallback(() => {
-    console.log(user.user_ID);
-    dispatch(unLikeAction({ id: post._id, user: user.user_ID }));
+    console.log(userInfo.user_ID);
+    dispatch(unLikeAction({ id: post._id, user: userInfo.user_ID }));
   }, [post.likes]);
 
   const onToggleComment = useCallback(() => {
@@ -36,11 +36,11 @@ function PostCard({ post }) {
     dispatch(deletePost(post._id));
   }, []);
 
-  const likes = post.likes.find((v) => v === user.user_ID);
+  const likes = post.likes.find((v) => v === userInfo.user_ID);
   return (
     <div key={post._id} style={{ marginBottom: 20 }}>
       <CardWrapper>
-        {user && post.user.user_ID === user.user_ID ? (
+        {userInfo && post.user.user_ID === userInfo.user_ID ? (
           <Card
             cover={post.images[0] && <PostImages images={post.images}></PostImages>}
             actions={[

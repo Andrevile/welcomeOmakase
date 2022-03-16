@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PageTitle from 'components/Common/PageTitle';
 import Layout from 'components/Common/Layout';
 import PostForm from 'components/Post/PostForm';
@@ -23,10 +24,14 @@ export const Global = createGlobalStyle`
   
 `;
 const Share = () => {
-  const { user } = useSelector((state) => state.user);
+  const { userInfo, isLoggedIn } = useSelector((state) => state.user);
+  let navigate = useNavigate();
   useEffect(() => {
-    console.log(user.user_ID);
-  }, []);
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
   return (
     <Layout>
       <Global />
