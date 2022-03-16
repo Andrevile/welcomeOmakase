@@ -6,27 +6,39 @@ import InputBox from 'components/Auth/InputBox';
 import SignLogo from 'components/Auth/SignLogo';
 import useFormData from 'hooks/useFormData';
 import userSlice from 'redux/reducers/userSlice';
-const SignIn = ({ setHasCookie }) => {
-  const { user, isLogginIn } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+import { signIn } from 'redux/actions/user';
+const SignIn = () => {
+  const { user, logInError } = useSelector((state) => state.user);
   const { values, changeHandler } = useFormData({
     initialValues: { user_ID: '', user_PW: '' },
   });
   const [Warning, setWarning] = useState('');
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(logInError);
+    if (logInError.length > 0) {
+      setWarning(logInError);
+    }
+  }, [logInError]);
   const dataSubmit = async (e) => {
     e.preventDefault();
-    setWarning('');
-    let res = await api.post('/user/signin', values);
-    console.log(res);
-    if (res.token) {
-      dispatch(userSlice.actions.logIn({ _id: res.user._id, user_ID: values.user_ID }));
-      setHasCookie(true);
-      navigate('/');
-    } else {
-      setWarning(res.message);
-    }
+
+    dispatch(signIn(values)).then(({ type }) => {
+      if (type !== 'USER/SIGN_IN/rejected') {
+        navigate('/');
+      }
+    });
+    // let res = await api.post('/user/signin', values);
+    // console.log(res);
+    // if (res.token) {
+    //   // dispatch(userSlice.actions.logIn({ _id: res.user._id, user_ID: values.user_ID }));
+    //   setHasCookie(true);
+    //   navigate('/');
+    // } else {
+    //   setWarning(res.message);
+    // }
   };
 
   return (
@@ -72,7 +84,7 @@ const SignIn = ({ setHasCookie }) => {
           </form>
         </div>
       </div>
-      {Warning.length === 0 ? null : (
+      {logInError.length > 0 && (
         <div className='signIn-warning'>
           <p>{Warning}</p>
         </div>

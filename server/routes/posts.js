@@ -3,7 +3,9 @@ const Post = require('../db/schemas/post');
 const Comment = require('../db/schemas/comment');
 const User = require('../db/schemas/user');
 const router = express.Router();
+const passport = require('passport');
 
+router.get('/test', passport.authenticate('jwt', { session: false }), async (req, res, next) => {});
 router.get('/loadpost', async (req, res, next) => {
   try {
     let posts = await Post.find()

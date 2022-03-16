@@ -8,20 +8,19 @@ dotenv.config();
 exports.signUp = async (req, res, next) => {
   try {
     if (!req.body.user_ID | !req.body.user_PW | !req.body.email) {
-      res.json({ message: '비어있는 칸이 존재합니다.', status: 400 });
-      return;
+      return res.status(400).json({ message: '비어있는 칸이 존재합니다.' });
     }
     const checkID = await User.find({ user_ID: req.body.user_ID });
 
     console.log(checkID);
     if (checkID.length !== 0) {
-      res.json({ message: '이미 존재하는 ID입니다.', status: 400 });
-      return;
+      // res.status(400).send('이미 존재');
+      return res.status(400).json({ message: '이미 존재하는 ID입니다.' });
+      // return;
     }
     const checkEmail = await User.find({ email: req.body.email });
     if (checkEmail.length !== 0) {
-      res.json({ message: '이미 가입 되어있는 Email 입니다.', status: 400 });
-      return;
+      return res.status(400).json({ message: '이미 가입 되어있는 Email 입니다.' });
     }
 
     req.body.user_PW = await bcrpyt.hash(req.body.user_PW, 10);
@@ -65,11 +64,13 @@ exports.passportVerify = async (ID, PW, done) => {
 };
 
 const cookieExtractor = (req) => {
-  const { user } = req.cookies;
-  return user;
+  const { omakase_user } = req.cookies;
+
+  return omakase_user.token;
 };
 exports.JWTConfig = {
-  jwtFromRequest: cookieExtractor, //ExtractJwt.fromHeader("authorization"),
+  // cookieExtractor
+  jwtFromRequest: cookieExtractor, //ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_KEY,
 };
 
@@ -77,26 +78,14 @@ exports.JWTVerify = async (jwtPayload, done) => {
   try {
     const user = await User.findOne({ user_ID: jwtPayload.user_ID });
     if (user) {
+      console.log('발견');
       done(null, user);
       return;
     }
-    done(null, false, { reason: '올바르지 않은 인증정보 입니다.' });
+    done(null, 'vxzc', { reason: '올바르지 않은 인증정보 입니다.' });
     return;
   } catch (err) {
-    done(err, false, { reason: '기간이 만료 되었습니다.' });
+    console.error(err);
+    done(err);
   }
 };
-
-exports.JWTMiddleware = passport.authenticate('jwt', { session: false }, (jwtError, user, info) => {
-  try {
-    if (jwtError) {
-      res.status(400).json({ message: info.reason });
-      return;
-    }
-    res.locals.user_ID = user.user_ID;
-    next();
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-});

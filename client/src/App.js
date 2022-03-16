@@ -1,37 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { withCookies, useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import userSlice from 'redux/reducers/userSlice';
 import NavBar from 'components/NavBar';
-
 import NotFound from 'pages/NotFound';
-
 import Modal from 'components/Common/Modal';
-
 import Main from 'pages/Main';
 import Dining from 'pages/Dining';
 import Share from 'pages/Share';
 import SignUp from 'pages/SignUp';
 import SignIn from 'pages/SignIn';
-
+import { checkSignIn } from 'redux/actions/user';
 import './App.css';
 function App() {
   const [modalOff, modalOn] = useState(false);
-  const [cookies, removeCookie] = useCookies(['user']);
-  const [hasCookie, setHasCookie] = useState(false);
   const appRef = useRef();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (cookies.user && cookies.user !== 'undefined') {
-      setHasCookie(true);
-      // let alreadyLogIn = { id: cookies.id, user: cookies.user };
-      console.log(cookies);
-      dispatch(userSlice.actions.logIn({ _id: cookies.user.id, user_ID: cookies.user.user }));
-    }
-  }, [cookies]);
-
+  // useEffect(() => {
+  //   const userState = JSON.parse(localStorage.getItem('omakase_user'));
+  //   console.log(userState);
+  //   if (userState) {
+  //     dispatch(checkSignIn(userState)).then(({ type }) => {
+  //       if (type === 'USER/CHECK/rejected') {
+  //         localStorage.removeItem('omakase_user');
+  //       }
+  //     });
+  //   }
+  // }, []);
   useEffect(() => {
     if (modalOff) {
       document.body.style.overflow = 'hidden';
@@ -42,13 +37,13 @@ function App() {
   return (
     <div className='App' ref={appRef}>
       {modalOff ? <Modal modalOn={modalOn}></Modal> : null}
-      <NavBar hasCookie={hasCookie} removeCookie={removeCookie} setHasCookie={setHasCookie} modalOn={modalOn}></NavBar>
+      <NavBar modalOn={modalOn}></NavBar>
 
       <Routes>
         <Route path='/' element={<Main />}></Route>
         <Route path='/dining' element={<Dining />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
-        <Route path='/signin' element={<SignIn setHasCookie={setHasCookie} />}></Route>
+        <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/share' element={<Share />}></Route>
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
@@ -56,4 +51,4 @@ function App() {
   );
 }
 
-export default withCookies(App);
+export default App;
