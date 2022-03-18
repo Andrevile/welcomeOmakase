@@ -14,16 +14,6 @@ function Posts() {
   const { posts, loadPostsLoading, hasMorePosts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
-  const scrollY = _throttle(() => {
-    console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
-    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-      if (!loadPostsLoading && hasMorePosts) {
-        console.log('이벤트', loadPostsLoading, hasMorePosts);
-        dispatch(loadPosts(posts[posts.length - 1]?._id));
-      }
-    }
-  }, 500);
-
   useEffect(() => {
     if (posts.length === 0) {
       dispatch(loadPosts());
@@ -35,6 +25,15 @@ function Posts() {
   }, [posts]);
 
   useEffect(() => {
+    const scrollY = _throttle(() => {
+      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
+      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+        if (!loadPostsLoading && hasMorePosts) {
+          console.log('이벤트', loadPostsLoading, hasMorePosts);
+          dispatch(loadPosts(posts[posts.length - 1]._id));
+        }
+      }
+    }, 1000);
     window.addEventListener('scroll', scrollY);
     return () => {
       window.removeEventListener('scroll', scrollY);

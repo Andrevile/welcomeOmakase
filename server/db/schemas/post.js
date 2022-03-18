@@ -20,7 +20,7 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    images: [{ type: Schema.Types.ObjectId, ref: 'Image' }],
+    images: [String], //[{ type: Schema.Types.ObjectId, ref: 'Image' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     likes: [String],
     createdAt: {

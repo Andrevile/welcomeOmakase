@@ -63,3 +63,24 @@ export const unLikeAction = createAsyncThunk('POST/UNLIKE_ACTION', async (data) 
   console.log('좋아요 취소  성공');
   return data;
 });
+
+export const uploadImages = createAsyncThunk('POST/UPLOAD_IMAGES', async (data, { rejectWithValue }) => {
+  try {
+    const response = await api.post('/post/images', data);
+    return response;
+  } catch (err) {
+    console.error(err);
+    return rejectWithValue(err);
+  }
+});
+
+export const removeImages = createAsyncThunk('POST/REMOVE_IMAGES', async (data, { rejectWithValue }) => {
+  try {
+    console.log(data);
+    const response = await api.delete(`/post/removeimages/${data}`);
+    return response;
+  } catch (err) {
+    console.error(err.response.data);
+    return rejectWithValue(err.response.data);
+  }
+});
