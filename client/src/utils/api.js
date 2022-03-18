@@ -28,6 +28,35 @@ class api {
   }
 }
 
+export class abortApi extends api {
+  constructor(controller) {
+    super();
+    this.instance = axios.create({
+      baseURL: 'http://localhost:5000',
+      withCredentials: true,
+      signal: controller.signal,
+    });
+  }
+
+  async get(url) {
+    const response = await this.instance.get(url);
+    return response.data;
+  }
+  async post(url, data) {
+    const response = await this.instance.post(url, data);
+    return response.data;
+  }
+
+  async put(url, data) {
+    const response = await this.instance.put(url, data);
+    return response.data;
+  }
+  async delete(url) {
+    const response = await this.instance.delete(url);
+    return response.data;
+  }
+}
+
 export default new api();
 
 // export const Axios = async (Url, Method, Data) => {

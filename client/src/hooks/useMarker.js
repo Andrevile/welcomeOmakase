@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import api from 'utils/api';
+import api, { abortApi } from 'utils/api';
+import axios from 'axios';
 import { generateMarker } from 'utils/generateMarker';
 const useMarker = (naverMap, setPlace, filter_condition) => {
   const [markerList, setMarkerList] = useState({});
@@ -39,13 +40,21 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
   }, []);
 
   useEffect(() => {
-    api.post('/place', filter_condition).then((res) => {
-      initMarker(res.data);
-    });
+    let controller = new AbortController();
 
-    return () => {
-      setPlace(null);
-    };
+    const abortAPI = new abortApi(controller);
+    abortAPI
+      .post('/place', filter_condition, { withCredentials: true, signal: controller.signal })
+      .then((res) => {
+        initMarker(res.data);
+      })
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.warn('요청 취소');
+        }
+      });
+
+    return () => controller?.abort();
   }, []);
 
   return { markerList, initMarker, markerFiltering };

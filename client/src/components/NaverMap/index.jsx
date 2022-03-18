@@ -9,10 +9,10 @@ import useCallMap from 'hooks/useCallMap';
 import Loading from 'components/Common/Loading';
 import Map from './Map';
 import useMarker from 'hooks/useMarker';
-import filteringSlice from 'redux/reducers/filteringSlice';
+import placeSlice from 'redux/reducers/placeSlice';
 
 function NaverMap({ setPlace }) {
-  const filter_condition = useSelector((state) => state.filtering);
+  const filter_condition = useSelector((state) => state.place);
 
   const dispatch = useDispatch();
   const { mapRef, loading } = useCallMap();
@@ -38,9 +38,8 @@ function NaverMap({ setPlace }) {
 
   useEffect(() => {
     return () => {
-      dispatch(filteringSlice.actions.datafilter(defaultCondition));
+      dispatch(placeSlice.actions.datafilter(defaultCondition));
       mapRef.current = null;
-      setPlace(null);
     };
   }, []);
 

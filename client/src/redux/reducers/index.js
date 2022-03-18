@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import filteringSlice from './filteringSlice';
+import placeSlice from './placeSlice';
 import postSlice from './postSlice';
 import userSlice from './userSlice';
 
 const rootReducer = combineReducers({
-  filtering: filteringSlice.reducer,
+  place: placeSlice.reducer,
   post: postSlice.reducer,
   user: userSlice.reducer,
 });

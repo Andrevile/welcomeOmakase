@@ -27,7 +27,6 @@ const Share = () => {
   const { userInfo, isLoggedIn } = useSelector((state) => state.user);
   let navigate = useNavigate();
   useEffect(() => {
-    console.log(isLoggedIn);
     if (!isLoggedIn) {
       navigate('/');
     }
