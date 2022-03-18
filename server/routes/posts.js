@@ -8,14 +8,20 @@ const passport = require('passport');
 router.get('/test', passport.authenticate('jwt', { session: false }), async (req, res, next) => {});
 router.get('/loadpost', async (req, res, next) => {
   try {
-    let posts = await Post.find()
+    console.log('last ID =', req.query.lastId);
+    const lastID = {};
+    if (req.query.lastId !== 'undefined') {
+      lastID._id = { $lt: req.query.lastId };
+    }
+    let posts = await Post.find(lastID)
       .populate('user', { user_ID: 1 })
       .populate({
         path: 'comments',
         populate: { path: 'user', select: 'user_ID' },
         options: { sort: { createdAt: -1 } },
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .limit(5);
 
     return res.json(posts);
   } catch (err) {
