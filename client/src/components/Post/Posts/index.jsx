@@ -25,15 +25,15 @@ function Posts() {
   }, [posts]);
 
   useEffect(() => {
-    const scrollY = _throttle(() => {
-      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
+    const scrollY = () => {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (!loadPostsLoading && hasMorePosts) {
           console.log('이벤트', loadPostsLoading, hasMorePosts);
           dispatch(loadPosts(posts[posts.length - 1]._id));
         }
       }
-    }, 1000);
+    };
+
     window.addEventListener('scroll', scrollY);
     return () => {
       window.removeEventListener('scroll', scrollY);
