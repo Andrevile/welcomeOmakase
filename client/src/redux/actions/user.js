@@ -4,7 +4,7 @@ import api from 'utils/api';
 export const registerUser = createAsyncThunk('USER/REGISTER_USER', async (data, { rejectWithValue }) => {
   try {
     const response = await api.post('/user/signup', data);
-    console.log(response);
+
     return response;
   } catch (err) {
     console.log('register', err.response.data.message);
@@ -19,7 +19,7 @@ export const signIn = createAsyncThunk('USER/SIGN_IN', async (data, { rejectWith
     return user;
     // return { _id: response.user.user._id, user_ID: response.user.user_ID };
   } catch (err) {
-    console.log('signing', err.response.data.message);
+    console.error('signing', err.response.data.message);
     return rejectWithValue(err.response.data.message);
   }
 });
@@ -29,7 +29,7 @@ export const logOut = createAsyncThunk('USER/LOG_OUT', async (data, { rejectWith
     const response = await api.get('/user/logout');
     return response;
   } catch (err) {
-    console.log('logout', err.response.data.message);
+    console.error('logout', err.response.data.message);
     return rejectWithValue(err.response.data.messages);
   }
 });
@@ -40,7 +40,7 @@ export const checkSignIn = createAsyncThunk('USER/CHECK', async (data, { rejectW
     const response = await api.post('/user/check', data);
     return response;
   } catch (err) {
-    console.log('expired or not valid', err);
+    console.error('expired or not valid', err);
     return rejectWithValue('세션 만료');
   }
 });

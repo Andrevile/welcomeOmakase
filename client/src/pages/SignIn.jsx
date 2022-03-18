@@ -17,7 +17,6 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(logInError);
     if (logInError.length > 0) {
       setWarning(logInError);
     }

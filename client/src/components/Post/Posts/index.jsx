@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PostCard from '../PostCard';
 import { useEffect } from 'react';
 import { loadPosts } from 'redux/actions/post';
+import _throttle from 'lodash/throttle';
 const CardList = styled.div`
   border: 1px solid #d9d9d9;
   padding: 10px;
@@ -18,20 +19,21 @@ function Posts() {
       dispatch(loadPosts());
     }
   }, []);
+
   useEffect(() => {
     const scrollY = () => {
-      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (!loadPostsLoading && hasMorePosts) {
-          dispatch(loadPosts());
+          dispatch(loadPosts(posts[posts.length - 1]._id));
         }
       }
     };
+
     window.addEventListener('scroll', scrollY);
     return () => {
       window.removeEventListener('scroll', scrollY);
     };
-  }, [loadPosts, hasMorePosts, posts]);
+  }, [loadPostsLoading, hasMorePosts, posts]);
   return (
     <>
       <CardList>

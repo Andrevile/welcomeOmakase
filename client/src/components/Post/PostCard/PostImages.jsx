@@ -22,12 +22,10 @@ function PostImages({ images }) {
   const [imageZoom, setImageZoom] = useState(false);
 
   const onZoom = useCallback(() => {
-    console.log('on');
     setImageZoom(true);
   }, [imageZoom]);
 
   const onClose = useCallback(() => {
-    console.log('off');
     setImageZoom(false);
   }, [imageZoom]);
   return (
@@ -44,7 +42,7 @@ function PostImages({ images }) {
           }}
         >
           {images.length === 1 ? (
-            <img src={images[0].src} style={{ width: '100%' }} alt='포스트이미지'></img>
+            <img src={`http://localhost:5000/${images[0]}`} style={{ width: '100%' }} alt='포스트이미지'></img>
           ) : images.length === 2 ? (
             images.map((img, idx) => {
               return (
@@ -59,7 +57,7 @@ function PostImages({ images }) {
             })
           ) : (
             <>
-              <img src={images[0].src} style={{ width: '50%' }} alt='포스트이미지'></img>
+              <img src={`http://localhost:5000/${images[0]}`} style={{ width: '50%' }} alt='포스트이미지'></img>
               <ShowMoreImg>
                 <PlusOutlined />
                 <br />

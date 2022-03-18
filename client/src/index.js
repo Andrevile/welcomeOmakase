@@ -13,10 +13,8 @@ import 'static/styles/reset.scss';
 import './index.css';
 
 function loadUser() {
-  // const dispatch = useDispatch();
-
   const userState = JSON.parse(localStorage.getItem('omakase_user'));
-  console.log(userState);
+
   if (userState) {
     store.dispatch(checkSignIn(userState)).then(({ type }) => {
       if (type === 'USER/CHECK/rejected') {

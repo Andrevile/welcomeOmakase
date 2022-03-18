@@ -2,20 +2,32 @@ const express = require('express');
 const Post = require('../db/schemas/post');
 const Comment = require('../db/schemas/comment');
 const User = require('../db/schemas/user');
+// const passport = require('passport');
+// const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const { isAuthenticated } = require('../middlewares/auth');
+const { makeUploadsDir } = require('../util/makeUploadsDir');
+const { upload } = require('../middlewares/upload');
 const router = express.Router();
-const passport = require('passport');
 
-router.get('/test', passport.authenticate('jwt', { session: false }), async (req, res, next) => {});
+makeUploadsDir();
 router.get('/loadpost', async (req, res, next) => {
   try {
-    let posts = await Post.find()
+    console.log('last ID =', req.query.lastId);
+    const lastID = {};
+    if (req.query.lastId !== 'undefined') {
+      lastID._id = { $lt: req.query.lastId };
+    }
+    let posts = await Post.find(lastID)
       .populate('user', { user_ID: 1 })
       .populate({
         path: 'comments',
         populate: { path: 'user', select: 'user_ID' },
         options: { sort: { createdAt: -1 } },
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .limit(5);
 
     return res.json(posts);
   } catch (err) {
@@ -24,17 +36,17 @@ router.get('/loadpost', async (req, res, next) => {
   }
 });
 
-router.post('/addpost', async (req, res, next) => {
+router.post('/addpost', isAuthenticated, async (req, res, next) => {
   try {
     const newPost = await Post.create(req.body.content);
     const post = { ...newPost._doc, user: { _id: newPost.user, user_ID: req.body.user_ID } };
-    return res.status(201).send(post);
+    return res.status(201).json(post);
   } catch (err) {
     next(err);
   }
 });
 
-router.put('/addcomment/:postId', async (req, res, next) => {
+router.put('/addcomment/:postId', isAuthenticated, async (req, res, next) => {
   try {
     const post = await Post.findOne({ _id: req.params.postId });
     const newComment = await Comment.create(req.body);
@@ -50,7 +62,7 @@ router.put('/addcomment/:postId', async (req, res, next) => {
   }
 });
 
-router.post('/deletecomment', async (req, res, next) => {
+router.post('/deletecomment', isAuthenticated, async (req, res, next) => {
   try {
     const result = await Comment.deleteOne({ _id: req.body.commentID });
     await Post.updateOne({ _id: req.body.id }, { $pull: { comments: req.body.commentID } });
@@ -60,7 +72,7 @@ router.post('/deletecomment', async (req, res, next) => {
   }
 });
 
-router.put('/like/:postId', async (req, res, next) => {
+router.put('/like/:postId', isAuthenticated, async (req, res, next) => {
   try {
     console.log(req.body);
     await Post.updateOne({ _id: req.params.postId }, { $addToSet: { likes: req.body.user } });
@@ -70,7 +82,7 @@ router.put('/like/:postId', async (req, res, next) => {
   }
 });
 
-router.put('/unlike/:postId', async (req, res, next) => {
+router.put('/unlike/:postId', isAuthenticated, async (req, res, next) => {
   try {
     console.log(req.body);
     await Post.updateOne({ _id: req.params.postId }, { $pull: { likes: req.body.user } });
@@ -80,7 +92,7 @@ router.put('/unlike/:postId', async (req, res, next) => {
   }
 });
 
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isAuthenticated, async (req, res, next) => {
   console.log(req.params);
   try {
     await Post.deleteOne({ _id: req.params.postId });
@@ -88,6 +100,25 @@ router.delete('/:postId', async (req, res, next) => {
     res.status(200).json({ message: '삭제 성공' });
   } catch (err) {
     next(err);
+  }
+});
+
+router.post('/images', isAuthenticated, upload.array('image'), (req, res) => {
+  console.log('이미지 목록', req.files);
+  res.json(req.files.map((image) => image.filename));
+});
+
+router.delete('/removeimages/:image', isAuthenticated, async (req, res) => {
+  try {
+    console.log('d여기');
+    console.log(path.join(__dirname, '../uploads', `/${req.params.image}`));
+    fs.unlink(path.join(__dirname, '../uploads', `/${req.params.image}`), (err) => {
+      console.log('삭제', err);
+    });
+    res.status(201).json(req.params.image);
+  } catch (err) {
+    console.log('이미지 삭제', err);
+    res.status(401).send('이미지 삭제 실패');
   }
 });
 module.exports = router;

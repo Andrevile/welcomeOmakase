@@ -6,10 +6,11 @@ import styled from 'styled-components';
 import useFormData from 'hooks/useFormData';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from 'redux/actions/post';
+import { addPost, uploadImages } from 'redux/actions/post';
 import userSlice from 'redux/reducers/userSlice';
 import shortid from 'shortid';
 import faker from 'faker';
+import Images from './Images';
 const FormWrapper = styled(Form)`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -27,17 +28,21 @@ function PostForm() {
   const { values, changeHandler, setValues } = useFormData({ initialValues: { content: '' } });
 
   const { userInfo } = useSelector((state) => state.user);
-  const { posts, addPostDone } = useSelector((state) => state.post);
+  const { posts, addPostDone, imgPaths } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const onSubmit = () => {
+    if (!values.content || !values.content.trim()) {
+      return alert('게시글을 작성하세요');
+    }
+
     dispatch(
       addPost({
         user_ID: userInfo.user_ID,
         content: {
           user: userInfo._id,
           content: values.content,
-          images: [],
+          images: imgPaths,
           comments: [],
           likes: [],
         },
@@ -50,9 +55,19 @@ function PostForm() {
       setValues({ content: '' });
     }
   }, [addPostDone]);
+
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);
+
+  const onChangeImages = useCallback((e) => {
+    const imageFormData = new FormData();
+    [].forEach.call(e.target.files, (f) => {
+      imageFormData.append('image', f);
+    });
+
+    dispatch(uploadImages(imageFormData));
+  }, []);
 
   return (
     // <FormWrapper encType='multipart/form-data' onFinish={onSubmit}>
@@ -67,7 +82,7 @@ function PostForm() {
       />
 
       <OptionWrapper>
-        <input type='file' multiple hidden ref={imageInput} />
+        <input type='file' name='image' multiple hidden ref={imageInput} onChange={onChangeImages} />
         <Button icon={<UploadOutlined />} onClick={onClickImageUpload}>
           이미지 업로드
         </Button>
@@ -75,6 +90,8 @@ function PostForm() {
           글 쓰기
         </Button>
       </OptionWrapper>
+
+      <Images />
     </FormWrapper>
   );
 }

@@ -5,7 +5,7 @@ const useFormData = ({ initialValues }) => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    console.log(values);
+
     setValues({ ...values, [name]: value });
   };
 
