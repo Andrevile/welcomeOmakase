@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import api from 'utils/api';
 
-export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async () => {
+export const loadPosts = createAsyncThunk('POST/LOAD_POSTS', async (data) => {
   try {
-    const response = await api.get('/post/loadpost');
+    const response = await api.get(`/post/loadpost?lastId=${data}`);
     console.log('받아온 데이터', response);
     return response;
   } catch (err) {
