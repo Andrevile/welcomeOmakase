@@ -61,7 +61,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsDone = true;
         state.loadPostsError = null;
-        state.hasMorePosts = state.posts.length < 50;
+        state.hasMorePosts = action.payload.length === 5;
         state.posts = _concat(state.posts, [...action.payload]);
       })
       .addCase(loadPosts.rejected, (state, action) => {
