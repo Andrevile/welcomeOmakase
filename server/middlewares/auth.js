@@ -2,6 +2,7 @@ const passport = require('passport');
 
 exports.isAuthenticated = (req, res, next) => {
   if (passport.authenticate('jwt', { session: false })) {
+    console.log('인증된 유저');
     next();
   } else {
     res.clearCookie('omakase_user');

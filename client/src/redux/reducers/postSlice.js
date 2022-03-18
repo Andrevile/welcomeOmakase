@@ -7,6 +7,8 @@ import {
   deleteComment,
   likeAction,
   unLikeAction,
+  uploadImages,
+  removeImages,
 } from 'redux/actions/post';
 import { generateDummyPost } from 'utils/generateDummyPost';
 import _concat from 'lodash/concat';
@@ -17,18 +19,23 @@ const initialState = {
   posts: [],
   imgPaths: [],
   hasMorePosts: true,
+
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
+
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+
   removePostLoading: false,
   removePostDone: false,
   removePostError: null,
+
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+
   removeCommentLoading: false,
   removeCommentDone: false,
   removeCommentError: null,
@@ -36,6 +43,14 @@ const initialState = {
   likeLoading: false,
   likeDone: false,
   likeError: null,
+
+  uploadImagesLoading: false,
+  uploadImagesDone: false,
+  uploadImagesError: null,
+
+  removeImagesLoading: false,
+  removeImagesDone: false,
+  removeImagesError: null,
 };
 
 //type
@@ -169,6 +184,32 @@ const postSlice = createSlice({
         state.likeLoading = false;
         state.likeDone = false;
         state.likeError = action.error.message;
+      })
+      .addCase(uploadImages.pending, (state) => {
+        state.uploadImagesLoading = true;
+        state.uploadImagesDone = false;
+      })
+      .addCase(uploadImages.fulfilled, (state, action) => {
+        state.uploadImagesLoading = false;
+        state.uploadImagesDone = true;
+        state.imgPaths = _concat(state.imgPaths, [...action.payload]);
+      })
+      .addCase(uploadImages.rejected, (state, action) => {
+        state.uploadImagesLoading = false;
+        state.uploadImagesError = action.payload;
+      })
+      .addCase(removeImages.pending, (state) => {
+        state.removeImagesLoading = true;
+        state.removeImagesDone = false;
+      })
+      .addCase(removeImages.fulfilled, (state, action) => {
+        state.removeImagesLoading = false;
+        state.removeImagesDone = true;
+        state.imgPaths = state.imgPaths.filter((img) => img !== action.payload);
+      })
+      .addCase(removeImages.rejected, (state, action) => {
+        state.removeImagesLoading = false;
+        state.removeImagesError = action.payload;
       }),
 });
 

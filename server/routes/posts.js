@@ -2,15 +2,16 @@ const express = require('express');
 const Post = require('../db/schemas/post');
 const Comment = require('../db/schemas/comment');
 const User = require('../db/schemas/user');
-const passport = require('passport');
-const multer = require('multer');
+// const passport = require('passport');
+// const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { isAuthenticated } = require('../middlewares/auth');
-const { makeUplodsDir } = require('../util/makeUploadsDir');
+const { makeUploadsDir } = require('../util/makeUploadsDir');
+const { upload } = require('../middlewares/upload');
 const router = express.Router();
 
-makeUplodsDir();
+makeUploadsDir();
 router.get('/loadpost', async (req, res, next) => {
   try {
     console.log('last ID =', req.query.lastId);
@@ -39,7 +40,7 @@ router.post('/addpost', isAuthenticated, async (req, res, next) => {
   try {
     const newPost = await Post.create(req.body.content);
     const post = { ...newPost._doc, user: { _id: newPost.user, user_ID: req.body.user_ID } };
-    return res.status(201).send(post);
+    return res.status(201).json(post);
   } catch (err) {
     next(err);
   }
@@ -99,6 +100,25 @@ router.delete('/:postId', isAuthenticated, async (req, res, next) => {
     res.status(200).json({ message: '삭제 성공' });
   } catch (err) {
     next(err);
+  }
+});
+
+router.post('/images', isAuthenticated, upload.array('image'), (req, res) => {
+  console.log('이미지 목록', req.files);
+  res.json(req.files.map((image) => image.filename));
+});
+
+router.delete('/removeimages/:image', isAuthenticated, async (req, res) => {
+  try {
+    console.log('d여기');
+    console.log(path.join(__dirname, '../uploads', `/${req.params.image}`));
+    fs.unlink(path.join(__dirname, '../uploads', `/${req.params.image}`), (err) => {
+      console.log('삭제', err);
+    });
+    res.status(201).json(req.params.image);
+  } catch (err) {
+    console.log('이미지 삭제', err);
+    res.status(401).send('이미지 삭제 실패');
   }
 });
 module.exports = router;
