@@ -21,14 +21,9 @@ function Posts() {
   }, []);
 
   useEffect(() => {
-    console.log(posts);
-  }, [posts]);
-
-  useEffect(() => {
     const scrollY = () => {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (!loadPostsLoading && hasMorePosts) {
-          console.log('이벤트', loadPostsLoading, hasMorePosts);
           dispatch(loadPosts(posts[posts.length - 1]._id));
         }
       }

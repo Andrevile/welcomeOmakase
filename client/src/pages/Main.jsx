@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { profileList } from 'static/constants/profileList';
 import { defaultCondition } from 'static/constants/defaultCondition';
 import Profile from 'components/Profile';
-import filteringSlice from 'redux/reducers/filteringSlice';
+import placeSlice from 'redux/reducers/placeSlice';
 
 const Main = () => {
   const dispatch = useDispatch();
   const onClickHandler = (name) => () => {
-    dispatch(filteringSlice.actions.datafilter({ ...defaultCondition, youtuber: name }));
+    dispatch(placeSlice.actions.datafilter({ ...defaultCondition, youtuber: name }));
   };
 
   return (

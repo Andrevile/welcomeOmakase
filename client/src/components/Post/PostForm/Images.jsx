@@ -20,7 +20,6 @@ function Images() {
   const dispatch = useDispatch();
   const onRemoveImage = useCallback(
     (id) => () => {
-      console.log('id', id);
       dispatch(removeImages(imgPaths[id]));
     },
     [imgPaths]

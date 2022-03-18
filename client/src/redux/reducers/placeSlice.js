@@ -6,8 +6,8 @@ const initialState = {
   place_position: '',
 };
 
-const filteringSlice = createSlice({
-  name: 'filtering',
+const placeSlice = createSlice({
+  name: 'place',
   initialState,
   reducers: {
     datafilter(state, action) {
@@ -18,4 +18,4 @@ const filteringSlice = createSlice({
   extraReducers: {},
 });
 
-export default filteringSlice;
+export default placeSlice;

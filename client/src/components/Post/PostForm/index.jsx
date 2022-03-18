@@ -56,19 +56,14 @@ function PostForm() {
     }
   }, [addPostDone]);
 
-  useEffect(() => {
-    console.log(imgPaths);
-  }, []);
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);
 
   const onChangeImages = useCallback((e) => {
-    console.log('images', e.target.files);
     const imageFormData = new FormData();
     [].forEach.call(e.target.files, (f) => {
       imageFormData.append('image', f);
-      console.log(imageFormData);
     });
 
     dispatch(uploadImages(imageFormData));

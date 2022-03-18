@@ -22,12 +22,10 @@ function PostImages({ images }) {
   const [imageZoom, setImageZoom] = useState(false);
 
   const onZoom = useCallback(() => {
-    console.log('on');
     setImageZoom(true);
   }, [imageZoom]);
 
   const onClose = useCallback(() => {
-    console.log('off');
     setImageZoom(false);
   }, [imageZoom]);
   return (
