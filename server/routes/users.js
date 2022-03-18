@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../db/schemas/user');
-const { signUp } = require('../module/auth');
+const { signUp } = require('../middlewares/signUp');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');

@@ -2,10 +2,15 @@ const express = require('express');
 const Post = require('../db/schemas/post');
 const Comment = require('../db/schemas/comment');
 const User = require('../db/schemas/user');
-const router = express.Router();
 const passport = require('passport');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const { isAuthenticated } = require('../middlewares/auth');
+const { makeUplodsDir } = require('../util/makeUploadsDir');
+const router = express.Router();
 
-router.get('/test', passport.authenticate('jwt', { session: false }), async (req, res, next) => {});
+makeUplodsDir();
 router.get('/loadpost', async (req, res, next) => {
   try {
     let posts = await Post.find()
@@ -24,7 +29,7 @@ router.get('/loadpost', async (req, res, next) => {
   }
 });
 
-router.post('/addpost', async (req, res, next) => {
+router.post('/addpost', isAuthenticated, async (req, res, next) => {
   try {
     const newPost = await Post.create(req.body.content);
     const post = { ...newPost._doc, user: { _id: newPost.user, user_ID: req.body.user_ID } };
@@ -34,7 +39,7 @@ router.post('/addpost', async (req, res, next) => {
   }
 });
 
-router.put('/addcomment/:postId', async (req, res, next) => {
+router.put('/addcomment/:postId', isAuthenticated, async (req, res, next) => {
   try {
     const post = await Post.findOne({ _id: req.params.postId });
     const newComment = await Comment.create(req.body);
@@ -50,7 +55,7 @@ router.put('/addcomment/:postId', async (req, res, next) => {
   }
 });
 
-router.post('/deletecomment', async (req, res, next) => {
+router.post('/deletecomment', isAuthenticated, async (req, res, next) => {
   try {
     const result = await Comment.deleteOne({ _id: req.body.commentID });
     await Post.updateOne({ _id: req.body.id }, { $pull: { comments: req.body.commentID } });
@@ -60,7 +65,7 @@ router.post('/deletecomment', async (req, res, next) => {
   }
 });
 
-router.put('/like/:postId', async (req, res, next) => {
+router.put('/like/:postId', isAuthenticated, async (req, res, next) => {
   try {
     console.log(req.body);
     await Post.updateOne({ _id: req.params.postId }, { $addToSet: { likes: req.body.user } });
@@ -70,7 +75,7 @@ router.put('/like/:postId', async (req, res, next) => {
   }
 });
 
-router.put('/unlike/:postId', async (req, res, next) => {
+router.put('/unlike/:postId', isAuthenticated, async (req, res, next) => {
   try {
     console.log(req.body);
     await Post.updateOne({ _id: req.params.postId }, { $pull: { likes: req.body.user } });
@@ -80,7 +85,7 @@ router.put('/unlike/:postId', async (req, res, next) => {
   }
 });
 
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isAuthenticated, async (req, res, next) => {
   console.log(req.params);
   try {
     await Post.deleteOne({ _id: req.params.postId });
