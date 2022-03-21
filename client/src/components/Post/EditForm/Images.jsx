@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
+import { backUrl } from 'config/config';
 const ImagesWrapper = styled.div`
   & > div {
     display: inline-block;
@@ -27,7 +28,7 @@ function Images({ images, setImages }) {
       {images.map((v, i) => {
         return (
           <div key={v}>
-            <Image src={`http://localhost:5000/${v}`} alt={v} />
+            <Image src={`${backUrl}/${v}`} alt={v} />
             <div>
               <Button onClick={onRemoveImage(i)}>제거</Button>
             </div>

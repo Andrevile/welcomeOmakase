@@ -4,6 +4,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { backUrl } from 'config/config';
 function ImagesZoom({ images, onClose }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   return (
@@ -22,7 +23,7 @@ function ImagesZoom({ images, onClose }) {
           {images.map((img, idx) => {
             return (
               <ImgWrapper key={idx}>
-                <img src={`http://localhost:5000/${img}`} alt={img}></img>
+                <img src={`${backUrl}/${img}`} alt={img}></img>
               </ImgWrapper>
             );
           })}

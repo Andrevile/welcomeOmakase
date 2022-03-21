@@ -1,11 +1,11 @@
 import axios from 'axios';
-
+import { backUrl } from 'config/config';
 // axios.defaults.baseURL = 'http://localhost:5000';
 
 class api {
   constructor() {
     this.instance = axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: `${backUrl}`,
       withCredentials: true,
     });
   }
@@ -32,7 +32,7 @@ export class abortApi extends api {
   constructor(controller) {
     super();
     this.instance = axios.create({
-      baseURL: 'http://localhost:5000',
+      baseURL: `${backUrl}`,
       withCredentials: true,
       signal: controller.signal,
     });
