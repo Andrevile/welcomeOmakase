@@ -3,8 +3,10 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 const passport = require('passport');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-
+const helmet = require('helmet');
+const hpp = require('hpp');
 const connect = require('./db');
 const usersRouter = require('./routes/users');
 const placesRouter = require('./routes/places');
@@ -16,9 +18,15 @@ const { passportConfig, passportVerify, JWTConfig, JWTVerify } = require('./pass
 
 dotenv.config();
 const app = express();
-
-app.set('port', process.env.PORT || 5000);
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan('dev'));
+  app.set('port', process.env.PORT || 5000);
+}
+app.use(cors({ origin: ['http://localhost:3000', 'welcomeOmakase.com'], credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
