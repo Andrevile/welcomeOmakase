@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useFormData from 'hooks/useFormData';
-import { Comment, Form, Button, List, Input } from 'antd';
+import { Form, Button, Input } from 'antd';
 import { addComment } from 'redux/actions/post';
-import shortid from 'shortid';
+
 function CommentForm({ post }) {
   const { values, changeHandler, setValues } = useFormData({ initialValues: { comment: '' } });
   const { userInfo } = useSelector((state) => state.user);
@@ -21,13 +21,13 @@ function CommentForm({ post }) {
         },
       })
     );
-  }, [values]);
+  }, [values, dispatch, post._id, userInfo._id]);
 
   useEffect(() => {
     if (addCommentDone) {
       setValues({ comment: '' });
     }
-  }, [addCommentDone]);
+  }, [addCommentDone, setValues]);
   return (
     <Form onFinish={onSubmitHandler}>
       <Form.Item style={{ position: 'relative', margin: 0 }}>

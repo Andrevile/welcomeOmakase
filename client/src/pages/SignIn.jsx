@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import api from 'utils/api';
+
 import { useNavigate } from 'react-router-dom';
 import InputBox from 'components/Auth/InputBox';
 import SignLogo from 'components/Auth/SignLogo';
 import useFormData from 'hooks/useFormData';
-import userSlice from 'redux/reducers/userSlice';
+
 import { signIn } from 'redux/actions/user';
 const SignIn = () => {
-  const { user, logInError } = useSelector((state) => state.user);
+  const { logInError } = useSelector((state) => state.user);
   const { values, changeHandler } = useFormData({
     initialValues: { user_ID: '', user_PW: '' },
   });

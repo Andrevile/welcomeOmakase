@@ -9,8 +9,9 @@ import {
   unLikeAction,
   uploadImages,
   removeImages,
+  editPost,
 } from 'redux/actions/post';
-import { generateDummyPost } from 'utils/generateDummyPost';
+
 import _concat from 'lodash/concat';
 import _remove from 'lodash/remove';
 import _find from 'lodash/find';
@@ -51,6 +52,10 @@ const initialState = {
   removeImagesLoading: false,
   removeImagesDone: false,
   removeImagesError: null,
+
+  editPostLoading: false,
+  editPostDone: false,
+  editPostError: null,
 };
 
 //type
@@ -210,6 +215,19 @@ const postSlice = createSlice({
       .addCase(removeImages.rejected, (state, action) => {
         state.removeImagesLoading = false;
         state.removeImagesError = action.payload;
+      })
+      .addCase(editPost.pending, (state, action) => {
+        state.editPostLoading = true;
+        state.editPostDone = false;
+      })
+      .addCase(editPost.fulfilled, (state, action) => {
+        state.editPostLoading = false;
+        state.editPostDone = true;
+        state.posts = state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
+      })
+      .addCase(editPost.rejected, (state, action) => {
+        state.editPostLoading = false;
+        state.editPostError = action.payload;
       }),
 });
 

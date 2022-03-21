@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import userSlice from 'redux/reducers/userSlice';
+
 import NavBar from 'components/NavBar';
 import NotFound from 'pages/NotFound';
 import Modal from 'components/Common/Modal';
@@ -10,12 +9,12 @@ import Dining from 'pages/Dining';
 import Share from 'pages/Share';
 import SignUp from 'pages/SignUp';
 import SignIn from 'pages/SignIn';
-import { checkSignIn } from 'redux/actions/user';
+
 import './App.css';
 function App() {
   const [modalOff, modalOn] = useState(false);
   const appRef = useRef();
-  const dispatch = useDispatch();
+
   // useEffect(() => {
   //   const userState = JSON.parse(localStorage.getItem('omakase_user'));
   //   console.log(userState);
