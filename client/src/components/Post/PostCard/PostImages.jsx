@@ -23,11 +23,11 @@ function PostImages({ images }) {
 
   const onZoom = useCallback(() => {
     setImageZoom(true);
-  }, [imageZoom]);
+  }, []);
 
   const onClose = useCallback(() => {
     setImageZoom(false);
-  }, [imageZoom]);
+  }, []);
   return (
     <>
       <div>
@@ -47,9 +47,9 @@ function PostImages({ images }) {
             images.map((img, idx) => {
               return (
                 <img
-                  key={`${img.src} ` + ` ${idx}`}
+                  key={`${img} `}
                   style={{ width: '50%' }}
-                  src={img.src}
+                  src={`http://localhost:5000/${img}`}
                   alt='포스트이미지'
                   onClick={onZoom}
                 ></img>

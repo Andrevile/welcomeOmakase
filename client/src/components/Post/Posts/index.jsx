@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { List } from 'antd';
+
 import styled from 'styled-components';
 import PostCard from '../PostCard';
 import { useEffect } from 'react';
 import { loadPosts } from 'redux/actions/post';
-import _throttle from 'lodash/throttle';
+
 const CardList = styled.div`
   border: 1px solid #d9d9d9;
   padding: 10px;
@@ -18,7 +18,7 @@ function Posts() {
     if (posts.length === 0) {
       dispatch(loadPosts());
     }
-  }, []);
+  }, [dispatch, posts.length]);
 
   useEffect(() => {
     const scrollY = () => {
@@ -33,7 +33,7 @@ function Posts() {
     return () => {
       window.removeEventListener('scroll', scrollY);
     };
-  }, [loadPostsLoading, hasMorePosts, posts]);
+  }, [loadPostsLoading, hasMorePosts, posts, dispatch]);
   return (
     <>
       <CardList>

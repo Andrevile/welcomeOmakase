@@ -1,14 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Form, Input, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import useFormData from 'hooks/useFormData';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost, uploadImages } from 'redux/actions/post';
-
 import Images from './Images';
+import { useDispatch } from 'react-redux';
+import { editPost } from 'redux/actions/post';
+import api from 'utils/api';
 const FormWrapper = styled(Form)`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -21,12 +20,11 @@ const OptionWrapper = styled.div`
   margin-top: 5px;
 `;
 
-function PostForm() {
+function EditForm({ post, setEditMode }) {
   const imageInput = useRef(null);
-  const { values, changeHandler, setValues } = useFormData({ initialValues: { content: '' } });
-
-  const { userInfo } = useSelector((state) => state.user);
-  const { addPostDone, imgPaths } = useSelector((state) => state.post);
+  const { values, changeHandler } = useFormData({ initialValues: { content: post.content } });
+  const [images, setImages] = useState([...post.images]);
+  //   const { posts, addPostDone, imgPaths } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const onSubmit = () => {
@@ -35,44 +33,43 @@ function PostForm() {
     }
 
     dispatch(
-      addPost({
-        user_ID: userInfo.user_ID,
+      editPost({
+        id: post._id,
         content: {
-          user: userInfo._id,
+          user: post.user,
           content: values.content,
-          images: imgPaths,
-          comments: [],
-          likes: [],
+          images: [...images],
+          comments: [...post.comments],
+          likes: [...post.likes],
         },
       })
     ).then(({ type }) => {
-      if (type !== 'POST/ADD_POST/rejected') {
-        message.success('게시글이 등록되었습니다.');
+      if (type !== 'POST/EDIT_POST/rejected') {
+        message.success('게시글이 수정되었습니다.');
+        setEditMode(false);
       }
     });
   };
-
-  useEffect(() => {
-    if (addPostDone) {
-      setValues({ content: '' });
-    }
-  }, [addPostDone, setValues]);
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, []);
 
   const onChangeImages = useCallback(
-    (e) => {
+    async (e) => {
       const imageFormData = new FormData();
       [].forEach.call(e.target.files, (f) => {
         imageFormData.append('image', f);
       });
-
-      dispatch(uploadImages(imageFormData));
+      const response = await api.post('post/images', imageFormData);
+      setImages([...images, ...response]);
     },
-    [dispatch]
+    [images]
   );
+
+  const editModeHandler = useCallback(() => {
+    setEditMode(false);
+  }, [setEditMode]);
 
   return (
     // <FormWrapper encType='multipart/form-data' onFinish={onSubmit}>
@@ -91,14 +88,20 @@ function PostForm() {
         <Button icon={<UploadOutlined />} onClick={onClickImageUpload}>
           이미지 업로드
         </Button>
-        <Button type='primary' style={{ float: 'right', color: 'white' }} htmlType='submit'>
-          글 쓰기
-        </Button>
+        <Button.Group style={{ float: 'right', color: 'white' }}>
+          <>
+            <Button style={{ marginRight: 10 }} type='primary' htmlType='submit'>
+              수정
+            </Button>
+            <Button type='danger' onClick={editModeHandler}>
+              취소
+            </Button>
+          </>
+        </Button.Group>
       </OptionWrapper>
-
-      <Images />
+      <Images images={images} setImages={setImages} />
     </FormWrapper>
   );
 }
 
-export default PostForm;
+export default EditForm;

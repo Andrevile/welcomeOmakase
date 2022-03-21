@@ -1,30 +1,39 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Popover, Button, List, Space } from 'antd';
+import { Card, Popover, Button } from 'antd';
 
 import { CommentOutlined, EllipsisOutlined, LikeTwoTone, LikeOutlined } from '@ant-design/icons';
 import { deletePost, likeAction, unLikeAction } from 'redux/actions/post';
 import CommentArea from 'components/Post/CommentArea';
+
 import styled from 'styled-components';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+import EditForm from '../EditForm';
 import PostImages from './PostImages';
 import IconText from './IconText';
 import PostWriter from './PostWriter';
+
 const CardWrapper = styled.div`
   border: 1px solid #d9d9d9;
 `;
 
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 function PostCard({ post }) {
+  const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(false);
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
   const onToggleLike = useCallback(() => {
     dispatch(likeAction({ id: post._id, user: userInfo.user_ID }));
-  }, [post.likes]);
+  }, [post._id, userInfo.user_ID, dispatch]);
 
   const onToggleUnLike = useCallback(() => {
     dispatch(unLikeAction({ id: post._id, user: userInfo.user_ID }));
-  }, [post.likes]);
+  }, [post._id, userInfo.user_ID, dispatch]);
 
   const onToggleComment = useCallback(() => {
     setComment(!comment);
@@ -32,9 +41,16 @@ function PostCard({ post }) {
 
   const deletePostHandler = useCallback(() => {
     dispatch(deletePost(post._id));
+  }, [dispatch, post._id]);
+
+  const editModeHandler = useCallback(() => {
+    setEditMode(true);
   }, []);
 
   const likes = post.likes.find((v) => v === userInfo.user_ID);
+  if (editMode) {
+    return <EditForm post={post} setEditMode={setEditMode} />;
+  }
   return (
     <div key={post._id} style={{ marginBottom: 20 }}>
       <CardWrapper>
@@ -59,7 +75,7 @@ function PostCard({ post }) {
                 content={
                   <Button.Group>
                     <>
-                      <Button>수정</Button>
+                      <Button onClick={editModeHandler}>수정</Button>
                       <Button type='danger' onClick={deletePostHandler}>
                         삭제
                       </Button>
@@ -71,6 +87,9 @@ function PostCard({ post }) {
               </Popover>,
             ]}
           >
+            <>
+              <span style={{ float: 'right' }}>{dayjs(post.createdAt).format('YYYY-MM-DD')}</span>
+            </>
             <Card.Meta
               description={post.content} //PostContent 컴포넌트 삽입 할 공간
               title={<PostWriter postUser={post.user.user_ID} />}

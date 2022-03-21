@@ -88,3 +88,22 @@ export const removeImages = createAsyncThunk('POST/REMOVE_IMAGES', async (data, 
     return rejectWithValue(err.response.data);
   }
 });
+
+export const editPost = createAsyncThunk('POST/EDIT_POST', async (data, { rejectWithValue }) => {
+  try {
+    const response = await api.put(`/post/editpost?postId=${data.id}`, data.content);
+    return response;
+  } catch (err) {
+    console.error(err.response.data);
+    return err.response.data;
+  }
+});
+// export const editImages = createAsyncThunk('POST/EDIT_IMAGES', async (data, { rejectWithValue }) => {
+//   try {
+//     const response = await api.post('/post/images',data);
+//     return response
+//   } catch (err) {
+//     console.error(err.response.data);
+//     return rejectWithValue(err.response.data);
+//   }
+// });

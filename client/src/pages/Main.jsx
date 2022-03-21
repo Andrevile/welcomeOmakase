@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { profileList } from 'static/constants/profileList';
 import { defaultCondition } from 'static/constants/defaultCondition';

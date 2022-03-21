@@ -46,6 +46,26 @@ router.post('/addpost', isAuthenticated, async (req, res, next) => {
   }
 });
 
+router.put('/editpost', isAuthenticated, async (req, res, next) => {
+  try {
+    const updatePost = await Post.updateOne(
+      { _id: req.query.postId },
+      { $set: { content: req.body.content, images: req.body.images } }
+    );
+    const post = await Post.findOne({ _id: req.query.postId })
+      .populate('user', { user_ID: 1 })
+      .populate({
+        path: 'comments',
+        populate: { path: 'user', select: 'user_ID' },
+        options: { sort: { createdAt: -1 } },
+      });
+    console.log('수정', post);
+
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(403).send('잘못된 접근입니다.');
+  }
+});
 router.put('/addcomment/:postId', isAuthenticated, async (req, res, next) => {
   try {
     const post = await Post.findOne({ _id: req.params.postId });

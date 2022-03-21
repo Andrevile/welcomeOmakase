@@ -1,4 +1,4 @@
-import { Comment, List, Button } from 'antd';
+import { Comment, List } from 'antd';
 import CommentForm from './CommentForm';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ function CommentArea({ post, comments }) {
     (comment) => () => {
       dispatch(deleteComment({ id: post._id, commentID: comment._id }));
     },
-    []
+    [dispatch, post._id]
   );
   return (
     <>

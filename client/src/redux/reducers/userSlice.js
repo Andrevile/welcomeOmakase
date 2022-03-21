@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import build from 'shortid/lib/build';
+
 import { registerUser, signIn, logOut, checkSignIn } from 'redux/actions/user';
-const dummyUser = {
-  user: {
-    user_ID: 'test123456789',
-  },
-};
+
 const initialState = {
   isLoggedIn: JSON.parse(localStorage.getItem('omakase_user')) ? true : false,
   checkLoading: false,

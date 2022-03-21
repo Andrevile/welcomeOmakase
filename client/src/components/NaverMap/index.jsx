@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import api from 'utils/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { defaultCondition } from 'static/constants/defaultCondition';
@@ -16,7 +16,7 @@ function NaverMap({ setPlace }) {
 
   const dispatch = useDispatch();
   const { mapRef, loading } = useCallMap();
-  const { markerList, initMarker, markerFiltering } = useMarker(mapRef, setPlace, filter_condition);
+  const { markerFiltering } = useMarker(mapRef, setPlace, filter_condition);
   const { values, changeHandler } = useFormData({
     initialValues: {
       place_name: '',
@@ -41,7 +41,7 @@ function NaverMap({ setPlace }) {
       dispatch(placeSlice.actions.datafilter(defaultCondition));
       mapRef.current = null;
     };
-  }, []);
+  }, [dispatch, mapRef]);
 
   return (
     <>

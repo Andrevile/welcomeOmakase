@@ -1,12 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PageTitle from 'components/Common/PageTitle';
 import Layout from 'components/Common/Layout';
 import PostForm from 'components/Post/PostForm';
 import Posts from 'components/Post/Posts';
-import styled, { createGlobalStyle } from 'styled-components';
-import { loadPosts } from 'redux/actions/post';
+import { createGlobalStyle } from 'styled-components';
 export const Global = createGlobalStyle`
   .slick-slide {
     display: inline-block;
@@ -24,13 +23,13 @@ export const Global = createGlobalStyle`
   
 `;
 const Share = () => {
-  const { userInfo, isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
   let navigate = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
   return (
     <Layout>
       <Global />

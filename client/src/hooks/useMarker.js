@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import api, { abortApi } from 'utils/api';
+import { abortApi } from 'utils/api';
 import axios from 'axios';
 import { generateMarker } from 'utils/generateMarker';
 const useMarker = (naverMap, setPlace, filter_condition) => {
@@ -8,7 +8,7 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
     (place) => () => {
       setPlace({ ...place });
     },
-    []
+    [setPlace]
   );
 
   const markerFiltering = (data) => {
@@ -28,16 +28,19 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
     setMarkerList({ ...markerList, ...temp });
   };
 
-  const initMarker = useCallback((data) => {
-    let temp = {};
+  const initMarker = useCallback(
+    (data) => {
+      let temp = {};
 
-    data.map((place) => {
-      const marker = generateMarker(naverMap.current, place);
-      window.naver.maps.Event.addListener(marker, 'click', markerClickHandler(place));
-      temp[place.place_name] = marker;
-    });
-    setMarkerList({ ...temp });
-  }, []);
+      data.map((place) => {
+        const marker = generateMarker(naverMap.current, place);
+        window.naver.maps.Event.addListener(marker, 'click', markerClickHandler(place));
+        temp[place.place_name] = marker;
+      });
+      setMarkerList({ ...temp });
+    },
+    [markerClickHandler, naverMap]
+  );
 
   useEffect(() => {
     let controller = new AbortController();
@@ -55,7 +58,7 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
       });
 
     return () => controller?.abort();
-  }, []);
+  }, [filter_condition, initMarker]);
 
   return { markerList, initMarker, markerFiltering };
 };
