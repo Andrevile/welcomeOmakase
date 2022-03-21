@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+
 const Writer = styled.span`
   font-weight: bold;
 `;

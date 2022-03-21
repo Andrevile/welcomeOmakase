@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import api from 'utils/api';
+
 import InputBox from 'components/Auth/InputBox';
 import useFormData from 'hooks/useFormData';
 import SignLogo from 'components/Auth/SignLogo';
 import { registerUser } from 'redux/actions/user';
-import userSlice from 'redux/reducers/userSlice';
+
 const SignUp = () => {
   const { values, changeHandler } = useFormData({
     initialValues: { user_ID: '', email: '', user_PW: '', user_PW_compare: '', auth: 'user' },
   });
-  const { registerErr, registerMessage, registerDone } = useSelector((state) => state.user);
+  const { registerErr } = useSelector((state) => state.user);
   const [Warning, setWarning] = useState('');
 
   const dispatch = useDispatch();

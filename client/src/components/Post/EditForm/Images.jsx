@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { removeImages } from 'redux/actions/post';
 const ImagesWrapper = styled.div`
   & > div {
     display: inline-block;
@@ -15,18 +13,18 @@ const Image = styled.img.attrs((props) => ({
 }))`
   width: 200px;
 `;
-function Images() {
-  const { imgPaths } = useSelector((state) => state.post);
-  const dispatch = useDispatch();
+function Images({ images, setImages }) {
   const onRemoveImage = useCallback(
-    (id) => () => {
-      dispatch(removeImages(imgPaths[id]));
+    (id) => async () => {
+      //   const response = await api.delete(`/post/removeimages/${images[id]}`);
+
+      setImages([...images.filter((img, index) => index !== id)]);
     },
-    [imgPaths, dispatch]
+    [images, setImages]
   );
   return (
     <ImagesWrapper>
-      {imgPaths.map((v, i) => {
+      {images.map((v, i) => {
         return (
           <div key={v}>
             <Image src={`http://localhost:5000/${v}`} alt={v} />
