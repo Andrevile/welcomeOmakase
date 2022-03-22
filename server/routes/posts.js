@@ -10,8 +10,7 @@ const { isAuthenticated } = require('../middlewares/auth');
 const { makeUploadsDir } = require('../util/makeUploadsDir');
 const { upload } = require('../middlewares/upload');
 const router = express.Router();
-
-makeUploadsDir();
+// makeUploadsDir();
 router.get('/loadpost', async (req, res, next) => {
   try {
     console.log('last ID =', req.query.lastId);
@@ -125,7 +124,7 @@ router.delete('/:postId', isAuthenticated, async (req, res, next) => {
 
 router.post('/images', isAuthenticated, upload.array('image'), (req, res) => {
   console.log('이미지 목록', req.files);
-  res.json(req.files.map((image) => image.filename));
+  res.json(req.files.map((image) => image.location));
 });
 
 router.delete('/removeimages/:image', isAuthenticated, async (req, res) => {
