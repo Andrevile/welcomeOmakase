@@ -30,7 +30,8 @@ function Images() {
       {imgPaths.map((v, i) => {
         return (
           <div key={v}>
-            <Image src={`${backUrl}/uploads/${v}`} alt={v} />
+            {/* <Image src={`${backUrl}/uploads/${v}`} alt={v} /> */}
+            <Image src={v} alt={v} />
             <div>
               <Button onClick={onRemoveImage(i)}>제거</Button>
             </div>

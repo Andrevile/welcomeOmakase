@@ -8,7 +8,7 @@ const AWS = require('aws-sdk');
 //   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 //   region: 'ap-northeast-2',
 // });
-exports.S3 = new AWS.S3({
+const S3 = new AWS.S3({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   region: 'ap-northeast-2',
@@ -23,6 +23,27 @@ exports.upload = multer({
   }),
   limits: { fileSize: 20 * 1024 * 1024 }, //20MB
 });
+
+exports.deleteImage = async (req, res) => {
+  try {
+    const option = {
+      Bucket: 'welcome-omakase-image',
+      Key: `original/${req.params.image}`,
+    };
+    const result = S3.deleteObject(option, (err, data) => {
+      if (err) {
+        throw err;
+      } else {
+        console.log(data);
+      }
+    });
+
+    res.status(201).json(req.params.image);
+  } catch (err) {
+    console.log(err);
+    res.status(403).send('이미지 삭제 실패');
+  }
+};
 // exports.upload = multer({
 //   storage: multer.diskStorage({
 //     destination(req, file, done) {

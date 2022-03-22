@@ -43,14 +43,16 @@ function PostImages({ images }) {
           }}
         >
           {images.length === 1 ? (
-            <img src={`${backUrl}/uploads/${images[0]}`} style={{ width: '100%' }} alt='포스트이미지'></img>
+            // <img src={`${backUrl}/uploads/${images[0]}`} style={{ width: '100%' }} alt='포스트이미지'></img>
+            <img src={images[0]} style={{ width: '100%' }} alt='포스트이미지'></img>
           ) : images.length === 2 ? (
             images.map((img, idx) => {
               return (
                 <img
                   key={`${img} `}
                   style={{ width: '50%' }}
-                  src={`${backUrl}/uploads/${img}`}
+                  // src={`${backUrl}/uploads/${img}`}
+                  src={img}
                   alt='포스트이미지'
                   onClick={onZoom}
                 ></img>
@@ -58,7 +60,8 @@ function PostImages({ images }) {
             })
           ) : (
             <>
-              <img src={`${backUrl}/uploads/${images[0]}`} style={{ width: '50%' }} alt='포스트이미지'></img>
+              {/* <img src={`${backUrl}/uploads/${images[0]}`} style={{ width: '50%' }} alt='포스트이미지'></img> */}
+              <img src={images[0]} style={{ width: '50%' }} alt='포스트이미지'></img>
               <ShowMoreImg>
                 <PlusOutlined />
                 <br />

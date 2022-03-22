@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const { isAuthenticated } = require('../middlewares/auth');
 const { makeUploadsDir } = require('../util/makeUploadsDir');
-const { upload } = require('../middlewares/upload');
+const { upload, deleteImage } = require('../middlewares/upload');
 const router = express.Router();
 // makeUploadsDir();
 router.get('/loadpost', async (req, res, next) => {
@@ -111,6 +111,12 @@ router.put('/unlike/:postId', isAuthenticated, async (req, res, next) => {
   }
 });
 
+router.post('/images', isAuthenticated, upload.array('image'), (req, res) => {
+  console.log('이미지 목록', req.files);
+  res.json(req.files.map((image) => image.location));
+});
+
+router.delete('/removeimages/:image', isAuthenticated, deleteImage);
 router.delete('/:postId', isAuthenticated, async (req, res, next) => {
   console.log(req.params);
   try {
@@ -119,25 +125,6 @@ router.delete('/:postId', isAuthenticated, async (req, res, next) => {
     res.status(200).json({ message: '삭제 성공' });
   } catch (err) {
     next(err);
-  }
-});
-
-router.post('/images', isAuthenticated, upload.array('image'), (req, res) => {
-  console.log('이미지 목록', req.files);
-  res.json(req.files.map((image) => image.location));
-});
-
-router.delete('/removeimages/:image', isAuthenticated, async (req, res) => {
-  try {
-    console.log('d여기');
-    console.log(path.join(__dirname, '../uploads', `/${req.params.image}`));
-    fs.unlink(path.join(__dirname, '../uploads', `/${req.params.image}`), (err) => {
-      console.log('삭제', err);
-    });
-    res.status(201).json(req.params.image);
-  } catch (err) {
-    console.log('이미지 삭제', err);
-    res.status(401).send('이미지 삭제 실패');
   }
 });
 module.exports = router;
