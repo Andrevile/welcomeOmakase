@@ -47,7 +47,7 @@ const useMarker = (naverMap, setPlace, filter_condition) => {
 
     const abortAPI = new abortApi(controller);
     abortAPI
-      .post('/place', filter_condition, { withCredentials: true, signal: controller.signal })
+      .post('api/place', filter_condition, { withCredentials: true, signal: controller.signal })
       .then((res) => {
         initMarker(res.data);
       })

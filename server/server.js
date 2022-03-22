@@ -31,14 +31,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 console.log(path.join(__dirname), 'uploads');
-app.use('/', express.static(path.join(__dirname, 'uploads')));
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 connect(); //DB 연결
 
 // 라우터 등록
-app.use('/place', placesRouter); //dining에서 데이터 불러올 때,
-app.use('/user', usersRouter);
-app.use('/post', postsRouter);
+app.use('api/place', placesRouter); //dining에서 데이터 불러올 때,
+app.use('api/user', usersRouter);
+app.use('api/post', postsRouter);
 app.use(passport.initialize());
 passport.use('local', new LocalStrategy(passportConfig, passportVerify));
 passport.use('jwt', new JWTStrategy(JWTConfig, JWTVerify));

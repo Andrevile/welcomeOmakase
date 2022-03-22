@@ -23,7 +23,7 @@ function ImagesZoom({ images, onClose }) {
           {images.map((img, idx) => {
             return (
               <ImgWrapper key={idx}>
-                <img src={`${backUrl}/${img}`} alt={img}></img>
+                <img src={`${backUrl}/uploads/${img}`} alt={img}></img>
               </ImgWrapper>
             );
           })}
