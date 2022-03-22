@@ -98,6 +98,7 @@ const postSlice = createSlice({
         state.addPostDone = true;
         state.addPostError = null;
         state.posts = _concat([action.payload], state.posts);
+        state.imgPaths = [];
       })
       .addCase(addPost.rejected, (state, action) => {
         state.addPostLoading = false;

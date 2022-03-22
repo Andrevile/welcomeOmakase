@@ -81,8 +81,11 @@ export const uploadImages = createAsyncThunk('POST/UPLOAD_IMAGES', async (data, 
 
 export const removeImages = createAsyncThunk('POST/REMOVE_IMAGES', async (data, { rejectWithValue }) => {
   try {
-    const response = await api.delete(`api/post/removeimages/${data}`);
-    return response;
+    let imgUrl = data.split('/');
+    imgUrl = imgUrl[imgUrl.length - 1];
+    console.log(imgUrl);
+    const response = await api.delete(`api/post/removeimages/${imgUrl}`);
+    return data;
   } catch (err) {
     console.error(err.response.data);
     return rejectWithValue(err.response.data);
