@@ -3,7 +3,7 @@ import api from 'utils/api';
 
 export const registerUser = createAsyncThunk('USER/REGISTER_USER', async (data, { rejectWithValue }) => {
   try {
-    const response = await api.post('/user/signup', data);
+    const response = await api.post('api/user/signup', data);
 
     return response;
   } catch (err) {
@@ -14,7 +14,7 @@ export const registerUser = createAsyncThunk('USER/REGISTER_USER', async (data, 
 
 export const signIn = createAsyncThunk('USER/SIGN_IN', async (data, { rejectWithValue }) => {
   try {
-    const response = await api.post('/user/signin', data);
+    const response = await api.post('api/user/signin', data);
     const user = { _id: response._id, user_ID: response.user_ID };
     return user;
     // return { _id: response.user.user._id, user_ID: response.user.user_ID };
@@ -26,7 +26,7 @@ export const signIn = createAsyncThunk('USER/SIGN_IN', async (data, { rejectWith
 
 export const logOut = createAsyncThunk('USER/LOG_OUT', async (data, { rejectWithValue }) => {
   try {
-    const response = await api.get('/user/logout');
+    const response = await api.get('api/user/logout');
     return response;
   } catch (err) {
     console.error('logout', err.response.data.message);
@@ -37,7 +37,7 @@ export const logOut = createAsyncThunk('USER/LOG_OUT', async (data, { rejectWith
 export const checkSignIn = createAsyncThunk('USER/CHECK', async (data, { rejectWithValue }) => {
   try {
     // const response = await api.post('/user/check', { _id: 123124, user_ID: 'test' });
-    const response = await api.post('/user/check', data);
+    const response = await api.post('api/user/check', data);
     return response;
   } catch (err) {
     console.error('expired or not valid', err);
