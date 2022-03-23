@@ -118,6 +118,7 @@
   margin-left: 3px;
   border-radius: 5px;
   height: 35px;
+  border: 1px solid black;
 }
 
 @media screen and (max-width: 600px) {
@@ -153,12 +154,13 @@
     margin-right: 3px;
   }
   .filtering-submit {
+    border-radius: 1px solid black;
     float: right;
     width: 20%;
     margin-top: 5px;
   }
 }
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 380px) {
   .fa-solid > span {
     display: none;
   }
