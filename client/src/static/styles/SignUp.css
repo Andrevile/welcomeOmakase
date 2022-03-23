@@ -84,4 +84,11 @@
   .signUp-form-container {
     width: 280px;
   }
+  .signUp-form {
+    position: relative;
+  }
+  .formSubmit {
+    width: 278px;
+    text-align: center;
+  }
 }

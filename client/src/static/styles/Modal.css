@@ -39,6 +39,7 @@
   margin-right: 2px;
   font-size: 16px;
   font-family: var(--font-normal);
+  cursor: pointer;
 }
 
 .modal-contents {
@@ -54,6 +55,7 @@
   text-align: center;
 }
 .modal-footer > button {
+  cursor: pointer;
   border-radius: 10px;
   font-family: var(--font-normal);
   font-size: 16px;
@@ -110,7 +112,14 @@
 }
 
 @media screen and (max-width: 600px) {
+  .modal-close {
+    border-radius: 1px solid black;
+    cursor: pointer;
+  }
   .modal_body {
     width: 300px;
+  }
+  .modal-footer > button {
+    border: 1px solid black;
   }
 }
