@@ -21,13 +21,13 @@ const app = express();
 if (process.env.NODE_ENV !== 'development') {
   app.use(morgan('combined'));
   app.use(hpp());
-  app.use(helmet());
+ // app.use(helmet({contentSecurityPolicy : false}));
   app.set('port', 5000);
 } else {
   app.use(morgan('dev'));
   app.set('port', 5000);
 }
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: [ 'http://52.79.100.0','https://welcomeomakase.com','https://www.welcomeomakase.com'], credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -44,7 +44,7 @@ passport.use('jwt', new JWTStrategy(JWTConfig, JWTVerify));
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+	  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 //404 에러처리 미들웨어 = 일치하는 라우터가 없을 때,
 app.use((req, res, next) => {

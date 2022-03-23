@@ -42,6 +42,7 @@ router.post('/signin', async (req, res, next) => {
           {
             maxAge: 24 * 60 * 60 * 3000,
             httpOnly: true,
+	    domain: '.welcomeomakase.com',
           }
         );
         return res.status(201).json(user);
