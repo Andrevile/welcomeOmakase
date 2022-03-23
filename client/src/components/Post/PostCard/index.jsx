@@ -112,6 +112,9 @@ function PostCard({ post }) {
               ),
             ]}
           >
+            <>
+              <span style={{ float: 'right' }}>{dayjs(post.createdAt).format('YYYY-MM-DD')}</span>
+            </>
             <Card.Meta description={post.content} title={<PostWriter postUser={post.user.user_ID} />}></Card.Meta>
           </Card>
         )}
