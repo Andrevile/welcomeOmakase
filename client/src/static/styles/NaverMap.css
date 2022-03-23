@@ -160,7 +160,7 @@
     margin-top: 5px;
   }
 }
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 500px) {
   .fa-solid > span {
     display: none;
   }
