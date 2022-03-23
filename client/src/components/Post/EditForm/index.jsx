@@ -8,6 +8,7 @@ import Images from './Images';
 import { useDispatch } from 'react-redux';
 import { editPost } from 'redux/actions/post';
 import api from 'utils/api';
+import { backUrl } from 'config/config';
 const FormWrapper = styled(Form)`
   margin-top: 10px;
   margin-bottom: 10px;
@@ -55,17 +56,14 @@ function EditForm({ post, setEditMode }) {
     imageInput.current.click();
   }, []);
 
-  const onChangeImages = useCallback(
-    async (e) => {
-      const imageFormData = new FormData();
-      [].forEach.call(e.target.files, (f) => {
-        imageFormData.append('image', f);
-      });
-      const response = await api.post('post/images', imageFormData);
-      setImages([...images, ...response]);
-    },
-    [images]
-  );
+  const onChangeImages = useCallback(async (e) => {
+    const imageFormData = new FormData();
+    [].forEach.call(e.target.files, (f) => {
+      imageFormData.append('image', f);
+    });
+    const response = await api.post(`${backUrl}/api/post/images`, imageFormData);
+    setImages([...images, ...response]);
+  }, []);
 
   const editModeHandler = useCallback(() => {
     setEditMode(false);
