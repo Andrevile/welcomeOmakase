@@ -73,7 +73,7 @@ const SlickWrapper = styled.div`
 const ImgWrapper = styled.div`
   padding: 0px 32px 32px 32px;
   text-align: center;
-
+  background-color: white;
   & img {
     margin: 0 auto;
     max-height: 750px;
