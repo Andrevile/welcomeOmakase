@@ -113,7 +113,7 @@
 
 @media screen and (max-width: 600px) {
   .modal-close {
-    border-radius: 1px solid black;
+    border: 1px solid black;
     cursor: pointer;
   }
   .modal_body {
